@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <ui:composition template="layout.xhtml">
+
+        <ui:define name="title">eBusiness</ui:define>
+        <ui:define name="heading">Order Detail </ui:define>
+        <ui:define name="content">
+             <h:outputText value="The Found Order" styleClass="customHeading1" rendered="#{orderBean.search == true}"/>
+            <table id="tableContent">
+                <thead>
+                    <tr>
+                        <th>Order #</th>
+                        <th>Customer</th>
+                        <th>Item</th>
+                        <th>Created At</th>
+                        <th>Unit Price</th>
+                        <th>Qty</th>
+                        <th>Total Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <f:forEach items="#{orderBean.getOrderList(orderBean.orderId)}" var="order">
+                        <tr>
+                            <td>#{order.id}</td>
+                             <td>
+                            
+                            
+                                <h:form>
+                           <h:commandLink action="#{customerBean.showCustomerDetailsById(order.customer.id)}">#{order.customer.name}</h:commandLink>
+                                </h:form>
+                            </td>
+
+                            <h:panelGroup rendered="#{order.itemId.type eq 'Movie'}">
+                                <td>
+                                    <h:form>
+                                        <h:commandLink action="#{movieBean.redirectToMovieDetail(order.itemId.id)}">#{order.itemId.title}</h:commandLink>
+                                    </h:form>
+
+                               
+                                </td>
+                            </h:panelGroup>
+                            <h:panelGroup rendered="#{order.itemId.type eq 'Game'}">
+                                <td>
+
+                                    <h:form>
+                                        <h:commandLink action="#{gameBean.redirectToGameDetail(order.itemId.id)}">#{order.itemId.title}</h:commandLink>
+                                    </h:form>
+                                </td>
+                            </h:panelGroup>
+
+                      
+                            <td>#{order.creationDate}</td>
+                            <td>#{order.itemId.price}</td>
+                            <td>#{order.quantity}</td> 
+                            <td>$ #{order.quantity * order.itemId.price} </td>   
+                        </tr>
+                    </f:forEach>
+                </tbody>
+            </table>
+  <h:outputText value="Total Orders #{orderBean.getAllOrdersCount()}" styleClass="customHeading2" />
+        </ui:define>
+        <ui:define name="footer">
+            <a href="list_customer.faces">Customer list</a> | <a href="list_order.faces">Order list</a> |  <a href="default.faces">HomePage</a>
+        </ui:define>
+    </ui:composition>
+</html>

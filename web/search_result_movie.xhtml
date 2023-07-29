@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsp/jstl/core"
+ xmlns:ui="http://java.sun.com/jsf/facelets">
+       <ui:composition template="layout.xhtml">
+
+<ui:define name="title">eBusiness</ui:define>
+<ui:define name="heading">Movies </ui:define>
+<ui:define name="content">
+    <h:outputText value="The Found movie" styleClass="customHeading1" rendered="#{movieBean.search == true}"/>
+   <table id="tableContent">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Title</th>
+                <th>Company</th>
+                <th>Platform</th>
+                <th>Classification</th>
+                <th>Description</th>
+                <th>Price</th>
+                <th>Duration</th>
+                <th>Special Feature</th>
+                 <th>Stock</th>
+            </tr>
+        </thead>
+        <tbody>
+           
+            <f:forEach items="#{movieBean.getMovieList(movieBean.movieId)}" var="movie">
+                <tr>
+                    <td>#{movie.id}</td>
+                    <td>#{movie.title}</td>
+                    <td>#{movie.company}</td>
+                    <td>#{movie.platform}</td>
+                    <td>#{movie.classification}</td>
+                    <td>#{movie.description}</td>
+                    <td>$ #{movie.price}</td>
+                     <td>#{movie.duration}</td>
+                    <td>#{movie.specialFeatures}</td>
+                   <td>#{movie.stock}</td>
+                    
+                </tr>
+            </f:forEach>
+        </tbody>
+    </table>
+ <h:outputText value="Total Movies: #{movieBean.countMovies()}" styleClass="customHeading2"/>
+</ui:define>
+ <ui:define name="footer">
+     <a href="add_movie.faces">Add movie</a> | <a href="default.faces">HomePage</a>
+</ui:define>
+       </ui:composition>
+</html>

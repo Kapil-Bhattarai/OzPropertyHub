@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <ui:composition template="layout.xhtml">
+
+        <ui:define name="title">eBusiness</ui:define>
+        <ui:define name="heading">Game Detail </ui:define>
+        <ui:define name="content">
+            <h:outputText value="Data successfully saved for #{gameBean.getGameName(gameBean.gameId)}" styleClass="customHeading1" rendered="#{gameBean.gameId != null}"/>
+
+            <table id="tableContent">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Platform</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <f:forEach items="#{gameBean.getGameList(gameBean.gameId)}" var="game">
+                        <tr>
+                            <td><a href="list_game.xhtml?faces-redirect=true&amp;gameId=#{game.id}">#{game.title}</a></td>
+                            <td>#{game.platform}</td>              
+                        </tr>
+                    </f:forEach>
+                </tbody>
+            </table>
+            <h:outputText value="Total Games: #{gameBean.countGames()}" styleClass="customHeading2" />
+              
+        </ui:define>
+         <ui:define name="footer">
+     <a href="add_game.faces">Add movie</a> | <a href="default.faces">HomePage</a>
+</ui:define>
+    </ui:composition>
+</html>

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <ui:composition template="layout.xhtml">
+
+       <ui:define name="title">Movies and Games</ui:define>
+        <ui:define name="heading">Add Game </ui:define>
+
+        <ui:define name="content">
+            <h:form id="gameForm">
+
+                <div class="row">
+                    <div class="col-25">
+                        <label for="title">Title: </label>
+                    </div>
+                    <div class="col-75">
+                        <h:inputText id="title" value="#{gameBean.product.title}" required="true" />
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-25">
+                        <label for="description">Description: </label>
+                    </div>
+                    <div class="col-75">
+                        <h:inputTextarea id="description" value="#{gameBean.product.description}" required="true" />
+                    </div>
+                </div> 
+
+                <div class="row">
+                    <div class="col-25">
+                        <label for="company">Company: </label>
+                    </div>
+                    <div class="col-75">
+                        <h:inputText id="company" value="#{gameBean.product.company}" required="true" />
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="col-25">
+                        <label for="platform">Platform: </label>
+                    </div>
+                    <div class="col-75">
+                        <h:inputText id="platform" value="#{gameBean.product.platform}" required="true" />
+                    </div>
+                </div> 
+       
+
+                <div class="row">
+                    <div class="col-25">
+                        <label for="classification">Classification: </label>
+                    </div>
+                    <div class="col-75">
+                        <h:inputText id="classification" value="#{gameBean.product.classification}" required="true" />
+                    </div>
+                </div> 
+
+                 <div class="row">
+                    <div class="col-25">
+                        <label for="price">Price: </label>
+                    </div>
+                    <div class="col-75">
+                        <h:inputText id="price" value="#{gameBean.product.price}" required="true" />
+                    </div>
+                </div> 
+                
+                 <div class="row">
+                    <div class="col-25">
+                        <label for="stock">Stocks: </label>
+                    </div>
+                    <div class="col-75">
+                        <h:inputText id="stock" value="#{gameBean.product.stock}" required="true" />
+                    </div>
+                </div> 
+                               
+                <div class="row">
+                    <div class="col-25">
+                        <label for="hasHdOutput">Video Output: </label>
+                    </div>
+                    <div class="col-75">
+                         <h:inputText id="output" value="#{gameBean.output}" required="true" />
+                    </div>
+                </div> 
+
+                <div class="row">
+                    <div class="col-25">
+                        <label for="hardDiskSpace">Hard Disk Space: </label>
+                    </div>
+                    <div class="col-75">
+                        <h:inputText id="hardDiskSpace" value="#{gameBean.hardDiskSpace}" required="true" />
+                    </div>
+                </div> 
+
+                <div class="row">
+                    <div class="col-25">
+                        <label for="noOfCoPlayers">Number of Co-Players: </label>
+                    </div>
+                    <div class="col-75">
+                        <h:inputText id="noOfCoPlayers" value="#{gameBean.noOfCoPlayers}" required="true" />
+                    </div>
+                </div> 
+
+                <p>
+                    <h:commandButton value="Add Game" action="#{gameBean.addGame}">
+                    </h:commandButton>
+                </p>
+            </h:form>
+              
+        </ui:define>
+        
+        <ui:define name="footer">
+    <a href="new_game_display.faces">Games stock</a> | <a href="default.faces">HomePage</a>
+</ui:define>
+        
+    </ui:composition> 
+</html>

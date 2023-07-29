@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:f="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <ui:composition template="layout.xhtml">
+
+        <ui:define name="title">eBusiness</ui:define>
+        <ui:define name="heading">Movie Detail</ui:define>
+       
+         <ui:define name="content">
+           
+            <table id="tableContent">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Platform</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <f:forEach items="#{movieBean.getMovieList(0)}" var="movie">
+                        <tr>
+                            <td>
+                               
+                              <h:form>
+                                    <h:commandLink action="#{movieBean.redirectToMovieDetail(movie.id)}">#{movie.title}</h:commandLink>
+                                </h:form>
+                            </td>
+                            <td>#{movie.platform}</td>              
+                        </tr>
+                    </f:forEach>
+                </tbody>
+            </table>
+            <h:outputText value="Total Movies: #{movieBean.countMovies()}" styleClass="customHeading2"/>
+               
+        </ui:define>
+        
+         <ui:define name="footer">
+     <a href="add_movie.faces">Add movie</a> | <a href="default.faces">HomePage</a>
+</ui:define> 
+    </ui:composition> 
+</html>

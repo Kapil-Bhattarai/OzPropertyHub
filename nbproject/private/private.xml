@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group>
+            <file>file:/Users/kapilbhattarai/NetBeansProjects/OzPropertyHub/web/userRecovery.xhtml</file>
+            <file>file:/Users/kapilbhattarai/NetBeansProjects/OzPropertyHub/src/java/order/ProductOrder.java</file>
+            <file>file:/Users/kapilbhattarai/NetBeansProjects/OzPropertyHub/web/emailVerification.xhtml</file>
+            <file>file:/Users/kapilbhattarai/NetBeansProjects/OzPropertyHub/web/logout.xhtml</file>
+            <file>file:/Users/kapilbhattarai/NetBeansProjects/OzPropertyHub/src/java/products/Product.java</file>
+            <file>file:/Users/kapilbhattarai/NetBeansProjects/OzPropertyHub/web/WEB-INF/glassfish-resources.xml</file>
+            <file>file:/Users/kapilbhattarai/NetBeansProjects/OzPropertyHub/src/java/products/game/GameController.java</file>
+            <file>file:/Users/kapilbhattarai/NetBeansProjects/OzPropertyHub/src/conf/MANIFEST.MF</file>
+            <file>file:/Users/kapilbhattarai/NetBeansProjects/OzPropertyHub/nbproject/build-impl.xml</file>
+            <file>file:/Users/kapilbhattarai/NetBeansProjects/OzPropertyHub/src/java/products/movie/MovieEJB.java</file>
+            <file>file:/Users/kapilbhattarai/NetBeansProjects/OzPropertyHub/web/layout.xhtml</file>
+            <file>file:/Users/kapilbhattarai/NetBeansProjects/OzPropertyHub/src/conf/persistence.xml</file>
+            <file>file:/Users/kapilbhattarai/NetBeansProjects/OzPropertyHub/web/emailRecovery.xhtml</file>
+            <file>file:/Users/kapilbhattarai/NetBeansProjects/OzPropertyHub/src/java/products/movie/MovieController.java</file>
+            <file>file:/Users/kapilbhattarai/NetBeansProjects/OzPropertyHub/src/java/authentication/Beans/Wuser.java</file>
+            <file>file:/Users/kapilbhattarai/NetBeansProjects/OzPropertyHub/src/java/products/game/GameEJB.java</file>
+            <file>file:/Users/kapilbhattarai/NetBeansProjects/OzPropertyHub/web/resources/store/main.js</file>
+            <file>file:/Users/kapilbhattarai/NetBeansProjects/OzPropertyHub/src/java/customer/CustomerEJB.java</file>
+            <file>file:/Users/kapilbhattarai/NetBeansProjects/OzPropertyHub/src/java/customer/Customer.java</file>
+            <file>file:/Users/kapilbhattarai/NetBeansProjects/OzPropertyHub/src/java/products/game/Game.java</file>
+            <file>file:/Users/kapilbhattarai/NetBeansProjects/OzPropertyHub/web/login.xhtml</file>
+            <file>file:/Users/kapilbhattarai/NetBeansProjects/OzPropertyHub/src/java/order/ProductOrderEJB.java</file>
+            <file>file:/Users/kapilbhattarai/NetBeansProjects/OzPropertyHub/web/WEB-INF/glassfish-web.xml</file>
+            <file>file:/Users/kapilbhattarai/NetBeansProjects/OzPropertyHub/src/java/authentication/Filters/LoginFilter.java</file>
+            <file>file:/Users/kapilbhattarai/NetBeansProjects/OzPropertyHub/web/default.xhtml</file>
+            <file>file:/Users/kapilbhattarai/NetBeansProjects/OzPropertyHub/web/WEB-INF/web.xml</file>
+            <file>file:/Users/kapilbhattarai/NetBeansProjects/OzPropertyHub/web/index.xhtml</file>
+            <file>file:/Users/kapilbhattarai/NetBeansProjects/OzPropertyHub/src/java/authentication/Beans/AutenticationBean.java</file>
+            <file>file:/Users/kapilbhattarai/NetBeansProjects/OzPropertyHub/src/java/products/movie/Movie.java</file>
+            <file>file:/Users/kapilbhattarai/NetBeansProjects/OzPropertyHub/src/java/order/ProductOrderController.java</file>
+            <file>file:/Users/kapilbhattarai/NetBeansProjects/OzPropertyHub/web/resources/store/style.css</file>
+            <file>file:/Users/kapilbhattarai/NetBeansProjects/OzPropertyHub/src/java/customer/CustomerController.java</file>
+        </group>
+    </open-files>
+</project-private>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <ui:composition template="layout.xhtml">
+
+        <ui:define name="title">eBusiness</ui:define>
+        <ui:define name="heading">Search Game </ui:define>
+        <ui:define name="content">
+
+            <h:form>
+                <h:panelGrid columns="3">
+                    <h:outputLabel value="Title: "/>
+                    <h:inputText value="#{gameBean.searchQuery}" required="true" requiredMessage="Please enter a game Name!" id="searchQuery" />
+                    <h:message errorStyle="color:red" for="searchQuery" />
+
+                    <h:commandButton value="Search" action="#{gameBean.searchGame()}" />
+
+                </h:panelGrid>
+            </h:form>
+        </ui:define>
+    </ui:composition> 
+</html>

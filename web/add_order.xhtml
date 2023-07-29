@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:m="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <ui:composition template="layout.xhtml">
+
+       <ui:define name="title">Movies and Games</ui:define>
+        <ui:define name="heading">New Order </ui:define>
+        <ui:define name="content">
+
+            <h:form id="orderForm">
+
+                <div class="row">
+                    <div class="col-25">
+                        <label for="title">Customer: </label>
+                    </div>
+                    <div class="col-75">
+
+                        <div class="select">
+                            <h:selectOneMenu id="selectedCustomer" value="#{orderBean.selectedCustomer}">
+                                <m:selectItems value="#{orderBean.getCustomerList()}" var="customer" itemLabel="#{customer.name}" itemValue="#{customer.id}" />
+                            </h:selectOneMenu>
+                           
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-25">
+                        <label for="title">Item: </label>
+                    </div>
+                    <div class="col-75">
+
+                        <div class="select">
+                            <h:selectOneMenu id="itemId" value="#{orderBean.itemId}">
+                                <m:selectItems value="#{orderBean.getProductsList()}" var="product" itemLabel="#{product.title} - #{product.price}" itemValue="#{product.id}" />
+                            </h:selectOneMenu>
+                           
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-25">
+                        <label for="description">Quantity: </label>
+                    </div>
+                    <div class="col-75">
+                        <h:inputText id="quantity" value="#{orderBean.quantity}" required="true" />
+                    </div>
+                </div> 
+                
+                <p>
+                    <h:commandButton value="Place order" action="#{orderBean.addOrder()}">
+                    </h:commandButton>
+                </p>
+            </h:form>
+        </ui:define>
+        
+         <ui:define name="footer">
+            <a href="list_order.faces">List orders</a> | <a href="default.faces">HomePage</a>
+        </ui:define>
+        
+    </ui:composition> 
+</html>
