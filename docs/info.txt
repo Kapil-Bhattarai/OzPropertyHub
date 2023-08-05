@@ -1,1 +1,1 @@
-This directory will contain documentation files and images.
+This directory will contain documentation files and images 1.
