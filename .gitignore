@@ -17,7 +17,7 @@
 *.zip
 *.tar.gz
 *.rar
-
+*.DS_store
 .settings
 .classpath
 .project
