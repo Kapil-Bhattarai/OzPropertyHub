@@ -16,6 +16,8 @@ import jakarta.ejb.EJB;
 import order.ProductOrder;
 import order.ProductOrderEJB;
 
+
+
 @ManagedBean(name = "customerBean")
 @SessionScoped
 public class CustomerController implements Serializable {
