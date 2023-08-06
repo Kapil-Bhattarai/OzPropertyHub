@@ -63,8 +63,8 @@
                                 <li><h:outputLink value="contact.faces">Contact</h:outputLink><br/></li>
                                  <li><h:outputLink value="buysalerent.faces">BuySell</h:outputLink><br/></li>
                                 <li><h:outputLink value="property-detail.faces">Property Detail</h:outputLink><br/></li>
-                                <li><h:outputLink value="join.faces">Login</h:outputLink><br/></li>
-                                <li><h:outputLink value="signup.faces">Sign up</h:outputLink><br/></li>
+                                <li><h:outputLink value="join.faces" rendered="#{userBean.id == null}" >Login</h:outputLink><br/></li>
+                                <li><h:outputLink value="signup.faces" rendered="#{userBean.id == null}">Sign up</h:outputLink><br/></li>
 
                             </ul>
                         </div>
@@ -90,12 +90,14 @@
                 </div>-->
                 <!-- #Header Starts -->
             </div>
-            <h:messages globalOnly="true" id="messages" showDetail="false"
+<!--            <h:messages globalOnly="true" id="messages" showDetail="false"
                         errorClass="msg_error"
+                        errorStyle="color:red"
                         infoClass="msg_info"
                         fatalClass="msg_error"
                         warnClass="msg_warn"
-                        />
+                         layout="table"
+                        />-->
             <ui:insert name="content">
 
             </ui:insert>

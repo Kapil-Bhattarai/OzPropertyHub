@@ -11,11 +11,16 @@ import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import static jakarta.persistence.GenerationType.IDENTITY;
 import jakarta.persistence.Id;
+import jakarta.persistence.NamedQueries;
+import jakarta.persistence.NamedQuery;
 import jakarta.persistence.Table;
 import oz.UserType;
 
 @Entity
 @Table(name = "OZ_USER")
+@NamedQueries( {
+    @NamedQuery(name = "UserEntity.findByEmail", query = "SELECT u FROM UserEntity u WHERE u.email = :email")
+})
 public class UserEntity implements Serializable {
 
     @Id
@@ -23,16 +28,15 @@ public class UserEntity implements Serializable {
     @Column(name = "id", nullable = false)
     private Integer id;
     
-    @Column(name = "firstname", nullable = false)
+    @Column(name = "firstName", nullable = false)
     private String firstname;
     
     @Column(name = "password", nullable = false)
     private String password;
      
-    @Column(name = "lastname", nullable = false)
+    @Column(name = "lastName", nullable = false)
     private String lastname;
-     
-    
+       
     @Column(name = "email", nullable = false, length = 128)
     private String email;
     
@@ -147,6 +151,5 @@ public class UserEntity implements Serializable {
         this.since = since;
         this.type = type;
     }
-    
-    
+     
 }
