@@ -19,7 +19,8 @@ import oz.UserType;
 @Entity
 @Table(name = "OZ_USER")
 @NamedQueries( {
-    @NamedQuery(name = "UserEntity.findByEmail", query = "SELECT u FROM UserEntity u WHERE u.email = :email")
+    @NamedQuery(name = "UserEntity.findByEmail", query = "SELECT u FROM UserEntity u WHERE u.email = :email"),
+    @NamedQuery(name = "UserEntity.findByEmailAndPassword", query = "SELECT u FROM UserEntity u WHERE u.email = :email AND u.password = :password")
 })
 public class UserEntity implements Serializable {
 

@@ -44,9 +44,44 @@ public class UserController {
         ozUser = new UserEntity();
     }
 
+    public String loginUser() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        UserEntity user = userEJB.getUserbyEmailAndPassword(email, HashConvert(password));
+        if (user == null) {
+            // not registered before.
+            Util.showMessage(context, FacesMessage.SEVERITY_ERROR, "User details not found!. Please enter correct details.", null);
+            return "";
+        } else {
+            // registered user
+            if (!user.getIsLive()) {
+                // request not accepeted by admin. Show error message
+                Util.showMessage(context, FacesMessage.SEVERITY_ERROR, "Your request is still pending.", null);
+                return null;
+            } else {
+                UserType type = user.getType();
+                if (type == null) {
+                    return "";
+                } else {
+                    
+                    user = userEJB.getUserbyEmail(email);
+                   setUserData(user);          
+                    
+                    return switch (type) {
+                        case ADMIN ->
+                            "admin_dashboard.faces";
+                        case AGENT ->
+                            "agent_dashboard.faces";
+                        default ->
+                            "user_dashboard.faces";
+                    };
+                }
+            }
+        }
+    }
+
     public String registerUser() {
         FacesContext context = FacesContext.getCurrentInstance();
-        UserEntity user = getUserbyEmail();
+        UserEntity user = userEJB.getUserbyEmail(email);
         System.out.println("userValue " + user);
         if (user == null) {
             if (!password.equals(confirmPassword)) {
@@ -88,6 +123,19 @@ public class UserController {
 
     }
 
+    private void setUserData(UserEntity user) {
+        email = user.getEmail();
+        password = user.getPassword();
+        firstName = user.getFirstname();
+        lastName = user.getLastname();
+        phone = user.getPhone();
+        id = user.getId();
+        since = user.getSince();
+        type = user.getType();
+        bio = user.getBio();
+        isLive = user.getIsLive();
+    }
+    
     private void resetUserData() {
         id = null;
         firstName = null;
@@ -125,19 +173,6 @@ public class UserController {
             return sb.toString();
         } catch (NoSuchAlgorithmException e) {
             throw new UnsupportedOperationException(e);
-        }
-    }
-    //Retrieve a user by email address
-
-    private UserEntity getUserbyEmail() {
-        System.out.println("Email " + email);
-        try {
-            return em.createNamedQuery("UserEntity.findByEmail", UserEntity.class).
-                    setParameter("email", email).getResultList().get(0);
-
-        } catch (Exception e) {
-            System.out.println("exception value  " + e.getMessage());
-            return null;
         }
     }
 
