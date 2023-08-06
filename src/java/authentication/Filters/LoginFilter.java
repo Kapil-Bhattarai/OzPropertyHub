@@ -25,7 +25,7 @@ public class LoginFilter implements Filter {
        //Retrieve the authtication bean
        AutenticationBean session = (AutenticationBean) req.getSession().getAttribute("authBean");
        //Any after login accessible pages should be listed here
-       String[] afterLog = {"logout.faces", "default.faces"};
+       String[] afterLog = {"logout.faces", "default.faces", "admin_dashboard.faces", "agent_dashboard.faces", "user_dashboard.faces"};
        String url=req.getRequestURI();
        if (session==null || !session.isLogged()) {
            boolean risk=false;
@@ -36,7 +36,7 @@ public class LoginFilter implements Filter {
                }
            }
            if (risk) {
-               resp.sendRedirect(req.getServletContext().getContextPath()+"/login.faces");
+               resp.sendRedirect(req.getServletContext().getContextPath()+"/join.faces");
            } 
            else {
                chain.doFilter(request, response);
@@ -56,6 +56,7 @@ public class LoginFilter implements Filter {
            }
        }
     }
+    
     @Override
     public void destroy() {  }
     

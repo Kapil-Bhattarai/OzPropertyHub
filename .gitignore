@@ -22,7 +22,7 @@
 .classpath
 .project
 .metadata
-
+**/lib/received-emails/
 # IntelliJ Idea project files
 .idea
 *.iml

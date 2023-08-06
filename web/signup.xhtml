@@ -18,22 +18,53 @@
             </div>-->
             <!-- banner -->
 
-
             <div class="container">
+                
                 <div class="spacer">
                     <div class="row register">
                         <div class="col-lg-6 col-lg-offset-3 col-sm-6 col-sm-offset-3 col-xs-12 ">
 
+                            <h:messages globalOnly="true" showDetail="false"
+                                errorClass="msg_error"
+                            
+                                infoClass="msg_info"
+                                fatalClass="msg_error"
+                                warnClass="msg_warn"
+                                 layout="table"
+                                errorStyle="color:red"
+                                />
+                            <h:form>
 
-                            <input type="text" class="form-control" placeholder="Enter First Name" name="form_first_name"/>
-                            <input type="text" class="form-control" placeholder="Enter Last Name" name="form_last_name"/>
-                            <input type="email" class="form-control" placeholder="Enter Email" name="form_email"/>
-                            <input type="password" class="form-control" placeholder="Password" name="form_password"/>
-                            <input type="password" class="form-control" placeholder="Confirm Password" name="form_confirm_password"/>
-                            <input type="checkbox" style="width: 30px; height: 30px;" name="form_agent_register" id="agent_register" placeholder="Enter Email"/>
-                            <label for="form_agent_register" style="height: 30px; position: relative; bottom: 10px;"> Register as an Agent</label>
-                            <button type="submit" class="btn btn-success" name="Submit">Register</button>
+                                <h:outputLabel value="First Name"/>
+                                <h:inputText  class="form-control"  value="#{userBean.firstName}" required="true" requiredMessage="Please enter first name!" id="firstName" />
+                                <h:messages errorStyle="color:red" for="firstName" layout="table"/>
+                                    
+                                <h:outputLabel value="Last Name"/>
+                                <h:inputText  class="form-control"  value="#{userBean.lastName}" required="true" requiredMessage="Please enter last name!" id="lastName" />
+                                <h:messages errorStyle="color:red" for="lastName"  layout="table"/>                               
+                                
+                                <h:outputLabel value="Phone"/>
+                                <h:inputText  class="form-control"  value="#{userBean.phone}" required="true" requiredMessage="Please enter your phone" id="phone" />
+                                <h:messages errorStyle="color:red" for="phone" layout="table" />
+                                
+                                <h:outputLabel value="Email"/>
+                                <h:inputText  class="form-control"  value="#{userBean.email}" required="true" requiredMessage="Please enter email" id="email" />
+                                <h:messages errorStyle="color:red" for="email" layout="table" />
+                                                              
+                                <h:outputLabel value="Password"/>
+                                <h:inputText  class="form-control"  value="#{userBean.password}" required="true" requiredMessage="Please enter Password" id="password" />
+                                <h:messages errorStyle="color:red" for="password" layout="table" />
+                                                          
+                                <h:outputLabel value="Confirm Password"/>
+                                <h:inputText  class="form-control"  value="#{userBean.confirmPassword}" required="true" requiredMessage="Password doesn't match." id="confirmPassword" />
+                                <h:messages errorStyle="color:red" for="confirmPassword" layout="table" />
+                                                              
+                                <h:outputLabel style="height: 30px; position: relative; bottom: 10px;" value="Register as Agent ?"/>
+                                <h:selectBooleanCheckbox  style="width: 30px; height: 30px; margin-left: 20px;" value="#{userBean.isLive}" id="agent_register"/>
 
+                             <h:commandButton value="Submit"  class="btn btn-success" action="#{userBean.registerUser}" />
+                                
+                               </h:form>
                         </div>
 
                     </div>
