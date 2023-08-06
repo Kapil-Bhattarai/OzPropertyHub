@@ -234,3 +234,8 @@ select {
     padding: 12px;
 }
 
+input[type = checkbox] {
+    width: 30px;
+    height: 30px;
+}
+
