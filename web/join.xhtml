@@ -10,33 +10,43 @@
 
         <ui:define name="content">
             <!-- banner -->
-<!--<div class="inside-banner">
-  <div class="container"> 
-    <span class="pull-right"><a href="index.faces">Home</a> / Login</span>
-    <h2>Login</h2>
-</div>
-</div>-->
-<!-- banner -->
+            <!--<div class="inside-banner">
+              <div class="container"> 
+                <span class="pull-right"><a href="index.faces">Home</a> / Login</span>
+                <h2>Login</h2>
+            </div>
+            </div>-->
+            <!-- banner -->
 
-<div class="container">
-<div class="spacer">
-<div class="row register">
-  <div class="col-lg-6 col-lg-offset-3 col-sm-6 col-sm-offset-3 col-xs-12 ">
+            <div class="container">
+                <div class="spacer">
+                    <div class="row register">
+                        <div class="col-lg-6 col-lg-offset-3 col-sm-6 col-sm-offset-3 col-xs-12 ">
 
+                            <h:messages globalOnly="true" showDetail="false"
+                                        errorClass="msg_error"
+                                        infoClass="msg_info"
+                                        fatalClass="msg_error"
+                                        warnClass="msg_warn"
+                                        layout="table"
+                                        errorStyle="color:red"
+                                        />
+                            <h:form>
+                                <h:outputLabel value="Email"/>
+                                <h:inputText  value="#{userBean.email}" class="form-control" id="email" />
+                                <h:messages errorStyle="color:red" for="email" layout="table" />
 
-               
-                <input type="text" class="form-control" placeholder="Enter Email" name="form_email"/>
-                <input type="password" class="form-control" placeholder="Password" name="form_phone"/>
-      <button type="submit" class="btn btn-success" name="Submit">Login</button>
-          
+                                <h:outputLabel value="Password"/>
+                                <h:inputText  value="#{userBean.password}" class="form-control" id="password"/>                  
+                                <h:messages errorStyle="color:red" for="password" layout="table" />
 
+                                <h:commandButton value="Login" class="btn btn-success" action="#{userBean.loginUser}" />
+                            </h:form>
+                        </div>
 
-                
-        </div>
-  
-</div>
-</div>
-</div>   
+                    </div>
+                </div>
+            </div>   
         </ui:define>
     </ui:composition> 
 </html>
