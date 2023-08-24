@@ -153,7 +153,6 @@ public class UserController {
     }
     
     public String resetUserData() {
-        System.out.println("Reset User Data");
         id = null;
         firstName = null;
         lastName = null;
