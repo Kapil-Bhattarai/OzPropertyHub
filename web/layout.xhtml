@@ -2,7 +2,8 @@
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:ui="http://java.sun.com/jsf/facelets">
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title><ui:insert name="title">Application Title</ui:insert></title>
 
@@ -51,23 +52,35 @@
 
                         </div>
 
+                          <h:outputText value="#{userBean}"/>
+                          
+                          <h:form>
                         <!-- Nav Starts -->
                         <div class="navbar-collapse  collapse">
                              <a href="index.faces"><img src="resources/images/logo.png" alt="Realestate"/></a>
                             <ul class="nav navbar-nav navbar-right" style="margin-top: 15px;">
 
-                                <li><h:outputLink value="index.faces">Home</h:outputLink><br/></li>
-                                <li><h:outputLink value="agents.faces">Agents</h:outputLink><br/></li>
-                                <li><h:outputLink value="blog.faces">Blog</h:outputLink><br/></li>
-                                <li><h:outputLink value="blogdetail.faces">Blog Detail</h:outputLink><br/></li>
-                                <li><h:outputLink value="contact.faces">Contact</h:outputLink><br/></li>
-                                 <li><h:outputLink value="buysalerent.faces">BuySell</h:outputLink><br/></li>
-                                <li><h:outputLink value="property-detail.faces">Property Detail</h:outputLink><br/></li>
+                                <li><h:outputLink value="index.faces" rendered="#{userBean.id == null}">Home</h:outputLink><br/></li>
+                                <li><h:outputLink value="agents.faces" rendered="#{userBean.id == null}">Agents</h:outputLink><br/></li>
+                                <li><h:outputLink value="blog.faces" rendered="#{userBean.id == null}">Blog</h:outputLink><br/></li>
+                                <li><h:outputLink value="blogdetail.faces" rendered="#{userBean.id == null}">Blog Detail</h:outputLink><br/></li>
+                                <li><h:outputLink value="contact.faces" rendered="#{userBean.id == null}">Contact</h:outputLink><br/></li>
+                                <li><h:outputLink value="buysalerent.faces" rendered="#{userBean.id == null}">Buy Sell</h:outputLink><br/></li>
+                                <li><h:outputLink value="property-detail.faces" rendered="#{userBean.id == null}">Property Detail</h:outputLink><br/></li>
+                                
                                 <li><h:outputLink value="join.faces" rendered="#{userBean.id == null}" >Login</h:outputLink><br/></li>
                                 <li><h:outputLink value="signup.faces" rendered="#{userBean.id == null}">Sign up</h:outputLink><br/></li>
-
+                                <li><h:outputLink value="signup.faces" rendered="#{userBean.showAgentDashboard()}">Add Property</h:outputLink><br/></li>
+                                <li><h:outputLink value="signup.faces" rendered="#{userBean.showAgentDashboard()}">Manage Property</h:outputLink><br/></li>
+                                <li><h:outputLink value="signup.faces" rendered="#{userBean.showAdminDashboard()}">Add Agents</h:outputLink><br/></li>
+                                <li><h:outputLink value="signup.faces" rendered="#{userBean.showAdminDashboard()}">Manage Agents</h:outputLink><br/></li>
+                                <li><h:outputLink value="signup.faces" rendered="#{userBean.showAdminDashboard()}">Pending Requests</h:outputLink><br/></li> 
+                                <li><h:outputLink value="signup.faces" rendered="#{userBean.showUserDashboard()}">View Application</h:outputLink><br/></li>
+                                <li> <h:commandLink rendered="#{userBean.id != null}" action="#{userBean.resetUserData}" value="Sign out"> </h:commandLink><br/></li>
+                                      
                             </ul>
                         </div>
+                         </h:form>
                         <!-- #Nav Ends -->
 
                     </div>
@@ -134,13 +147,13 @@
                             <a href="#"><img src="resources/images/instagram.png" alt="instagram"/></a>
                         </div>
 
-                        <div class="col-lg-3 col-sm-3">
-                            <h4>Contact us</h4>
-                            <p><b>Bootstrap Realestate Inc.</b><br/>
-                                <span class="glyphicon glyphicon-map-marker"></span> 8290 Walk Street, Australia <br/>
-                                <span class="glyphicon glyphicon-envelope"></span> hello@bootstrapreal.com<br/>
-                                <span class="glyphicon glyphicon-earphone"></span> (123) 456-7890</p>
-                        </div>
+                       <div class="col-lg-3 col-sm-3">
+                    <h4>Contact us</h4>
+                    <p><b>OzPropertyHub Realestate Inc.</b><br/>
+                    <span class="glyphicon glyphicon-map-marker"></span>Kent street 200, Australia <br/>
+                    <span class="glyphicon glyphicon-envelope"></span> hello@ozpropertyhub.com<br/>
+                    <span class="glyphicon glyphicon-earphone"></span> (123) 456-7890</p>
+            </div>
                     </div>
                     <p class="copyright">Copyright 2023. OZPropertyHub.</p>
 
