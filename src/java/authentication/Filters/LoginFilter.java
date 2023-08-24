@@ -1,6 +1,5 @@
 package authentication.Filters;
 
-import authentication.Beans.AutenticationBean;
 import java.io.IOException;
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;
@@ -25,7 +24,7 @@ public class LoginFilter implements Filter {
        HttpServletResponse resp = (HttpServletResponse) response;
       
        UserController session = (UserController) req.getSession().getAttribute("userBean");
-        System.out.println("session value "+session);
+     
        String[] afterLog = {"logout.faces?faces-redirect=true", "default.faces?faces-redirect=true", "admin_dashboard.faces?faces-redirect=true", "agent_dashboard.faces?faces-redirect=true", "user_dashboard.faces?faces-redirect=true"};
        String url=req.getRequestURI();
        if (session==null || !session.isLoggedIn()) {
