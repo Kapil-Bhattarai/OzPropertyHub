@@ -30,6 +30,7 @@ public class UserController {
     private String email;
     private String bio;
     private String phone;
+     private String address;
     private Date since;
     private Boolean isLive = true;
 
@@ -63,10 +64,10 @@ public class UserController {
                 if (type == null) {
                     return "";
                 } else {
-                    
-                   user = userEJB.getUserbyEmail(email);
-                   setUserData(user);          
-                    
+
+                    user = userEJB.getUserbyEmail(email);
+                    setUserData(user);
+
                     return switch (type) {
                         case ADMIN ->
                             "/dashboard/admin/admin_dashboard.faces?faces-redirect=true";
@@ -79,29 +80,40 @@ public class UserController {
             }
         }
     }
-    
+
     public boolean isLoggedIn() {
-         return id != null;
+        return id != null;
     }
-     
+
     public boolean showAgentDashboard() {
         return id != null && type == UserType.AGENT;
     }
-    
+
     public boolean showAdminDashboard() {
-         return id != null && type == UserType.ADMIN;
+        return id != null && type == UserType.ADMIN;
     }
-    
+
     public boolean showUserDashboard() {
-         return id != null && type == UserType.USER;
+        return id != null && type == UserType.USER;
     }
 
     public List<UserEntity> getActiveAgents() {
-         List<UserEntity> list =  userEJB.getActiveUsersByType(UserType.AGENT);
-         System.out.println("values of agent "+list.toString());
-         return list;
+        List<UserEntity> list = userEJB.getActiveUsersByType(UserType.AGENT);
+        System.out.println("values of agent " + list.toString());
+        return list;
     }
-    
+
+    public String suspendAgent(UserEntity user) {
+        if (userEJB.suspendAgent(user) != null) {
+            System.out.println("values of agent controller");
+            return "/dashboard/admin/admin_dashboard.faces?faces-redirect=true";
+        } else {
+            System.out.println("values of agent controller else");
+            return null;
+        }
+
+    }
+
     public String registerUser() {
         FacesContext context = FacesContext.getCurrentInstance();
         UserEntity user = userEJB.getUserbyEmail(email);
@@ -118,6 +130,7 @@ public class UserController {
             user.setLastName(lastName);
             user.setPassword(HashConvert(password));
             user.setPhone(phone);
+            user.setAddress(address);
             user.setType(getUserType(isLive));
             user.setSince(new Date());
             user.setIsLive(!isLive);
@@ -125,12 +138,12 @@ public class UserController {
 
             if (userEJB.addUser(user)) {
                 id = user.getId();
-                String dashboard = "agent_pending_request.faces?faces-redirect=true";
+                String dashboard = "/dashboard/agent/agent_pending_request.faces?faces-redirect=true";
                 String body = firstName + " " + lastName + " has requested to join the site as property manager.";
                 if (isLive) {
                     Util.sendEmail("admin@gmail.com", email, "Request for Agent Registration", body);
                 } else {
-                    dashboard = "user_dashboard.faces?faces-redirect=true";
+                    dashboard = "/dashboard/user/user_dashboard.faces?faces-redirect=true";
                 }
                 return dashboard;
             } else {
@@ -157,8 +170,8 @@ public class UserController {
         bio = user.getBio();
         isLive = user.getIsLive();
     }
-    
-    public String resetUserData() {
+
+    public void resetUserData() {
         id = null;
         firstName = null;
         lastName = null;
@@ -169,8 +182,8 @@ public class UserController {
         phone = null;
         since = null;
         isLive = true;
+        address = null;
         type = UserType.USER;
-       return "index.faces?faces-redirect=true";
     }
 
     private UserType getUserType(boolean isPropertyAgent) {
@@ -296,7 +309,9 @@ public class UserController {
     }
 
     public String getFirstName() {
-         if (firstName == null || firstName.length() == 0) return firstName;  
+        if (firstName == null || firstName.length() == 0) {
+            return firstName;
+        }
         return firstName.substring(0, 1).toUpperCase() + firstName.substring(1);
     }
 
@@ -325,4 +340,21 @@ public class UserController {
         this.confirmPassword = confirmPassword;
     }
 
+    public EntityManager getEm() {
+        return em;
+    }
+
+    public void setEm(EntityManager em) {
+        this.em = em;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    
 }

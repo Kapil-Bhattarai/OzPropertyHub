@@ -16,12 +16,15 @@ import jakarta.persistence.NamedQuery;
 import jakarta.persistence.Table;
 import oz.UserType;
 
+
 @Entity
 @Table(name = "OZ_USER")
 @NamedQueries( {
     @NamedQuery(name = "UserEntity.findByEmail", query = "SELECT u FROM UserEntity u WHERE u.email = :email"),
     @NamedQuery(name = "UserEntity.findByEmailAndPassword", query = "SELECT u FROM UserEntity u WHERE u.email = :email AND u.password = :password"),
     @NamedQuery(name = "UserEntity.findActiveUserByType", query = "SELECT u FROM UserEntity u WHERE u.type = :type AND u.isLive = 1"),
+    @NamedQuery(name = "UserEntity.suspendUserById", query = "UPDATE UserEntity u SET u.isLive = 0 WHERE u.id = :id"),
+    @NamedQuery(name = "UserEntity.deleteUserById", query = "DELETE FROM UserEntity u WHERE u.id = :id")
 })
 public class UserEntity implements Serializable {
 
@@ -47,6 +50,9 @@ public class UserEntity implements Serializable {
       
     @Column(name = "phone", nullable = false, length = 12)
     private String phone;
+    
+    @Column(name = "address", nullable = false)
+    private String address;
     
     @Column(name = "since")
     @Temporal(TemporalType.TIMESTAMP)
@@ -142,8 +148,15 @@ public class UserEntity implements Serializable {
         this.lastName = lastName;
     }
 
-    
-    public UserEntity(Integer id, String firstname, String password, String lastname, String email, String bio, String phone, Date since, UserType type) {
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public UserEntity(Integer id, String firstname, String password, String lastname, String email, String bio, String phone, String address, Date since, UserType type) {
         this.id = id;
         this.firstName = firstname;
         this.password = password;
@@ -151,6 +164,7 @@ public class UserEntity implements Serializable {
         this.email = email;
         this.bio = bio;
         this.phone = phone;
+        this.address = address;
         this.since = since;
         this.type = type;
     }

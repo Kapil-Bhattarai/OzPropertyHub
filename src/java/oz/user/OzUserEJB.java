@@ -28,6 +28,21 @@ public class OzUserEJB extends OzEJB {
         }
     }
       
+    public String suspendAgent(UserEntity user) {
+        try {
+            user.setIsLive(Boolean.FALSE);
+            entityManager.merge(user);
+//             entityManager.createNamedQuery("UserEntity.suspendUserById", UserEntity.class)
+//                .setParameter("id", userId).executeUpdate();
+            System.out.println("exception value false");
+            return "success";
+                
+        } catch (Exception e) {
+            System.out.println("exception value  " + e.getMessage());
+            return null;
+        }
+    }
+     
     //Retrieve a user by email address
     public UserEntity getUserbyEmail(String email) {
         try {

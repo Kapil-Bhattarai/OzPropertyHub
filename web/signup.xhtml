@@ -39,6 +39,10 @@
                                 <h:inputText  class="form-control"  value="#{userBean.phone}" required="true" requiredMessage="Please enter your phone" id="phone" />
                                 <h:messages errorStyle="color:red" for="phone" layout="table" />
                                 
+                                <h:outputLabel value="Address"/>
+                                <h:inputText  class="form-control"  value="#{userBean.address}" required="true" requiredMessage="Please enter your address" id="address" />
+                                <h:messages errorStyle="color:red" for="address" layout="table" />
+                                
                                 <h:outputLabel value="Email"/>
                                 <h:inputText  class="form-control"  value="#{userBean.email}" required="true" requiredMessage="Please enter email" id="email" />
                                 <h:messages errorStyle="color:red" for="email" layout="table" />
