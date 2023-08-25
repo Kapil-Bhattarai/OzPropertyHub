@@ -2,7 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-       xmlns:f="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:f="http://xmlns.jcp.org/jsp/jstl/core"
       xmlns:ui="http://java.sun.com/jsf/facelets">
 
     <ui:composition template="../../layout.xhtml">
@@ -23,27 +23,27 @@
                         <th>Action</th>
                     </tr>
                 </thead>
-                 <tbody>
-              <f:forEach items="#{userBean.getActiveAgents()}" var="agent">
+                <tbody>
+                    <f:forEach items="#{userBean.getActiveAgents()}" var="agent">
                         <tr>
-                            
+
                             <td>1</td>    
-                              <td>#{agent.firstName} #{agent.lastName}</td>    
-                               <td>#{agent.email}</td>  
-                                 <td>#{agent.phone}</td>  
+                            <td>#{agent.firstName} #{agent.lastName}</td>    
+                            <td>#{agent.email}</td>  
+                            <td>#{agent.phone}</td>  
                             <td>
 
                                 <h:form>
                                     <h:commandLink>Edit</h:commandLink>
                                     <h:commandLink>Delete</h:commandLink>
-                                     
+
                                 </h:form>
                             </td>
                         </tr>
-                  
+
                     </f:forEach>
-                     </tbody>
-                </table>
+                </tbody>
+            </table>
         </ui:define>
     </ui:composition> 
 </html>

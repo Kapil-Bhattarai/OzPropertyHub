@@ -55,7 +55,7 @@
                         <h:form>
                             <!-- Nav Starts -->
                             <div class="navbar-collapse  collapse">
-                                <a href="index.faces"><img src="#{request.contextPath}/resources/images/logo.png" alt="Realestate"/></a>
+                                <a href="#{request.contextPath}/index.faces"><img src="#{request.contextPath}/resources/images/logo.png" alt="Realestate"/></a>
                                 <ul class="nav navbar-nav navbar-right" style="margin-top: 15px;">
 
                                     <li><h:outputLink value="#{request.contextPath}/index.faces" rendered="#{userBean.id == null}">Home</h:outputLink><br/></li>
@@ -71,7 +71,7 @@
                                     <li><h:outputLink value="#{request.contextPath}/signup.faces" rendered="#{userBean.showAgentDashboard()}">Add Property</h:outputLink><br/></li>
                                     <li><h:outputLink value="#{request.contextPath}/signup.faces" rendered="#{userBean.showAgentDashboard()}">Manage Property</h:outputLink><br/></li>
 <!--                                    <li><h:outputLink value="#{request.contextPath}/signup.faces" rendered="#{userBean.showAdminDashboard()}">Add Agents</h:outputLink><br/></li>-->
-                                    <li><h:outputLink value="#{request.contextPath}/signup.faces" rendered="#{userBean.showAdminDashboard()}">Manage Agents</h:outputLink><br/></li>
+                                    <li><h:outputLink value="#{request.contextPath}/dashboard/admin/admin_dashboard.faces" rendered="#{userBean.showAdminDashboard()}">Manage Agents</h:outputLink><br/></li>
                                     <li><h:outputLink value="#{request.contextPath}/signup.faces" rendered="#{userBean.showAdminDashboard()}">Pending Requests</h:outputLink><br/></li> 
                                     <li><h:outputLink value="#{request.contextPath}/signup.faces" rendered="#{userBean.showUserDashboard()}">View Application</h:outputLink><br/></li>
                                     <li> <h:commandLink rendered="#{userBean.id != null}" action="#{userBean.resetUserData}" value="Sign out"> </h:commandLink><br/></li>
