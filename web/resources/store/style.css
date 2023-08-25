@@ -219,6 +219,9 @@ input:checked + .slider:before {
     margin-inline-start: 0px;
     margin-inline-end: 0px;
     font-weight: bold;
+    width: 96%;
+    margin: 0 auto;
+    line-height: 2;
 }
 
 .customHeading2 {

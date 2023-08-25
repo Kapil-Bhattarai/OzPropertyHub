@@ -8,15 +8,14 @@
     <ui:composition template="../../layout.xhtml">
 
         <ui:define name="title">Oz Property Hub</ui:define>
-
+   
+    
         <ui:define name="content">
-
-            <h4>Admin Dashboard</h4>
-              <!--<h:outputText value="#{userBean.getActiveAgents()}"/>-->
+              <h:outputText value="Welcome #{userBean.firstName}" styleClass="customHeading1"/>
             <table id="tableContent">
+                
                 <thead>
                     <tr>
-                        <th>#</th>
                         <th>Name</th>
                         <th>Email</th>
                         <th>Phone</th>
@@ -25,22 +24,45 @@
                 </thead>
                 <tbody>
                     <f:forEach items="#{userBean.getActiveAgents()}" var="agent">
+                        <tr>    
+                            <td>#{agent.firstName} #{agent.lastName}</td>    
+                            <td>#{agent.email}</td>  
+                            <td>#{agent.phone}</td>  
+                            <td>
+                                <h:form>
+                                    <h:commandButton value="Edit" action="#" />
+                                    <h:commandButton value="Delete" action="#" />
+                                </h:form>
+                            </td>
+                        </tr>
+                        
                         <tr>
-
-                            <td>1</td>    
+  
                             <td>#{agent.firstName} #{agent.lastName}</td>    
                             <td>#{agent.email}</td>  
                             <td>#{agent.phone}</td>  
                             <td>
 
                                 <h:form>
-                                    <h:commandLink>Edit</h:commandLink>
-                                    <h:commandLink>Delete</h:commandLink>
-
+                                    <h:commandButton value="Edit" action="#" />
+                                    <h:commandButton value="Delete" action="#" />
                                 </h:form>
                             </td>
                         </tr>
+                                       
+                        <tr>
+     
+                            <td>#{agent.firstName} #{agent.lastName}</td>    
+                            <td>#{agent.email}</td>  
+                            <td>#{agent.phone}</td>  
+                            <td>
 
+                                <h:form>
+                                    <h:commandButton value="Edit" action="#" />
+                                    <h:commandButton value="Delete" action="#" />
+                                </h:form>
+                            </td>
+                        </tr>
                     </f:forEach>
                 </tbody>
             </table>

@@ -126,7 +126,8 @@ public class UserEntity implements Serializable {
     }
 
     public String getFirstName() {
-        return firstName;
+        if (firstName == null || firstName.length() == 0) return firstName;  
+        return firstName.substring(0, 1).toUpperCase() + firstName.substring(1);
     }
 
     public void setFirstName(String firstName) {
