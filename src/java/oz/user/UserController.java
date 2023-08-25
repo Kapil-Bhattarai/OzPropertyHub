@@ -68,11 +68,11 @@ public class UserController {
                     
                     return switch (type) {
                         case ADMIN ->
-                            "admin_dashboard.faces?faces-redirect=true";
+                            "/dashboard/admin/admin_dashboard.faces?faces-redirect=true";
                         case AGENT ->
-                            "agent_dashboard.faces?faces-redirect=true";
+                            "/dashboard/agent/agent_dashboard.faces?faces-redirect=true";
                         default ->
-                            "user_dashboard.faces?faces-redirect=true";
+                            "/dashboard/user/user_dashboard.faces?faces-redirect=true";
                     };
                 }
             }
