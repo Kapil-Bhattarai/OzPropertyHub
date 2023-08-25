@@ -2,6 +2,9 @@ package oz.user;
 
 import oz.OzEJB;
 import jakarta.ejb.Stateless;
+import java.util.ArrayList;
+import java.util.List;
+import oz.UserType;
 
 @Stateless
 public class OzUserEJB extends OzEJB {
@@ -15,6 +18,16 @@ public class OzUserEJB extends OzEJB {
         }
     }
 
+    public List<UserEntity> getActiveUsersByType(UserType type) {
+        try {
+            return entityManager.createNamedQuery("UserEntity.findActiveUserByType", UserEntity.class)
+                .setParameter("type", type).getResultList();
+        } catch (Exception e) {
+            System.out.println("exception value  " + e.getMessage());
+            return new ArrayList<>();
+        }
+    }
+      
     //Retrieve a user by email address
     public UserEntity getUserbyEmail(String email) {
         try {

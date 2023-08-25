@@ -11,6 +11,7 @@ import jakarta.faces.context.FacesContext;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Date;
+import java.util.List;
 import oz.UserType;
 import oz.Util;
 
@@ -95,10 +96,15 @@ public class UserController {
          return id != null && type == UserType.USER;
     }
 
+    public List<UserEntity> getActiveAgents() {
+         List<UserEntity> list =  userEJB.getActiveUsersByType(UserType.AGENT);
+         System.out.println("values of agent "+list.toString());
+         return list;
+    }
+    
     public String registerUser() {
         FacesContext context = FacesContext.getCurrentInstance();
         UserEntity user = userEJB.getUserbyEmail(email);
-        System.out.println("userValue " + user);
         if (user == null) {
             if (!password.equals(confirmPassword)) {
                 FacesMessage message = new FacesMessage("");
@@ -108,8 +114,8 @@ public class UserController {
             }
 
             user = new UserEntity();
-            user.setFirstname(firstName);
-            user.setLastname(lastName);
+            user.setFirstName(firstName);
+            user.setLastName(lastName);
             user.setPassword(HashConvert(password));
             user.setPhone(phone);
             user.setType(getUserType(isLive));
@@ -142,8 +148,8 @@ public class UserController {
     private void setUserData(UserEntity user) {
         email = user.getEmail();
         password = user.getPassword();
-        firstName = user.getFirstname();
-        lastName = user.getLastname();
+        firstName = user.getFirstName();
+        lastName = user.getLastName();
         phone = user.getPhone();
         id = user.getId();
         since = user.getSince();
