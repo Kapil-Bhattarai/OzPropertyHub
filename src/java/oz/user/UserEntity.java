@@ -22,7 +22,7 @@ import oz.UserType;
 @NamedQueries( {
     @NamedQuery(name = "UserEntity.findByEmail", query = "SELECT u FROM UserEntity u WHERE u.email = :email"),
     @NamedQuery(name = "UserEntity.findByEmailAndPassword", query = "SELECT u FROM UserEntity u WHERE u.email = :email AND u.password = :password"),
-    @NamedQuery(name = "UserEntity.findActiveUserByType", query = "SELECT u FROM UserEntity u WHERE u.type = :type AND u.isLive = 1"),
+    @NamedQuery(name = "UserEntity.findActiveUserByType", query = "SELECT u FROM UserEntity u WHERE u.type = :type AND u.isLive = :isLive"),
     @NamedQuery(name = "UserEntity.suspendUserById", query = "UPDATE UserEntity u SET u.isLive = 0 WHERE u.id = :id"),
     @NamedQuery(name = "UserEntity.deleteUserById", query = "DELETE FROM UserEntity u WHERE u.id = :id")
 })

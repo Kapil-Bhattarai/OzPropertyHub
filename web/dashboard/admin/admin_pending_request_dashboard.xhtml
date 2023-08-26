@@ -24,7 +24,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <f:forEach items="#{userBean.getActiveUsersByType(true)}" var="agent">       
+                    <f:forEach items="#{userBean.getActiveUsersByType(false)}" var="agent">       
                         <tr>
                             <td>#{agent.firstName} #{agent.lastName}</td>    
                             <td>#{agent.email}</td>  
@@ -32,7 +32,7 @@
                              <td>#{agent.address}</td> 
                             <td>
                                 <h:form>
-                                    <h:commandButton value="Suspend" action="#{userBean.suspendAgent(agent)}" />
+                                    <h:commandButton value="Active" action="#{userBean.activateAgent(agent)}" />
                                     <h:commandButton value="Delete" action="#{userBean.deleteAgent(agent)}" />
                                 </h:form>
                             </td>

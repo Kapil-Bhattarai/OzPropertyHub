@@ -18,10 +18,11 @@ public class OzUserEJB extends OzEJB {
         }
     }
 
-    public List<UserEntity> getActiveUsersByType(UserType type) {
+    public List<UserEntity> getActiveUsersByType(UserType type, Boolean isActive) {
         try {
             return entityManager.createNamedQuery("UserEntity.findActiveUserByType", UserEntity.class)
-                .setParameter("type", type).getResultList();
+                .setParameter("type", type)
+                .setParameter("isLive", isActive).getResultList();
         } catch (Exception e) {
             System.out.println("exception value  " + e.getMessage());
             return new ArrayList<>();
@@ -39,6 +40,17 @@ public class OzUserEJB extends OzEJB {
         }
     }
     
+     public String activateAgent(UserEntity user) {
+        try {
+            user.setIsLive(Boolean.TRUE);
+            entityManager.merge(user);
+            return "success";
+        } catch (Exception e) {
+            System.out.println("exception value  " + e.getMessage());
+            return null;
+        }
+    }
+     
     public String deleteAgent(UserEntity user) {
         
         try {

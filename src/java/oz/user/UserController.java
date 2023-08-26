@@ -97,8 +97,8 @@ public class UserController {
         return id != null && type == UserType.USER;
     }
 
-    public List<UserEntity> getActiveAgents() {
-        List<UserEntity> list = userEJB.getActiveUsersByType(UserType.AGENT);
+    public List<UserEntity> getActiveUsersByType(Boolean isActive) {
+        List<UserEntity> list = userEJB.getActiveUsersByType(UserType.AGENT, isActive);
         System.out.println("values of agent " + list.toString());
         return list;
     }
@@ -109,8 +109,16 @@ public class UserController {
         } else {
             return null;
         }
-
     }
+    
+     public String activateAgent(UserEntity user) {
+        if (userEJB.activateAgent(user) != null) {
+            return "/dashboard/admin/admin_pending_request_dashboard.faces?faces-redirect=true";
+        } else {
+            return null;
+        }
+    }
+    
      public String deleteAgent(UserEntity user) {
         if (userEJB.deleteAgent(user) != null) {
             return "/dashboard/admin/admin_dashboard.faces?faces-redirect=true";
