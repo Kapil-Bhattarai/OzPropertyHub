@@ -184,7 +184,7 @@ table span {
 }
 
 #tableContent tr:nth-child(even){
-    background-color: #05aa6d29;
+    background-color: #337bd24d;
 }
 
 #tableContent tr:hover {
@@ -195,7 +195,7 @@ table span {
     padding-top: 12px;
     padding-bottom: 12px;
     text-align: center;
-    background-color: #04AA6D;
+    background-color: #337bd2;
     color: white;
 
 }
