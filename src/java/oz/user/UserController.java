@@ -63,20 +63,36 @@ public class UserController {
                     return "";
                 } else {
                     
-                    user = userEJB.getUserbyEmail(email);
+                   user = userEJB.getUserbyEmail(email);
                    setUserData(user);          
                     
                     return switch (type) {
                         case ADMIN ->
-                            "admin_dashboard.faces";
+                            "admin_dashboard.faces?faces-redirect=true";
                         case AGENT ->
-                            "agent_dashboard.faces";
+                            "agent_dashboard.faces?faces-redirect=true";
                         default ->
-                            "user_dashboard.faces";
+                            "user_dashboard.faces?faces-redirect=true";
                     };
                 }
             }
         }
+    }
+    
+    public boolean isLoggedIn() {
+         return id != null;
+    }
+     
+    public boolean showAgentDashboard() {
+        return id != null && type == UserType.AGENT;
+    }
+    
+    public boolean showAdminDashboard() {
+         return id != null && type == UserType.ADMIN;
+    }
+    
+    public boolean showUserDashboard() {
+         return id != null && type == UserType.USER;
     }
 
     public String registerUser() {
@@ -103,12 +119,12 @@ public class UserController {
 
             if (userEJB.addUser(user)) {
                 id = user.getId();
-                String dashboard = "agent_pending_request.faces";
+                String dashboard = "agent_pending_request.faces?faces-redirect=true";
                 String body = firstName + " " + lastName + " has requested to join the site as property manager.";
                 if (isLive) {
                     Util.sendEmail("admin@gmail.com", email, "Request for Agent Registration", body);
                 } else {
-                    dashboard = "user_dashboard.faces";
+                    dashboard = "user_dashboard.faces?faces-redirect=true";
                 }
                 return dashboard;
             } else {
@@ -136,7 +152,7 @@ public class UserController {
         isLive = user.getIsLive();
     }
     
-    private void resetUserData() {
+    public String resetUserData() {
         id = null;
         firstName = null;
         lastName = null;
@@ -148,6 +164,7 @@ public class UserController {
         since = null;
         isLive = true;
         type = UserType.USER;
+       return "index.faces?faces-redirect=true";
     }
 
     private UserType getUserType(boolean isPropertyAgent) {
