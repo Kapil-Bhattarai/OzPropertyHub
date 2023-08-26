@@ -33,7 +33,7 @@
     <body>
 
         <div id="content">
-
+            <h:outputText value="#{userBean}"></h:outputText>
 
             <!-- Header Starts -->
             <div class="navbar-wrapper">
@@ -55,26 +55,26 @@
                         <h:form>
                             <!-- Nav Starts -->
                             <div class="navbar-collapse  collapse">
-                                <a href="index.faces"><img src="resources/images/logo.png" alt="Realestate"/></a>
+                                <a href="#{request.contextPath}/index.faces"><img src="#{request.contextPath}/resources/images/logo.png" alt="Realestate"/></a>
                                 <ul class="nav navbar-nav navbar-right" style="margin-top: 15px;">
 
-                                    <li><h:outputLink value="index.faces" rendered="#{userBean.id == null}">Home</h:outputLink><br/></li>
-                                    <li><h:outputLink value="agents.faces" rendered="#{userBean.id == null}">Agents</h:outputLink><br/></li>
-                                    <li><h:outputLink value="blog.faces" rendered="#{userBean.id == null}">Blog</h:outputLink><br/></li>
-                                    <li><h:outputLink value="blogdetail.faces" rendered="#{userBean.id == null}">Blog Detail</h:outputLink><br/></li>
-                                    <li><h:outputLink value="contact.faces" rendered="#{userBean.id == null}">Contact</h:outputLink><br/></li>
-                                    <li><h:outputLink value="buysalerent.faces" rendered="#{userBean.id == null}">Buy Sell</h:outputLink><br/></li>
-                                    <li><h:outputLink value="property-detail.faces" rendered="#{userBean.id == null}">Property Detail</h:outputLink><br/></li>
+                                    <li><h:outputLink value="#{request.contextPath}/index.faces" rendered="#{userBean.id == null}">Home</h:outputLink><br/></li>
+                                    <li><h:outputLink value="#{request.contextPath}/agents.faces" rendered="#{userBean.id == null}">Agents</h:outputLink><br/></li>
+                                    <li><h:outputLink value="#{request.contextPath}/blog.faces" rendered="#{userBean.id == null}">Blog</h:outputLink><br/></li>
+                                    <li><h:outputLink value="#{request.contextPath}/blogdetail.faces" rendered="#{userBean.id == null}">Blog Detail</h:outputLink><br/></li>
+                                    <li><h:outputLink value="#{request.contextPath}/contact.faces" rendered="#{userBean.id == null}">Contact</h:outputLink><br/></li>
+                                    <li><h:outputLink value="#{request.contextPath}/buysalerent.faces" rendered="#{userBean.id == null}">Buy Sell</h:outputLink><br/></li>
+                                    <li><h:outputLink value="#{request.contextPath}/property-detail.faces" rendered="#{userBean.id == null}">Property Detail</h:outputLink><br/></li>
 
-                                    <li><h:outputLink value="join.faces" rendered="#{userBean.id == null}" >Login</h:outputLink><br/></li>
-                                    <li><h:outputLink value="signup.faces" rendered="#{userBean.id == null}">Sign up</h:outputLink><br/></li>
-                                    <li><h:outputLink value="signup.faces" rendered="#{userBean.showAgentDashboard()}">Add Property</h:outputLink><br/></li>
-                                    <li><h:outputLink value="signup.faces" rendered="#{userBean.showAgentDashboard()}">Manage Property</h:outputLink><br/></li>
-                                    <li><h:outputLink value="signup.faces" rendered="#{userBean.showAdminDashboard()}">Add Agents</h:outputLink><br/></li>
-                                    <li><h:outputLink value="signup.faces" rendered="#{userBean.showAdminDashboard()}">Manage Agents</h:outputLink><br/></li>
-                                    <li><h:outputLink value="signup.faces" rendered="#{userBean.showAdminDashboard()}">Pending Requests</h:outputLink><br/></li> 
-                                    <li><h:outputLink value="signup.faces" rendered="#{userBean.showUserDashboard()}">View Application</h:outputLink><br/></li>
-                                    <li> <h:commandLink rendered="#{userBean.id != null}" action="#{userBean.resetUserData}" value="Sign out"> </h:commandLink><br/></li>
+                                    <li><h:outputLink value="#{request.contextPath}/join.faces" rendered="#{userBean.id == null}" >Login</h:outputLink><br/></li>
+                                    <li><h:outputLink value="#{request.contextPath}/signup.faces" rendered="#{userBean.id == null}">Sign up</h:outputLink><br/></li>
+                                    <li><h:outputLink value="#{request.contextPath}/signup.faces" rendered="#{userBean.showAgentDashboard()}">Add Property</h:outputLink><br/></li>
+                                    <li><h:outputLink value="#{request.contextPath}/signup.faces" rendered="#{userBean.showAgentDashboard()}">Manage Property</h:outputLink><br/></li>
+<!--                                    <li><h:outputLink value="#{request.contextPath}/signup.faces" rendered="#{userBean.showAdminDashboard()}">Add Agents</h:outputLink><br/></li>-->
+                                    <li><h:outputLink value="#{request.contextPath}/dashboard/admin/admin_dashboard.faces" rendered="#{userBean.showAdminDashboard()}">Manage Agents</h:outputLink><br/></li>
+                                    <li><h:outputLink value="#{request.contextPath}/dashboard/admin/admin_pending_request_dashboard.faces" rendered="#{userBean.showAdminDashboard()}">Pending Requests</h:outputLink><br/></li> 
+                                    <li><h:outputLink value="#{request.contextPath}/signup.faces" rendered="#{userBean.showUserDashboard()}">View Application</h:outputLink><br/></li>
+                                    <li><h:outputLink value="#{request.contextPath}/logout.faces" rendered="#{userBean.id != null}">Sign out</h:outputLink><br/></li>
 
                                 </ul>
                             </div>
@@ -86,9 +86,9 @@
 
             </div>
             <!-- #Header Starts -->
-
-            <ui:insert name="content">
-
+           
+            <ui:insert name="content"> 
+            
             </ui:insert>
 
 
@@ -117,10 +117,10 @@
 
                         <div class="col-lg-3 col-sm-3">
                             <h4>Follow us</h4>
-                            <a href="#"><img src="resources/images/facebook.png" alt="facebook"/></a>
-                            <a href="#"><img src="resources/images/twitter.png" alt="twitter"/></a>
-                            <a href="#"><img src="resources/images/linkedin.png" alt="linkedin"/></a>
-                            <a href="#"><img src="resources/images/instagram.png" alt="instagram"/></a>
+                            <a href="#"><img src="#{request.contextPath}/resources/images/facebook.png" alt="facebook"/></a>
+                            <a href="#"><img src="#{request.contextPath}/resources/images/twitter.png" alt="twitter"/></a>
+                            <a href="#"><img src="#{request.contextPath}/resources/images/linkedin.png" alt="linkedin"/></a>
+                            <a href="#"><img src="#{request.contextPath}/resources/images/instagram.png" alt="instagram"/></a>
                         </div>
 
                         <div class="col-lg-3 col-sm-3">

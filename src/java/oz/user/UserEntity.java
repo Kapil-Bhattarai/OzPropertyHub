@@ -16,11 +16,15 @@ import jakarta.persistence.NamedQuery;
 import jakarta.persistence.Table;
 import oz.UserType;
 
+
 @Entity
 @Table(name = "OZ_USER")
 @NamedQueries( {
     @NamedQuery(name = "UserEntity.findByEmail", query = "SELECT u FROM UserEntity u WHERE u.email = :email"),
-    @NamedQuery(name = "UserEntity.findByEmailAndPassword", query = "SELECT u FROM UserEntity u WHERE u.email = :email AND u.password = :password")
+    @NamedQuery(name = "UserEntity.findByEmailAndPassword", query = "SELECT u FROM UserEntity u WHERE u.email = :email AND u.password = :password"),
+    @NamedQuery(name = "UserEntity.findActiveUserByType", query = "SELECT u FROM UserEntity u WHERE u.type = :type AND u.isLive = :isLive"),
+    @NamedQuery(name = "UserEntity.suspendUserById", query = "UPDATE UserEntity u SET u.isLive = 0 WHERE u.id = :id"),
+    @NamedQuery(name = "UserEntity.deleteUserById", query = "DELETE FROM UserEntity u WHERE u.id = :id")
 })
 public class UserEntity implements Serializable {
 
@@ -30,13 +34,13 @@ public class UserEntity implements Serializable {
     private Integer id;
     
     @Column(name = "firstName", nullable = false)
-    private String firstname;
+    private String firstName;
     
     @Column(name = "password", nullable = false)
     private String password;
      
     @Column(name = "lastName", nullable = false)
-    private String lastname;
+    private String lastName;
        
     @Column(name = "email", nullable = false, length = 128)
     private String email;
@@ -46,6 +50,9 @@ public class UserEntity implements Serializable {
       
     @Column(name = "phone", nullable = false, length = 12)
     private String phone;
+    
+    @Column(name = "address", nullable = false)
+    private String address;
     
     @Column(name = "since")
     @Temporal(TemporalType.TIMESTAMP)
@@ -68,14 +75,6 @@ public class UserEntity implements Serializable {
         this.id = id;
     }
 
-    public String getFirstname() {
-        return firstname;
-    }
-
-    public void setFirstname(String firstname) {
-        this.firstname = firstname;
-    }
-
     public String getPassword() {
         return password;
     }
@@ -83,15 +82,6 @@ public class UserEntity implements Serializable {
     public void setPassword(String password) {
         this.password = password;
     }
-
-    public String getLastname() {
-        return lastname;
-    }
-
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
-    }
-
 
     public String getEmail() {
         return email;
@@ -141,14 +131,40 @@ public class UserEntity implements Serializable {
         this.bio = bio;
     }
 
-    public UserEntity(Integer id, String firstname, String password, String lastname, String email, String bio, String phone, Date since, UserType type) {
+    public String getFirstName() {
+        if (firstName == null || firstName.length() == 0) return firstName;  
+        return firstName.substring(0, 1).toUpperCase() + firstName.substring(1);
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public UserEntity(Integer id, String firstname, String password, String lastname, String email, String bio, String phone, String address, Date since, UserType type) {
         this.id = id;
-        this.firstname = firstname;
+        this.firstName = firstname;
         this.password = password;
-        this.lastname = lastname;
+        this.lastName = lastname;
         this.email = email;
         this.bio = bio;
         this.phone = phone;
+        this.address = address;
         this.since = since;
         this.type = type;
     }
