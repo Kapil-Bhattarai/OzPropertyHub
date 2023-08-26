@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      >
+    <ui:composition template="layout.xhtml">
+
+
+        <ui:define name="title">Login</ui:define>
+        <ui:define name="heading">Login Your Account</ui:define>
+        <ui:define name="content">
+            <h1>JSF 2.3: Hello Websocket </h1>
+            <div id="messages"></div>
+            <hr />
+
+            <hr />
+            <h:form id="form2">
+                <div>
+                    <h:outputLabel style="width: 100px;height: 50px;" for="roomInput" value="Enter Room Name:" />
+                    <h:inputText id="roomInput" value="#{chatController.roomId}" />
+                    <button 
+                        id="sendMessage2" 
+                        onclick="initSocket()"
+                        type="button"
+                        >
+                        Connect to room
+                    </button>
+                </div>
+            </h:form>
+            <h:form id="form" rendered="#{not empty chatController.socketOpen}">
+
+                <div>
+                    <h:outputLabel for="messageInput" value="Say hi to JSF Websocket" />
+                    <h:inputText 
+                        id="messageInput" 
+                        value="#{chatController.message}"/>
+
+                </div>
+
+
+            </h:form>
+            <h:form id="hiddenForm">
+                <h:inputHidden id="socketOpenFlag" value="#{chatController.socketOpen}" />
+            </h:form>
+            <input type="file" id="fileInput" />
+            <button onclick="uploadFile()">Upload File</button>
+            <!--        <video width="640" height="360" controls="controls">
+                    <source src="#{request.contextPath}/resources/welcome-to-the-punch.mp4" type="video/mp4"/>
+                    Your browser does not support the video tag.
+                </video>-->
+            <div>
+                <button 
+                    id="sendMessage2" 
+                    onclick="sendMessage()"
+                    >
+                    Send Message to server
+                </button>
+            </div>
+            <img src="/OzPropertyHub/uploaded-images/2.png" style="height: 200px; width: 200px;"/>
+            <div class="container">
+                <div class="container chat-container">
+                    <div class="row">
+                        <div class="col-md-8 offset-md-2">
+                            <div class="chatbox">
+                                <div class="chat" id="chat">
+<!--                                    <div class="message incoming">
+                                        <div class="avatar">JD</div>
+                                        <div class="message-content">
+                                            <p>Hello there!</p>
+                                            <img src="https://s3-ap-southeast-2.amazonaws.com/testbeamvideos/Banner/everybody-hates-johan.jpg" class="attachment" />
+                                        </div>
+                                    </div>
+                                    <div class="message outgoing">
+                                        <div class="avatar">JD</div>
+                                        <div class="message-content">
+                                            <p>Hi! How can I help you?</p>
+                                            <img src="https://s3-ap-southeast-2.amazonaws.com/testbeamvideos/Banner/tracing-heritage.jpg" class="attachment" />
+                                        </div>
+                                    </div>-->
+                                </div>
+                            </div>
+                            <div class="send-message mt-3">
+                                <label class="btn btn-secondary btn-file">
+                                    Attach<input type="file" id="file-attachment" style="display: none;" onchange="handleFileSelect(event)" />
+                                </label>
+                                <input type="text" class="form-control" id="message-input" placeholder="Type your message..." />
+                                <button class="btn btn-primary" type="button" onClick="sendMessage()">Send</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <h:outputScript library="assets" name="chat.js" target="head"/>
+        </ui:define>
+    </ui:composition>
+</html>

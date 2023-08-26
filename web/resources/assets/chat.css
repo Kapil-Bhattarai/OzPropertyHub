@@ -1,0 +1,145 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : 17 Aug 2023, 1:28:03 pm
+    Author     : bishal
+*/
+
+
+
+.chat-container {
+    margin-top: 50px;
+}
+
+.chat {
+    border: 1px solid #ddd;
+    padding: 15px;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    max-height: 300px;
+    overflow-y: auto;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.chatbox {
+    position: relative;
+}
+
+.message {
+    margin: 10px 0;
+    /* padding: 10px;
+    border-radius: 8px; */
+    clear: both;
+}
+
+.avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    float: left;
+    margin-right: 10px;
+    background-color: #4caf50;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.message-content {
+    background-color: #f2f2f2;
+    border-radius: 8px;
+    padding: 10px;
+    display: inline-block;
+}
+
+.message-content p {
+    margin-bottom: 0;
+}
+
+.attachment {
+    display: block;
+    margin-top: 5px;
+    max-height: 150px;
+}
+
+.incoming {
+    float: left;
+}
+
+.incoming .message-content {
+    background-color: #4a0f7e;
+    color: #fff;
+}
+
+.outgoing .message-content {
+    background-color: #4caf50;
+    color: #fff;
+}
+
+.outgoing {
+    float: right;
+}
+
+.send-message {
+    display: flex;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-top: 0;
+    margin-bottom: 50px;
+    overflow: hidden;
+}
+
+.send-message input {
+    flex: 1;
+    height:50px;
+    margin: 0;
+    border: none;
+}
+
+.send-message label, .send-message button {
+    width: 100px;
+    border-radius: 0;
+}
+
+.send-message label {
+    background: rgb(51, 51, 183);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+}
+
+.send-message label:hover {
+    color: #fff;
+}
+
+.attachment-container {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    z-index: 1;
+}
+
+.attachment-container img {
+    height: 100px;
+    width: 100px;
+}
+.attachment-container button {
+    position: absolute;
+        right: 5px;
+    top: 10px;
+}
+/* Media query for responsive design */
+@media (max-width: 767px) {
+    .chat {
+        max-height: none;
+    }
+}
+
