@@ -32,11 +32,24 @@ public class OzUserEJB extends OzEJB {
         try {
             user.setIsLive(Boolean.FALSE);
             entityManager.merge(user);
-//             entityManager.createNamedQuery("UserEntity.suspendUserById", UserEntity.class)
-//                .setParameter("id", userId).executeUpdate();
-            System.out.println("exception value false");
             return "success";
-                
+        } catch (Exception e) {
+            System.out.println("exception value  " + e.getMessage());
+            return null;
+        }
+    }
+    
+    public String deleteAgent(UserEntity user) {
+        
+        try {
+            //entityManager.remove(user);
+             UserEntity userToDelete = entityManager.find(UserEntity.class, user.getId());
+        
+        if (userToDelete != null) {
+            UserEntity managedUser = entityManager.merge(userToDelete); // Re-attach the entity
+            entityManager.remove(managedUser); // Now remove the managed entity
+        }
+            return "success";
         } catch (Exception e) {
             System.out.println("exception value  " + e.getMessage());
             return null;

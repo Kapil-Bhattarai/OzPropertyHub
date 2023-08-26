@@ -105,15 +105,21 @@ public class UserController {
 
     public String suspendAgent(UserEntity user) {
         if (userEJB.suspendAgent(user) != null) {
-            System.out.println("values of agent controller");
             return "/dashboard/admin/admin_dashboard.faces?faces-redirect=true";
         } else {
-            System.out.println("values of agent controller else");
             return null;
         }
 
     }
+     public String deleteAgent(UserEntity user) {
+        if (userEJB.deleteAgent(user) != null) {
+            return "/dashboard/admin/admin_dashboard.faces?faces-redirect=true";
+        } else {
+            return null;
+        }
 
+    }
+    
     public String registerUser() {
         FacesContext context = FacesContext.getCurrentInstance();
         UserEntity user = userEJB.getUserbyEmail(email);

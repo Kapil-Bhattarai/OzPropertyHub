@@ -4,7 +4,7 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://java.sun.com/jsf/facelets">
 
-    <ui:composition template="layout.xhtml">
+    <ui:composition template="../../layout.xhtml">
 
         <ui:define name="title">Oz Property Hub</ui:define>
 
@@ -15,7 +15,7 @@
                     <div class="row">
                         <div class="col-lg-12">
 
-                            <img src="resources/images/blog/1.jpg" class="thumbnail img-responsive"  alt="blog title"/>
+                            <img src="#{request.contextPath}/resources/images/blog/1.jpg" class="thumbnail img-responsive"  alt="blog title"/>
                             <h4>Thank you for joining us. We have sent email to Admin for approval. We will get back to you shortly.</h4>
 
                         </div>
