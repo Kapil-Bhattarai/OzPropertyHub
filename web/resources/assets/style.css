@@ -21,7 +21,7 @@ h6 span{margin-right: 5px; font-size: 12px;}
 
 
 p{margin-bottom: 30px;}
-a{color:#72b70f; text-decoration:none;outline: none;}
+a{color:#428bca; text-decoration:none;outline: none;}
 a:hover{color:#333;}
 .spacer{margin-top: 40px;margin-bottom:40px;}
 .center{text-align: center;}
@@ -32,8 +32,8 @@ a.more:hover{background: #64a30a;text-decoration: none;}
 
 
 .btn{border-radius: 5px; font-family: din; outline: none;}
-.btn-success{ background: #72b70f;border:1px solid #72b70f;padding:6px 20px; font-size:16px; width: 100%; }
-.btn-primary{ background: #64a30a;border:none;width: 100%;border-radius: 20px;}
+.btn-success{ background: #428bca;border:1px solid #428bca;padding:6px 20px; font-size:16px; width: 100%; }
+.btn-primary{ background: #428bca;border:none;width: 100%;border-radius: 20px;}
 .btn-info{background: #333;border:4px solid #ddd;padding: 3px 20px; font-size:20px; border-radius: 20px;  }
 
 .thumbnail{ background-color:#fff;}
@@ -64,8 +64,8 @@ a.more:hover{background: #64a30a;text-decoration: none;}
 .listing-detail span:hover{background: #72b70f;}
 
 
-.status.sold{background:rgba(104,167,13,0.8);}
-.status.new{background:rgba(190,7,46,0.8);}
+.status.sold{background: #3276b1bf;}
+.status.new{background: #72b70fbf;}
 
 .recommended{position: relative;}
 .recommended .carousel-indicators{position: absolute;text-align: left;left: 0;bottom: -40px;margin: 0;}
@@ -237,7 +237,7 @@ textarea {
 
 input[type=button], input[type=submit], input[type=reset] {
     appearance: none;
-    background-color: #2ea44f;
+    background-color: #428bca;
     border: 1px solid rgba(27, 31, 35, .15);
     border-radius: 6px;
     box-shadow: rgba(27, 31, 35, .1) 0 1px 0;
