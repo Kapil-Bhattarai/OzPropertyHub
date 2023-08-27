@@ -12,6 +12,8 @@ import jakarta.persistence.Enumerated;
 import static jakarta.persistence.GenerationType.IDENTITY;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.NamedQueries;
+import jakarta.persistence.NamedQuery;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import oz.PropertyType;
@@ -21,6 +23,9 @@ import oz.user.UserEntity;
 
 @Entity
 @Table(name = "OZ_PROPERTY")
+@NamedQueries( {
+    @NamedQuery(name = "PropertyEntity.getPropertiesByAgent", query = "SELECT p FROM PropertyEntity p WHERE p.agent.id = :id")
+})
 public class PropertyEntity implements Serializable {
 
    
@@ -46,6 +51,9 @@ public class PropertyEntity implements Serializable {
 
     @Column(name = "hasAc")
     private Boolean hasAc = false;
+    
+    @Column(name = "mainImage")
+    private String mainImage;
 
     @Column(name = "hasSecureParking")
     private Boolean hasSecureParking = false;
@@ -183,6 +191,14 @@ public class PropertyEntity implements Serializable {
 
     public void setAgent(UserEntity agent) {
         this.agent = agent;
+    }
+
+    public String getMainImage() {
+        return mainImage;
+    }
+
+    public void setMainImage(String mainImage) {
+        this.mainImage = mainImage;
     }
 
     public PropertyEntity() {}

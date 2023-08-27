@@ -4,11 +4,14 @@
  */
 package oz.property;
 
+import static com.sun.faces.facelets.util.Path.context;
 import jakarta.ejb.EJB;
+import jakarta.faces.application.FacesMessage;
 import jakarta.faces.bean.ManagedBean;
 import jakarta.faces.bean.ManagedProperty;
 import jakarta.faces.bean.SessionScoped;
 import jakarta.faces.bean.ViewScoped;
+import jakarta.faces.context.FacesContext;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -19,9 +22,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import org.eclipse.persistence.jpa.jpql.parser.DateTime;
 import oz.PropertyType;
 import oz.StateType;
+import oz.Util;
 import oz.address.AddressEJB;
 import oz.address.AddressEntity;
 import oz.user.UserController;
@@ -63,8 +68,8 @@ public class PropertyController {
 
     @EJB
     private AddressEJB addressEJB;
-    
-     @ManagedProperty("#{userBean}")
+
+    @ManagedProperty("#{userBean}")
     private UserController userBean; // Inject the UserController bean
 
     private PropertyEntity propertyEntity;
@@ -239,78 +244,91 @@ public class PropertyController {
         this.userBean = userBean;
     }
 
-    
-    public void submit() {
+    public String submit() {
+        FacesContext context = FacesContext.getCurrentInstance();
+
         System.out.println("submit");
         try {
-            
             // Begin a new transaction
             //em.getTransaction().begin();
             System.out.println("suru");
             propertyEntity = new PropertyEntity();
+            if (mainImage != null) {
+                try (InputStream input = mainImage.getInputStream()) {
+                    String fileName = getSubmittedFileName(mainImage);
+                    System.out.println(System.getenv("OZPROPERTYHUB_UPLOAD_LOCATION"));
+                    System.out.println("hello");
+                    String fileLocation = System.getenv("OZPROPERTYHUB_UPLOAD_LOCATION") + "/" + fileName;
+                    File outputFile = new File(fileLocation);
 
-            addressEntity = new AddressEntity();
-            addressEntity.setUnit(String.valueOf(unitNumber));
-            addressEntity.setStreet_name(streetName);
-            addressEntity.setSuburb(suburb);
-            addressEntity.setPostcode(String.valueOf(postCode));
-            addressEntity.setState(state); // Convert enum to string
+                    try (FileOutputStream output = new FileOutputStream(outputFile)) {
+                        byte[] buffer = new byte[1024];
+                        int bytesRead;
+                        while ((bytesRead = input.read(buffer)) != -1) {
+                            output.write(buffer, 0, bytesRead);
+                        }
+                        System.out.println("hello");
+                        propertyEntity.setMainImage(fileName);
+                    }
 
-            // Save the AddressEntity in the database
-            addressEJB.addAddress(addressEntity);
-            System.out.println("mid");
-            // Create a new PropertyEntity and set its attributes
-            propertyEntity = new PropertyEntity();
-            propertyEntity.setRent(rent);
-            propertyEntity.setType(propertyType);
-            propertyEntity.setInspection(inspectionDate);
-            propertyEntity.setListedDate(listedDate);
-            propertyEntity.setHasAc(hasAc);
-            propertyEntity.setHasSecureParking(hasSecureParking);
-            propertyEntity.setHasDishWasher(hasDishwater);
-            propertyEntity.setHasBalcony(hasBalcony);
-            propertyEntity.setHasWardrobe(hasWardrobe);
-            propertyEntity.setNoOfParking(noOfParking);
-            propertyEntity.setNoOfBathroom(noOfBathroom);
+                    // Additional logic after saving the file
+                } catch (IOException e) {
+                    // Handle exception
+                }
 
-            // Associate the created AddressEntity with the PropertyEntity
-            propertyEntity.setAddress(addressEntity);
-            UserEntity existingAgent = em.find(UserEntity.class, userBean.getId()); // Use the correct agent ID here
+                System.out.println(propertyEntity.getMainImage());
+                addressEntity = new AddressEntity();
+                addressEntity.setUnit(String.valueOf(unitNumber));
+                addressEntity.setStreet_name(streetName);
+                addressEntity.setSuburb(suburb);
+                addressEntity.setPostcode(String.valueOf(postCode));
+                addressEntity.setState(state); // Convert enum to string
 
-            propertyEntity.setAgent(existingAgent);
+                // Save the AddressEntity in the database
+                addressEJB.addAddress(addressEntity);
+                System.out.println("mid");
+                // Create a new PropertyEntity and set its attributes
+                propertyEntity.setRent(rent);
+                propertyEntity.setType(propertyType);
+                propertyEntity.setInspection(inspectionDate);
+                propertyEntity.setListedDate(listedDate);
+                propertyEntity.setHasAc(hasAc);
+                propertyEntity.setHasSecureParking(hasSecureParking);
+                propertyEntity.setHasDishWasher(hasDishwater);
+                propertyEntity.setHasBalcony(hasBalcony);
+                propertyEntity.setHasWardrobe(hasWardrobe);
+                propertyEntity.setNoOfParking(noOfParking);
+                propertyEntity.setNoOfBathroom(noOfBathroom);
 
-            // Save the PropertyEntity in the database
-            propertyEJB.addProperty(propertyEntity);
-            System.out.println("end");
-//         if (mainImage != null) {
-//            try (InputStream input = mainImage.getInputStream()) {
-//                String fileName = getSubmittedFileName(mainImage);
-//                File outputFile = new File("/path/to/upload/directory/" + fileName);
-//
-//                try (FileOutputStream output = new FileOutputStream(outputFile)) {
-//                    byte[] buffer = new byte[1024];
-//                    int bytesRead;
-//                    while ((bytesRead = input.read(buffer)) != -1) {
-//                        output.write(buffer, 0, bytesRead);
-//                    }
-//                }
-//
-//                // Additional logic after saving the file
-//            } catch (IOException e) {
-//                // Handle exception
-//            }
-//        }
+                // Associate the created AddressEntity with the PropertyEntity
+                propertyEntity.setAddress(addressEntity);
+                UserEntity existingAgent = em.find(UserEntity.class, userBean.getId()); // Use the correct agent ID here
+
+                propertyEntity.setAgent(existingAgent);
+
+                // Save the PropertyEntity in the database
+                propertyEJB.addProperty(propertyEntity);
+                System.out.println("end");
+                return "/dashboard/agent/agent_dashboard.faces?faces-redirect=true";
+            }
+            return "";
         } catch (Exception e) {
-            System.out.println("error   ");
             // Rollback the transaction if an exception occurs
 //            if (em.getTransaction().isActive()) {
 //                em.getTransaction().rollback();
 //            }
             // Handle the exception or rethrow it
             // For example, you can log the error or show an error message to the user
-            e.printStackTrace(); // Replace with proper error handling
+            Util.showMessage(context, FacesMessage.SEVERITY_ERROR, "There were some errors while adding property.", null);
+            return "";
         }
 
+    }
+    
+    public List<PropertyEntity> getPropertiesByAgent(Boolean isActive) {
+        List<PropertyEntity> list = propertyEJB.getPropertiesByAgent(userBean.getId());
+        System.out.println("values of agent " + list.toString());
+        return list;
     }
 
     private String getSubmittedFileName(Part part) {
