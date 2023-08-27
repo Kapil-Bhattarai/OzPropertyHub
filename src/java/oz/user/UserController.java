@@ -54,6 +54,7 @@ public class UserController {
             Util.showMessage(context, FacesMessage.SEVERITY_ERROR, "User details not found!. Please enter correct details.", null);
             return "";
         } else {
+            System.out.println(user.getIsLive().toString());
             // registered user
             if (!user.getIsLive()) {
                 // request not accepeted by admin. Show error message
@@ -67,6 +68,7 @@ public class UserController {
 
                     user = userEJB.getUserbyEmail(email);
                     setUserData(user);
+                        System.out.println(type);
 
                     return switch (type) {
                         case ADMIN ->

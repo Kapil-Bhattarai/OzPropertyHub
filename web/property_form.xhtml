@@ -1,0 +1,108 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+
+    <ui:composition template="layout.xhtml">
+
+        <ui:define name="title">Oz Property Hub</ui:define>
+
+        <ui:define name="content">
+
+            <div class="container">
+
+                <div class="spacer">
+                    <div class="row register">
+                        <div class="col-lg-9 col-lg-offset-2 col-sm-9 col-sm-offset-2 col-xs-12 ">
+
+                            <h:messages globalOnly="true" showDetail="false"
+                                        errorClass="msg_error"
+
+                                        infoClass="msg_info"
+                                        fatalClass="msg_error"
+                                        warnClass="msg_warn"
+                                        layout="table"
+                                        errorStyle="color:red"
+                                        />
+                            <h:form>
+                                <div class="section">
+                                    <h4><b>Address Details</b></h4>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <h:outputLabel value="Unit Number"/>
+                                            <h:inputText  class="form-control"  value="#{userBean.firstName}" required="true" requiredMessage="Required!" id="unitNumber" />
+                                            <h:messages errorStyle="color:red" for="unitNumber" layout="table"/>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <h:outputLabel value="Street Name"/>
+                                            <h:inputText  class="form-control"  value="#{userBean.firstName}" required="true" requiredMessage="Required!" id="streetName" />
+                                            <h:messages errorStyle="color:red" for="streetName" layout="table"/>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <h:outputLabel value="Suburb"/>
+                                            <h:inputText  class="form-control"  value="#{userBean.suburb}" required="true" requiredMessage="Required!" id="suburb" />
+                                            <h:messages errorStyle="color:red" for="suburb" layout="table"/>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <h:outputLabel value="State"/>
+                                            <h:inputText  class="form-control"  value="#{userBean.firstName}" required="true" requiredMessage="Required!" id="streetName" />
+                                            <h:messages errorStyle="color:red" for="streetName" layout="table"/>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <h:outputLabel value="State"/>
+                                            <h:inputText  class="form-control"  value="#{userBean.firstName}" required="true" requiredMessage="Required!" id="postCode" />
+                                            <h:messages errorStyle="color:red" for="postCode" layout="table"/>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                                <h:outputLabel value="First Name"/>
+                                <h:inputText  class="form-control"  value="#{userBean.firstName}" required="true" requiredMessage="Please enter first name!" id="firstName" />
+                                <h:messages errorStyle="color:red" for="firstName" layout="table"/>
+
+                                <h:outputLabel value="Last Name"/>
+                                <h:inputText  class="form-control"  value="#{userBean.lastName}" required="true" requiredMessage="Please enter last name!" id="lastName" />
+                                <h:messages errorStyle="color:red" for="lastName"  layout="table"/>                               
+
+                                <h:outputLabel value="Phone"/>
+                                <h:inputText  class="form-control"  value="#{userBean.phone}" required="true" requiredMessage="Please enter your phone" id="phone" />
+                                <h:messages errorStyle="color:red" for="phone" layout="table" />
+
+                                <h:outputLabel value="Address"/>
+                                <h:inputText  class="form-control"  value="#{userBean.address}" required="true" requiredMessage="Please enter your address" id="address" />
+                                <h:messages errorStyle="color:red" for="address" layout="table" />
+
+                                <h:outputLabel value="Email"/>
+                                <h:inputText  class="form-control"  value="#{userBean.email}" required="true" requiredMessage="Please enter email" id="email" />
+                                <h:messages errorStyle="color:red" for="email" layout="table" />
+
+                                <h:outputLabel value="Password"/>
+                                <h:inputText  class="form-control"  value="#{userBean.password}" required="true" requiredMessage="Please enter Password" id="password" />
+                                <h:messages errorStyle="color:red" for="password" layout="table" />
+
+                                <h:outputLabel value="Confirm Password"/>
+                                <h:inputText  class="form-control"  value="#{userBean.confirmPassword}" required="true" requiredMessage="Password doesn't match." id="confirmPassword" />
+                                <h:messages errorStyle="color:red" for="confirmPassword" layout="table" />
+
+                                <h:outputLabel style="height: 30px; position: relative; bottom: 10px;" value="Register as Agent ?"/>
+                                <h:selectBooleanCheckbox  style="width: 30px; height: 30px; margin-left: 20px;" value="#{userBean.isLive}" id="agent_register"/>
+
+                                <h:commandButton value="Register"  class="btn btn-success" action="#{userBean.registerUser}" />
+
+                            </h:form>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+        </ui:define>
+    </ui:composition> 
+</html>
