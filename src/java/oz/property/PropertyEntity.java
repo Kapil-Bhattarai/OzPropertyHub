@@ -1,5 +1,6 @@
 package oz.property;
 
+import jakarta.mail.Address;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 import java.io.Serializable;
@@ -10,8 +11,13 @@ import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import static jakarta.persistence.GenerationType.IDENTITY;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import oz.PropertyType;
 import oz.UserType;
+import oz.address.AddressEntity;
+import oz.user.UserEntity;
 
 @Entity
 @Table(name = "OZ_PROPERTY")
@@ -28,7 +34,7 @@ public class PropertyEntity implements Serializable {
 
     @Column(name = "propertyType")
     @Enumerated(EnumType.STRING)
-    private UserType type;
+    private PropertyType type;
 
     @Column(name = "inspection")
     @Temporal(TemporalType.TIMESTAMP)
@@ -59,6 +65,14 @@ public class PropertyEntity implements Serializable {
     @Column(name = "noOfBathroom")
     private int noOfBathroom = 0;
 
+    @OneToOne
+    @JoinColumn(name = "addressId")
+    private AddressEntity address;
+    
+    @OneToOne
+    @JoinColumn(name = "agentId")
+    private UserEntity agent;
+    
     public Integer getPid() {
         return pid;
     }
@@ -75,11 +89,11 @@ public class PropertyEntity implements Serializable {
         this.rent = rent;
     }
 
-    public UserType getType() {
+    public PropertyType getType() {
         return type;
     }
 
-    public void setType(UserType type) {
+    public void setType(PropertyType type) {
         this.type = type;
     }
 
@@ -154,7 +168,22 @@ public class PropertyEntity implements Serializable {
     public void setNoOfBathroom(int noOfBathroom) {
         this.noOfBathroom = noOfBathroom;
     }
-    
+
+    public AddressEntity getAddress() {
+        return address;
+    }
+
+    public void setAddress(AddressEntity address) {
+        this.address = address;
+    }
+
+    public UserEntity getAgent() {
+        return agent;
+    }
+
+    public void setAgent(UserEntity agent) {
+        this.agent = agent;
+    }
 
     public PropertyEntity() {}
 }

@@ -4,15 +4,28 @@
  */
 package oz.property;
 
+import jakarta.ejb.EJB;
 import jakarta.faces.bean.ManagedBean;
+import jakarta.faces.bean.ManagedProperty;
 import jakarta.faces.bean.SessionScoped;
 import jakarta.faces.bean.ViewScoped;
+import jakarta.inject.Inject;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import jakarta.servlet.http.Part;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import org.eclipse.persistence.jpa.jpql.parser.DateTime;
 import oz.PropertyType;
 import oz.StateType;
+import oz.address.AddressEJB;
+import oz.address.AddressEntity;
+import oz.user.UserController;
+import oz.user.UserEntity;
 
 /**
  *
@@ -21,6 +34,9 @@ import oz.StateType;
 @ManagedBean(name = "propertyBean")
 @ViewScoped
 public class PropertyController {
+
+    @PersistenceContext
+    private EntityManager em;
 
     private int unitNumber;
     private String streetName;
@@ -41,6 +57,19 @@ public class PropertyController {
     private boolean hasWardrobe;
     private Date listedDate;
     private Date inspectionDate;
+
+    @EJB
+    private PropertyEJB propertyEJB;
+
+    @EJB
+    private AddressEJB addressEJB;
+    
+     @ManagedProperty("#{userBean}")
+    private UserController userBean; // Inject the UserController bean
+
+    private PropertyEntity propertyEntity;
+
+    private AddressEntity addressEntity;
 
     public int getUnitNumber() {
         return unitNumber;
@@ -193,18 +222,106 @@ public class PropertyController {
     public void setInspectionDate(Date inspectionDate) {
         this.inspectionDate = inspectionDate;
     }
-    
 
-    
     public StateType[] getStates() {
         return StateType.values();
     }
-    
+
     public PropertyType[] getPropertyTypes() {
         return PropertyType.values();
     }
+
+    public UserController getUserBean() {
+        return userBean;
+    }
+
+    public void setUserBean(UserController userBean) {
+        this.userBean = userBean;
+    }
+
     
-    public void submit(){
-         
+    public void submit() {
+        System.out.println("submit");
+        try {
+            
+            // Begin a new transaction
+            //em.getTransaction().begin();
+            System.out.println("suru");
+            propertyEntity = new PropertyEntity();
+
+            addressEntity = new AddressEntity();
+            addressEntity.setUnit(String.valueOf(unitNumber));
+            addressEntity.setStreet_name(streetName);
+            addressEntity.setSuburb(suburb);
+            addressEntity.setPostcode(String.valueOf(postCode));
+            addressEntity.setState(state); // Convert enum to string
+
+            // Save the AddressEntity in the database
+            addressEJB.addAddress(addressEntity);
+            System.out.println("mid");
+            // Create a new PropertyEntity and set its attributes
+            propertyEntity = new PropertyEntity();
+            propertyEntity.setRent(rent);
+            propertyEntity.setType(propertyType);
+            propertyEntity.setInspection(inspectionDate);
+            propertyEntity.setListedDate(listedDate);
+            propertyEntity.setHasAc(hasAc);
+            propertyEntity.setHasSecureParking(hasSecureParking);
+            propertyEntity.setHasDishWasher(hasDishwater);
+            propertyEntity.setHasBalcony(hasBalcony);
+            propertyEntity.setHasWardrobe(hasWardrobe);
+            propertyEntity.setNoOfParking(noOfParking);
+            propertyEntity.setNoOfBathroom(noOfBathroom);
+
+            // Associate the created AddressEntity with the PropertyEntity
+            propertyEntity.setAddress(addressEntity);
+            UserEntity existingAgent = em.find(UserEntity.class, userBean.getId()); // Use the correct agent ID here
+
+            propertyEntity.setAgent(existingAgent);
+
+            // Save the PropertyEntity in the database
+            propertyEJB.addProperty(propertyEntity);
+            System.out.println("end");
+//         if (mainImage != null) {
+//            try (InputStream input = mainImage.getInputStream()) {
+//                String fileName = getSubmittedFileName(mainImage);
+//                File outputFile = new File("/path/to/upload/directory/" + fileName);
+//
+//                try (FileOutputStream output = new FileOutputStream(outputFile)) {
+//                    byte[] buffer = new byte[1024];
+//                    int bytesRead;
+//                    while ((bytesRead = input.read(buffer)) != -1) {
+//                        output.write(buffer, 0, bytesRead);
+//                    }
+//                }
+//
+//                // Additional logic after saving the file
+//            } catch (IOException e) {
+//                // Handle exception
+//            }
+//        }
+        } catch (Exception e) {
+            System.out.println("error   ");
+            // Rollback the transaction if an exception occurs
+//            if (em.getTransaction().isActive()) {
+//                em.getTransaction().rollback();
+//            }
+            // Handle the exception or rethrow it
+            // For example, you can log the error or show an error message to the user
+            e.printStackTrace(); // Replace with proper error handling
+        }
+
+    }
+
+    private String getSubmittedFileName(Part part) {
+        String contentDisposition = part.getHeader("content-disposition");
+        String[] elements = contentDisposition.split(";");
+
+        for (String element : elements) {
+            if (element.trim().startsWith("filename")) {
+                return element.substring(element.indexOf('=') + 1).trim().replace("\"", "");
+            }
+        }
+        return "";
     }
 }

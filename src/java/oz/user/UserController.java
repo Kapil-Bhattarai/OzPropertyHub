@@ -269,10 +269,14 @@ public class UserController {
     }
 
     public String getEmail() {
+        System.out.println("get email");
+        System.out.println(email);
         return email;
     }
 
     public void setEmail(String email) {
+        System.out.println("set email");
+        System.out.println(email);
         this.email = email;
     }
 

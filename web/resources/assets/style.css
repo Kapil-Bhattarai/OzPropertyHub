@@ -393,3 +393,10 @@ h2{font-size: 25px;}
 .agent-header-wrapper a {
     width: auto;
 }
+
+.features input {
+    height: 15px;
+    width: 15px;
+    margin-right: 15px;
+    margin-bottom: 5px;
+}

@@ -1,4 +1,4 @@
-package oz.property;
+package oz.address;
 
 import jakarta.ejb.Stateless;
 import oz.OzEJB;
@@ -6,10 +6,10 @@ import oz.OzEJB;
 
 
 @Stateless
-public class PropertyEJB  extends OzEJB {
-    public Boolean addProperty(PropertyEntity property) {
+public class AddressEJB  extends OzEJB {
+    public Boolean addAddress(AddressEntity address) {
         try {
-            entityManager.persist(property);
+            entityManager.persist(address);
             return true;
         } catch (Exception e) {
             return false;
