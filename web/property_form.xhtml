@@ -76,12 +76,12 @@
                                             <h:messages errorStyle="color:red" for="mainImage" layout="table"/>
                                         </div>
                                     </div>
-                                    <!--                                    <div class="row">
-                                                                            <div class="col-lg-12">
-                                                                                <h:outputLabel value="Additional Images"/>
-                                                                                <h:inputFile multiple="true" class="form-control"  value="#{propertyBean.additionalImages}" id="additionalImages" />
-                                                                            </div>
-                                                                        </div>-->
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <h:outputLabel value="Additional Images"/>
+                                            <p:fileUpload value="#{propertyBean.additionalImages}"  multiple="true" mode="simple" dragDropSupport="true" />
+                                        </div>
+                                    </div>
                                     <div class="row">
                                         <div class="col-lg-6">
                                             <h:outputLabel value="Property"/>

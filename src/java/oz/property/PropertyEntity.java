@@ -14,11 +14,14 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import java.util.List;
 import oz.PropertyType;
 import oz.UserType;
 import oz.address.AddressEntity;
+import oz.property_image.PropertyImageEntity;
 import oz.user.UserEntity;
 
 @Entity
@@ -80,6 +83,9 @@ public class PropertyEntity implements Serializable {
     @OneToOne
     @JoinColumn(name = "agentId")
     private UserEntity agent;
+    
+    @OneToMany
+    private List<PropertyImageEntity> images;
     
     public Integer getPid() {
         return pid;
@@ -201,5 +207,14 @@ public class PropertyEntity implements Serializable {
         this.mainImage = mainImage;
     }
 
+    public List<PropertyImageEntity> getImages() {
+        return images;
+    }
+
+    public void setImages(List<PropertyImageEntity> images) {
+        this.images = images;
+    }
+
+    
     public PropertyEntity() {}
 }

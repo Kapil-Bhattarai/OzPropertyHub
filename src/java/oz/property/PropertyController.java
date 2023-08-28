@@ -4,6 +4,7 @@
  */
 package oz.property;
 
+import oz.property_image.PropertyImageEJB;
 import static com.sun.faces.facelets.util.Path.context;
 import jakarta.ejb.EJB;
 import jakarta.faces.application.FacesMessage;
@@ -20,15 +21,21 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import org.eclipse.persistence.jpa.jpql.parser.DateTime;
+import org.primefaces.model.file.UploadedFile;
+import org.primefaces.model.file.UploadedFiles;
 import oz.PropertyType;
 import oz.StateType;
 import oz.Util;
 import oz.address.AddressEJB;
 import oz.address.AddressEntity;
+import oz.property_image.PropertyImageEntity;
 import oz.user.UserController;
 import oz.user.UserEntity;
 
@@ -49,7 +56,6 @@ public class PropertyController {
     private StateType state;
     private int postCode;
     private Part mainImage;
-    private ArrayList<Part> additionalImages = new ArrayList<>();
     private PropertyType propertyType;
     private int rent;
     private int noOfBedroom;
@@ -63,11 +69,16 @@ public class PropertyController {
     private Date listedDate;
     private Date inspectionDate;
 
+    private UploadedFiles additionalImages;
+
     @EJB
     private PropertyEJB propertyEJB;
 
     @EJB
     private AddressEJB addressEJB;
+    
+    @EJB
+    private PropertyImageEJB propertyImageEJB;
 
     @ManagedProperty("#{userBean}")
     private UserController userBean; // Inject the UserController bean
@@ -124,11 +135,11 @@ public class PropertyController {
         this.mainImage = mainImage;
     }
 
-    public ArrayList<Part> getAdditionalImages() {
+    public UploadedFiles getAdditionalImages() {
         return additionalImages;
     }
 
-    public void setAdditionalImages(ArrayList<Part> additionalImages) {
+    public void setAdditionalImages(UploadedFiles additionalImages) {
         this.additionalImages = additionalImages;
     }
 
@@ -244,6 +255,7 @@ public class PropertyController {
         this.userBean = userBean;
     }
 
+
     public String submit() {
         FacesContext context = FacesContext.getCurrentInstance();
 
@@ -275,43 +287,64 @@ public class PropertyController {
                 } catch (IOException e) {
                     // Handle exception
                 }
-
-                System.out.println(propertyEntity.getMainImage());
-                addressEntity = new AddressEntity();
-                addressEntity.setUnit(String.valueOf(unitNumber));
-                addressEntity.setStreet_name(streetName);
-                addressEntity.setSuburb(suburb);
-                addressEntity.setPostcode(String.valueOf(postCode));
-                addressEntity.setState(state); // Convert enum to string
-
-                // Save the AddressEntity in the database
-                addressEJB.addAddress(addressEntity);
-                System.out.println("mid");
-                // Create a new PropertyEntity and set its attributes
-                propertyEntity.setRent(rent);
-                propertyEntity.setType(propertyType);
-                propertyEntity.setInspection(inspectionDate);
-                propertyEntity.setListedDate(listedDate);
-                propertyEntity.setHasAc(hasAc);
-                propertyEntity.setHasSecureParking(hasSecureParking);
-                propertyEntity.setHasDishWasher(hasDishwater);
-                propertyEntity.setHasBalcony(hasBalcony);
-                propertyEntity.setHasWardrobe(hasWardrobe);
-                propertyEntity.setNoOfParking(noOfParking);
-                propertyEntity.setNoOfBathroom(noOfBathroom);
-
-                // Associate the created AddressEntity with the PropertyEntity
-                propertyEntity.setAddress(addressEntity);
-                UserEntity existingAgent = em.find(UserEntity.class, userBean.getId()); // Use the correct agent ID here
-
-                propertyEntity.setAgent(existingAgent);
-
-                // Save the PropertyEntity in the database
-                propertyEJB.addProperty(propertyEntity);
-                System.out.println("end");
-                return "/dashboard/agent/agent_dashboard.faces?faces-redirect=true";
             }
-            return "";
+
+            
+            System.out.println(propertyEntity.getMainImage());
+            addressEntity = new AddressEntity();
+            addressEntity.setUnit(String.valueOf(unitNumber));
+            addressEntity.setStreet_name(streetName);
+            addressEntity.setSuburb(suburb);
+            addressEntity.setPostcode(String.valueOf(postCode));
+            addressEntity.setState(state); // Convert enum to string
+
+            // Save the AddressEntity in the database
+            addressEJB.addAddress(addressEntity);
+            System.out.println("mid");
+            // Create a new PropertyEntity and set its attributes
+            propertyEntity.setRent(rent);
+            propertyEntity.setType(propertyType);
+            propertyEntity.setInspection(inspectionDate);
+            propertyEntity.setListedDate(listedDate);
+            propertyEntity.setHasAc(hasAc);
+            propertyEntity.setHasSecureParking(hasSecureParking);
+            propertyEntity.setHasDishWasher(hasDishwater);
+            propertyEntity.setHasBalcony(hasBalcony);
+            propertyEntity.setHasWardrobe(hasWardrobe);
+            propertyEntity.setNoOfParking(noOfParking);
+            propertyEntity.setNoOfBathroom(noOfBathroom);
+
+            // Associate the created AddressEntity with the PropertyEntity
+            propertyEntity.setAddress(addressEntity);
+            UserEntity existingAgent = em.find(UserEntity.class, userBean.getId()); // Use the correct agent ID here
+
+            propertyEntity.setAgent(existingAgent);
+
+            // Save the PropertyEntity in the database
+            propertyEJB.addProperty(propertyEntity);
+            
+        for (org.primefaces.model.file.UploadedFile uploadedFile : additionalImages.getFiles()) {
+                try {
+                    
+                    String fileName = uploadedFile.getFileName();
+                    String fileLocation = System.getenv("OZPROPERTYHUB_UPLOAD_LOCATION") + "/" + fileName;
+                    try (InputStream inputStream = uploadedFile.getInputStream()) {
+                        Files.copy(inputStream, Paths.get(fileLocation), StandardCopyOption.REPLACE_EXISTING);
+                        PropertyImageEntity pie = new PropertyImageEntity();
+                        pie.setProperty(propertyEntity);
+                        pie.setImage(fileName);
+                        propertyImageEJB.addPropertyImage(pie);
+                    } catch (IOException e) {
+                        // Handle the exception
+                    }
+                    // Process the file content, save it, or do whatever you need.
+                } catch (Exception e) {
+                    // Handle the exception.
+                }
+            }
+            System.out.println("end");
+            return "/dashboard/agent/agent_dashboard.faces?faces-redirect=true";
+
         } catch (Exception e) {
             // Rollback the transaction if an exception occurs
 //            if (em.getTransaction().isActive()) {
@@ -324,7 +357,7 @@ public class PropertyController {
         }
 
     }
-    
+
     public List<PropertyEntity> getPropertiesByAgent(Boolean isActive) {
         System.out.println("get all values");
         List<PropertyEntity> list = propertyEJB.getPropertiesByAgent(userBean.getId());
