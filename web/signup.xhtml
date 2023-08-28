@@ -48,11 +48,11 @@
                                 <h:messages errorStyle="color:red" for="email" layout="table" />
                                                               
                                 <h:outputLabel value="Password"/>
-                                <h:inputText  class="form-control"  value="#{userBean.password}" required="true" requiredMessage="Please enter Password" id="password" />
+                                <h:inputSecret  class="form-control"  value="#{userBean.password}" required="true" requiredMessage="Please enter Password" id="password" />
                                 <h:messages errorStyle="color:red" for="password" layout="table" />
                                                           
                                 <h:outputLabel value="Confirm Password"/>
-                                <h:inputText  class="form-control"  value="#{userBean.confirmPassword}" required="true" requiredMessage="Password doesn't match." id="confirmPassword" />
+                                <h:inputSecret  class="form-control"  value="#{userBean.confirmPassword}" required="true" requiredMessage="Password doesn't match." id="confirmPassword" />
                                 <h:messages errorStyle="color:red" for="confirmPassword" layout="table" />
                                                               
                                 <h:outputLabel style="height: 30px; position: relative; bottom: 10px;" value="Register as Agent ?"/>
