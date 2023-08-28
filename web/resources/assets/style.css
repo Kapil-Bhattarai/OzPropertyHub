@@ -262,7 +262,6 @@ input[type=button], input[type=submit], input[type=reset] {
 
 table input[type=text], input[type=password] {
     padding: 6px;
-    width:200px;
 }
 
 table input[type=submit] {
