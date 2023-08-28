@@ -326,6 +326,7 @@ public class PropertyController {
     }
     
     public List<PropertyEntity> getPropertiesByAgent(Boolean isActive) {
+        System.out.println("get all values");
         List<PropertyEntity> list = propertyEJB.getPropertiesByAgent(userBean.getId());
         System.out.println("values of agent " + list.toString());
         return list;

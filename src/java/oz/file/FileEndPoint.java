@@ -26,7 +26,7 @@ public class FileEndPoint {
     public Response getFile(@PathParam("filename") String filename) {
         try {
             System.out.println("here he comes");
-            System.out.println(filename + "filename");
+            System.out.println(BASE_PATH + filename + "filename");
             File file = new File(BASE_PATH, filename);
             if (file.exists()) {
                 return Response.ok(file, Files.probeContentType(Paths.get(file.getPath()))).build();

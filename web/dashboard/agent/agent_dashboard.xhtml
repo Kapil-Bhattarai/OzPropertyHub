@@ -17,6 +17,8 @@
              <table id="tableContent">
                 <thead>
                     <tr>
+                        <th>Property</th>
+                        <th>Address</th>
                         <th>Rent</th>
                         
                     </tr>
@@ -24,8 +26,9 @@
                 <tbody>
                     <f:forEach items="#{propertyBean.getPropertiesByAgent(true)}" var="property">       
                         <tr>
-                            <td>#{property.rent}</td>    
-                            
+                            <td><img style="height: 100px; width: 100px;" src="#{request.contextPath}/uploaded-images/#{property.mainImage}" /></td>
+                            <td>#{property.address.unit}, #{property.address.street_name}, #{property.address.suburb}</td>
+                            <td>#{property.rent}</td>
                         </tr>
                     </f:forEach>
                 </tbody>
