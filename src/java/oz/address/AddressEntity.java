@@ -5,9 +5,13 @@ import java.io.Serializable;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import static jakarta.persistence.GenerationType.IDENTITY;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import oz.PropertyType;
+import oz.StateType;
 
 
 @Entity
@@ -34,8 +38,10 @@ public class AddressEntity implements Serializable {
     private String postcode;
     
     @Column(name = "state", nullable = false)
-    private String state;
+    @Enumerated(EnumType.STRING)
+    private StateType state;
 
+    
     public Integer getId() {
         return id;
     }
@@ -76,15 +82,15 @@ public class AddressEntity implements Serializable {
         this.postcode = postcode;
     }
 
-    public String getState() {
+    public StateType getState() {
         return state;
     }
 
-    public void setState(String state) {
+    public void setState(StateType state) {
         this.state = state;
     }
 
-    public AddressEntity(Integer id, String unit, String street_name, String suburb, String postcode, String state) {
+    public AddressEntity(Integer id, String unit, String street_name, String suburb, String postcode, StateType state) {
         this.id = id;
         this.unit = unit;
         this.street_name = street_name;

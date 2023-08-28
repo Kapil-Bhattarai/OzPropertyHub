@@ -10,43 +10,28 @@
         <ui:define name="title">Oz Property Hub</ui:define>
 
         <ui:define name="content">
-
+            <div class="agent-header-wrapper">
             <h4>Agent Dashboard</h4>
+            <a class="btn btn-success" href="#{request.contextPath}/property_form.faces">Add Property</a>
+            </div>
              <table id="tableContent">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Title</th>
-                <th>Company</th>
-                <th>Platform</th>
-                <th>Classification</th>
-                <th>Description</th>
-                <th>Price</th>
-                <th>HD Output</th>
-                 <th>Players</th>
-                <th>Space</th>
-                <th>Stock</th>
-            </tr>
-        </thead>
-        <tbody>
-           
-            <f:forEach items="#{gameBean.getGameList(gameBean.gameId)}" var="game">
-                <tr>
-                    <td>#{game.id}</td>
-                    <td>#{game.title}</td>
-                    <td>#{game.company}</td>
-                    <td>#{game.platform}</td>
-                    <td>#{game.classification}</td>
-                    <td>#{game.description}</td>
-                    <td>$ #{game.price}</td>
-                    <td>#{game.noOfCoPlayers}</td>
-                    <td>#{game.output}</td>
-                    <td>#{game.hardDiskSpace}</td>
-                    <td>#{game.stock}</td>
-                    
-                </tr>
-            </f:forEach>
-        </tbody>
+                <thead>
+                    <tr>
+                        <th>Property</th>
+                        <th>Address</th>
+                        <th>Rent</th>
+                        
+                    </tr>
+                </thead>
+                <tbody>
+                    <f:forEach items="#{propertyBean.getPropertiesByAgent(true)}" var="property">       
+                        <tr>
+                            <td><img style="height: 100px; width: 100px;" src="#{request.contextPath}/uploaded-images/#{property.mainImage}" /></td>
+                            <td>#{property.address.unit}, #{property.address.street_name}, #{property.address.suburb}</td>
+                            <td>#{property.rent}</td>
+                        </tr>
+                    </f:forEach>
+                </tbody>
     </table>
         </ui:define>
     </ui:composition> 

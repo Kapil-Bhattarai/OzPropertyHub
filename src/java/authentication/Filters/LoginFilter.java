@@ -31,7 +31,9 @@ public class LoginFilter implements Filter {
             "admin_dashboard.faces?faces-redirect=true",
             "agent_dashboard.faces?faces-redirect=true",
             "user_dashboard.faces?faces-redirect=true",
-            "agent_pending_request.faces?faces-redirect=true",};
+            "agent_pending_request.faces?faces-redirect=true",
+            "property_form.faces?faces-redirect=true",
+            };
         String url = req.getRequestURI();
         System.out.println("Url is "+url);
         if (session == null || !session.isLoggedIn()) {

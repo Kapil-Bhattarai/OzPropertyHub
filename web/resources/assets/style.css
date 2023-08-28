@@ -378,3 +378,25 @@ h2{font-size: 25px;}
 .footer .col-sm-3{margin-bottom: 30px;}
 .agents img{ margin-bottom: 20px;}
 }
+
+
+.agent-header-wrapper {
+    display: flex;
+    width: 96%;
+    margin: 20px auto 10px;
+}
+
+.agent-header-wrapper h4 {
+    flex: 1;
+}
+
+.agent-header-wrapper a {
+    width: auto;
+}
+
+.features input {
+    height: 15px;
+    width: 15px;
+    margin-right: 15px;
+    margin-bottom: 5px;
+}

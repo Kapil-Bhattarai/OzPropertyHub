@@ -1,5 +1,6 @@
 package oz.property;
 
+import jakarta.mail.Address;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 import java.io.Serializable;
@@ -10,11 +11,24 @@ import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import static jakarta.persistence.GenerationType.IDENTITY;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.NamedQueries;
+import jakarta.persistence.NamedQuery;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import java.util.List;
+import oz.PropertyType;
 import oz.UserType;
+import oz.address.AddressEntity;
+import oz.property_image.PropertyImageEntity;
+import oz.user.UserEntity;
 
 @Entity
 @Table(name = "OZ_PROPERTY")
+@NamedQueries( {
+    @NamedQuery(name = "PropertyEntity.getPropertiesByAgent", query = "SELECT p FROM PropertyEntity p WHERE p.agent.id = :id")
+})
 public class PropertyEntity implements Serializable {
 
    
@@ -28,7 +42,7 @@ public class PropertyEntity implements Serializable {
 
     @Column(name = "propertyType")
     @Enumerated(EnumType.STRING)
-    private UserType type;
+    private PropertyType type;
 
     @Column(name = "inspection")
     @Temporal(TemporalType.TIMESTAMP)
@@ -40,6 +54,9 @@ public class PropertyEntity implements Serializable {
 
     @Column(name = "hasAc")
     private Boolean hasAc = false;
+    
+    @Column(name = "mainImage")
+    private String mainImage;
 
     @Column(name = "hasSecureParking")
     private Boolean hasSecureParking = false;
@@ -59,6 +76,17 @@ public class PropertyEntity implements Serializable {
     @Column(name = "noOfBathroom")
     private int noOfBathroom = 0;
 
+    @OneToOne
+    @JoinColumn(name = "addressId")
+    private AddressEntity address;
+    
+    @OneToOne
+    @JoinColumn(name = "agentId")
+    private UserEntity agent;
+    
+    @OneToMany
+    private List<PropertyImageEntity> images;
+    
     public Integer getPid() {
         return pid;
     }
@@ -75,11 +103,11 @@ public class PropertyEntity implements Serializable {
         this.rent = rent;
     }
 
-    public UserType getType() {
+    public PropertyType getType() {
         return type;
     }
 
-    public void setType(UserType type) {
+    public void setType(PropertyType type) {
         this.type = type;
     }
 
@@ -154,7 +182,39 @@ public class PropertyEntity implements Serializable {
     public void setNoOfBathroom(int noOfBathroom) {
         this.noOfBathroom = noOfBathroom;
     }
-    
 
+    public AddressEntity getAddress() {
+        return address;
+    }
+
+    public void setAddress(AddressEntity address) {
+        this.address = address;
+    }
+
+    public UserEntity getAgent() {
+        return agent;
+    }
+
+    public void setAgent(UserEntity agent) {
+        this.agent = agent;
+    }
+
+    public String getMainImage() {
+        return mainImage;
+    }
+
+    public void setMainImage(String mainImage) {
+        this.mainImage = mainImage;
+    }
+
+    public List<PropertyImageEntity> getImages() {
+        return images;
+    }
+
+    public void setImages(List<PropertyImageEntity> images) {
+        this.images = images;
+    }
+
+    
     public PropertyEntity() {}
 }
