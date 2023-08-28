@@ -33,7 +33,7 @@
     <body>
 
         <div id="content">
-            <h:outputText value="#{userBean}"></h:outputText>
+            <!--<h:outputText value="#{userBean}"></h:outputText>-->
 
             <!-- Header Starts -->
             <div class="navbar-wrapper">
@@ -60,11 +60,11 @@
 
                                     <li><h:outputLink value="#{request.contextPath}/index.faces" rendered="#{userBean.id == null}">Home</h:outputLink><br/></li>
                                     <li><h:outputLink value="#{request.contextPath}/agents.faces" rendered="#{userBean.id == null}">Agents</h:outputLink><br/></li>
-                                    <li><h:outputLink value="#{request.contextPath}/blog.faces" rendered="#{userBean.id == null}">Blog</h:outputLink><br/></li>
-                                    <li><h:outputLink value="#{request.contextPath}/blogdetail.faces" rendered="#{userBean.id == null}">Blog Detail</h:outputLink><br/></li>
+<!--                                 <li><h:outputLink value="#{request.contextPath}/blog.faces" rendered="#{userBean.id == null}">Blog</h:outputLink><br/></li>
+                                    <li><h:outputLink value="#{request.contextPath}/blogdetail.faces" rendered="#{userBean.id == null}">Blog Detail</h:outputLink><br/></li>-->
                                     <li><h:outputLink value="#{request.contextPath}/contact.faces" rendered="#{userBean.id == null}">Contact</h:outputLink><br/></li>
-                                    <li><h:outputLink value="#{request.contextPath}/buysalerent.faces" rendered="#{userBean.id == null}">Buy Sell</h:outputLink><br/></li>
-                                    <li><h:outputLink value="#{request.contextPath}/property-detail.faces" rendered="#{userBean.id == null}">Property Detail</h:outputLink><br/></li>
+                                    <li><h:outputLink value="#{request.contextPath}/listing.faces" rendered="#{userBean.id == null}">Rent</h:outputLink><br/></li>
+                                    <!--<li><h:outputLink value="#{request.contextPath}/property-detail.faces" rendered="#{userBean.id == null}">Property Detail</h:outputLink><br/></li>-->
 
                                     <li><h:outputLink value="#{request.contextPath}/join.faces" rendered="#{userBean.id == null}" >Login</h:outputLink><br/></li>
                                     <li><h:outputLink value="#{request.contextPath}/signup.faces" rendered="#{userBean.id == null}">Sign up</h:outputLink><br/></li>

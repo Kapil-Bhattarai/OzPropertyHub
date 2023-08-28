@@ -44,6 +44,7 @@ public class UserController {
     @PostConstruct
     public void init() {
         ozUser = new UserEntity();
+        registerAdmin();
     }
 
     public String loginUser() {
@@ -128,7 +129,7 @@ public class UserController {
 
     }
     
-    public String registerUser() {
+       public String registerUser() {
         FacesContext context = FacesContext.getCurrentInstance();
         UserEntity user = userEJB.getUserbyEmail(email);
         if (user == null) {
@@ -170,6 +171,23 @@ public class UserController {
 
         }
 
+    }
+       
+    public void registerAdmin() {
+        UserEntity user = userEJB.getUserbyEmail("admin@gmail.com");
+        if (user == null) {
+            user = new UserEntity();
+            user.setFirstName("admin");
+            user.setLastName("Deo");
+            user.setPassword(HashConvert("password"));
+            user.setPhone("123456789");
+            user.setAddress("200,Kent Street, NSW, Australia");
+            user.setType(UserType.ADMIN);
+            user.setSince(new Date());
+            user.setIsLive(true);
+            user.setEmail("admin@gmail.com");
+            userEJB.addUser(user);
+        } 
     }
 
     private void setUserData(UserEntity user) {
