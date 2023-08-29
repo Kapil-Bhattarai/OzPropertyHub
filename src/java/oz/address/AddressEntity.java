@@ -28,6 +28,9 @@ public class AddressEntity implements Serializable {
     @Column(name = "unit", nullable = false)
     private String unit;
     
+    @Column(name = "street_number", nullable = false)
+    private String street_number;
+    
     @Column(name = "street_name", nullable = false)
     private String street_name;
     
@@ -90,13 +93,23 @@ public class AddressEntity implements Serializable {
         this.state = state;
     }
 
-    public AddressEntity(Integer id, String unit, String street_name, String suburb, String postcode, StateType state) {
+    public String getStreet_number() {
+        return street_number;
+    }
+
+    public void setStreet_number(String street_number) {
+        this.street_number = street_number;
+    }
+
+    
+    public AddressEntity(Integer id, String unit, String street_name, String street_number, String suburb, String postcode, StateType state) {
         this.id = id;
         this.unit = unit;
         this.street_name = street_name;
         this.suburb = suburb;
         this.postcode = postcode;
         this.state = state;
+        this.street_number = street_number;
     }
     
 

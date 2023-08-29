@@ -27,7 +27,8 @@ import oz.user.UserEntity;
 @Entity
 @Table(name = "OZ_PROPERTY")
 @NamedQueries( {
-    @NamedQuery(name = "PropertyEntity.getPropertiesByAgent", query = "SELECT p FROM PropertyEntity p WHERE p.agent.id = :id")
+    @NamedQuery(name = "PropertyEntity.getPropertiesByAgent", query = "SELECT p FROM PropertyEntity p WHERE p.agent.id = :id"),
+    @NamedQuery(name = "PropertyEntity.getProperty", query = "SELECT p FROM PropertyEntity p WHERE p.pid = :id")
 })
 public class PropertyEntity implements Serializable {
 
@@ -75,6 +76,9 @@ public class PropertyEntity implements Serializable {
 
     @Column(name = "noOfBathroom")
     private int noOfBathroom = 0;
+    
+    @Column(name = "noOfBedroom")
+    private int noOfBedroom = 0;
 
     @OneToOne
     @JoinColumn(name = "addressId")
@@ -213,6 +217,14 @@ public class PropertyEntity implements Serializable {
 
     public void setImages(List<PropertyImageEntity> images) {
         this.images = images;
+    }
+
+    public int getNoOfBedroom() {
+        return noOfBedroom;
+    }
+
+    public void setNoOfBedroom(int noOfBedroom) {
+        this.noOfBedroom = noOfBedroom;
     }
 
     
