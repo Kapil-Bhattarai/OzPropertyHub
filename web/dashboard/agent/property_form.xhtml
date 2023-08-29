@@ -7,7 +7,7 @@
       xmlns:p="http://primefaces.org/ui"
       >
 
-    <ui:composition template="layout.xhtml">
+    <ui:composition template="../../layout.xhtml">
 
         <ui:define name="title">Oz Property Hub</ui:define>
 
@@ -39,16 +39,24 @@
                                         </div>
                                         <div class="col-lg-6">
                                             <h:outputLabel value="Street Name and Number"/>
-                                            <h:inputText  class="form-control"  value="#{propertyBean.streetName}" required="true" requiredMessage="Required!" id="streetName" />
-                                            <h:messages errorStyle="color:red" for="streetName" layout="table"/>
+                                            <h:inputText  class="form-control"  value="#{propertyBean.streetNumber}" required="true" requiredMessage="Required!" id="streetNumber" />
+                                            <h:messages errorStyle="color:red" for="streetNumber" layout="table"/>
                                         </div>
                                     </div>
                                     <div class="row">
+                                         <div class="col-lg-6">
+                                            <h:outputLabel value="Street Name and Number"/>
+                                            <h:inputText  class="form-control"  value="#{propertyBean.streetName}" required="true" requiredMessage="Required!" id="streetName" />
+                                            <h:messages errorStyle="color:red" for="streetName" layout="table"/>
+                                        </div>
                                         <div class="col-lg-6">
                                             <h:outputLabel value="Suburb"/>
                                             <h:inputText  class="form-control"  value="#{propertyBean.suburb}" required="true" requiredMessage="Required!" id="suburb" />
                                             <h:messages errorStyle="color:red" for="suburb" layout="table"/>
                                         </div>
+                                    </div>
+
+                                    <div class="row">
                                         <div class="col-lg-6">
                                             <h:outputLabel value="State"/>
                                             <h:selectOneMenu value="#{propertyBean.state}" required="true" requiredMessage="Required!">
@@ -57,9 +65,6 @@
                                             </h:selectOneMenu>
                                             <h:messages errorStyle="color:red" for="state" layout="table"/>
                                         </div>
-                                    </div>
-
-                                    <div class="row">
                                         <div class="col-lg-6">
                                             <h:outputLabel value="Post Code"/>
                                             <h:inputText  class="form-control"  value="#{propertyBean.postCode}" required="true" requiredMessage="Required!" id="postCode" />

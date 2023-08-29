@@ -12,7 +12,7 @@
         <ui:define name="content">
             <div class="agent-header-wrapper">
             <h4>Agent Dashboard</h4>
-            <a class="btn btn-success" href="#{request.contextPath}/property_form.faces">Add Property</a>
+            <a class="btn btn-success" href="#{request.contextPath}/dashboard/agent/property_form.faces">Add Property</a>
             </div>
              <table id="tableContent">
                 <thead>
@@ -20,6 +20,7 @@
                         <th>Property</th>
                         <th>Address</th>
                         <th>Rent</th>
+                        <th>Actions</th>
                         
                     </tr>
                 </thead>
@@ -29,6 +30,12 @@
                             <td><img style="height: 100px; width: 100px;" src="#{request.contextPath}/uploaded-images/#{property.mainImage}" /></td>
                             <td>#{property.address.unit}, #{property.address.street_name}, #{property.address.suburb}</td>
                             <td>#{property.rent}</td>
+                            <td>
+                                <h:form>
+                                    <h:commandButton value="Edit" action="#{propertyBean.editProperty(property)}" />
+                                    <h:commandButton value="Delete" action="#{propertyBean.deleteProperty(property)}" />
+                                </h:form>
+                            </td>
                         </tr>
                     </f:forEach>
                 </tbody>
