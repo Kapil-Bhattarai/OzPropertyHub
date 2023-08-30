@@ -99,14 +99,11 @@
                                 <div class="col-lg-7 col-sm-7">
                                     <h5>Search with Suburb, Zip-code or Street name</h5>
 
-                                    <h:inputText  class="form-control" value="#{ozglobalbean.searchText}"  onfocus="if (this.value === 'Search property...')
-                                                this.value = '';" 
-                                                  onblur="if (this.value === '')
-                                                              this.value = 'Search property...';" />
+                                    <h:inputText  class="form-control" value="#{ozglobalbean.searchText}" />
                                     <div class="row"> 
                                         <div class="col-lg-3">
 
-                                          <h:selectOneMenu class="form-control" value="#{ozglobalbean.rent}">
+                                            <h:selectOneMenu class="form-control" value="#{ozglobalbean.rent}">
                                                 <f:selectItem  itemValue="0-300" itemLabel ="below $300/w"/>
                                                 <f:selectItem  itemValue="300-400" itemLabel="$300 - $400/w"/>
                                                 <f:selectItem  itemValue="400-500" itemLabel="$400 - $500/w" />
@@ -116,19 +113,17 @@
                                         </div>
                                         <div class="col-lg-3">
                                             <h:selectOneMenu class="form-control" value="#{ozglobalbean.propertyType}">
-                                                <f:selectItem itemLabel="Select property type..." itemValue="" />
                                                 <f:selectItems value="#{ozglobalbean.propertyTypes}" />
                                             </h:selectOneMenu>
                                         </div>
                                         <div class="col-lg-3">
                                             <h:selectOneMenu class="form-control" value="#{ozglobalbean.state}" >
-                                                <f:selectItem itemLabel="Select state..." itemValue="" />
                                                 <f:selectItems value="#{ozglobalbean.states}" />
                                             </h:selectOneMenu>
 
                                         </div>
                                         <div class="col-lg-3">
-                                            <button class="btn btn-success"  onclick="window.location.href = 'listing.faces'">Find Now</button>
+                                          <h:commandButton styleClass="btn btn-success" value="Find Now" action="listing.faces?faces-redirect=true" />                      
                                         </div>
                                     </div>
 
@@ -136,13 +131,18 @@
                             </div>
                         </div>
                     </h:form>
-                    
-                    
+
+
                 </div>
             </div>
             <!-- banner -->
             <div class="container">
-                <div class="properties-listing spacer"> <a href="listing.faces" class="pull-right viewall">View All Listing</a>
+
+                <div class="properties-listing spacer"> 
+                    <h:form>
+                        <h:commandButton styleClass="pull-right viewall" value="View All" action="#{ozglobalbean.clearFilter('listing.faces?faces-redirect=true')}" />                      
+                    </h:form>
+
                     <h2>Featured Properties</h2>
                     <div id="owl-example" class="owl-carousel">
                         <div class="properties">

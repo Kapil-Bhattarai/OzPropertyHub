@@ -31,6 +31,7 @@ import oz.user.UserEntity;
     @NamedQuery(name = "PropertyEntity.getPropertiesByAgent", query = "SELECT p FROM PropertyEntity p WHERE p.agent.id = :id"),
     @NamedQuery(name = "PropertyEntity.getProperty", query = "SELECT p FROM PropertyEntity p WHERE p.pid = :id"),
     @NamedQuery(name = "PropertyEntity.deletePropertyById", query = "DELETE FROM PropertyEntity p WHERE p.pid = :id"),
+    @NamedQuery(name = "PropertyEntity.getAll", query = "SELECT p FROM PropertyEntity p"),
     @NamedQuery(
             name = "PropertyEntity.search",
             query = "SELECT p FROM PropertyEntity p WHERE"
@@ -45,8 +46,8 @@ import oz.user.UserEntity;
             + " AND (:noOfParking IS NULL OR p.noOfParking >= :noOfParking)"
             + " AND (:noOfBathroom IS NULL OR p.noOfBathroom >= :noOfBathroom)"
             + " AND (:noOfBedroom IS NULL OR p.noOfBedroom >= :noOfBedroom)"
-            + " AND (:searchText IS NULL OR p.address.suburb = :searchText)" 
-            + " OR (:searchText IS NULL OR p.address.postcode = :searchText)"
+            + " AND (:state IS NULL OR p.address.state = :state)" 
+            + " AND (:searchText IS NULL OR (p.address.suburb = :searchText OR p.address.postcode = :searchText))"
     )
 })
 public class PropertyEntity implements Serializable {
@@ -55,6 +56,7 @@ public class PropertyEntity implements Serializable {
     public static final String QUERY_GET_PROPERTY_BY_AGENT = "PropertyEntity.getPropertiesByAgent";
     public static final String QUERY_GET_PROPERTY = "PropertyEntity.getProperty";
     public static final String QUERY_DELETE_PROPERTY_BY_ID = "PropertyEntity.deletePropertyById";
+    public static final String QUERY_GET_ALL = "PropertyEntity.getAll";
 
     @Id
     @jakarta.persistence.GeneratedValue(strategy = IDENTITY)

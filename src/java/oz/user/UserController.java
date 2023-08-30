@@ -186,7 +186,7 @@ public class UserController {
             user.setPassword(password);
             user.setPhone(phone);
             user.setAddress(address);
-            user.setType(UserType.ADMIN);
+            user.setType(type);
             user.setSince(new Date());
             user.setIsLive(isLive);
             user.setEmail(email);

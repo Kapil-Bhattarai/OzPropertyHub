@@ -15,21 +15,18 @@
             <h:form>
                 <div class="container">
                     <div class="properties-listing spacer">
-<!--                        <h:outputText value="#{ozglobalbean}"></h:outputText>-->
+                        <h:outputText value="#{ozglobalbean}"></h:outputText>
                         <div class="row">
                             <div class="col-lg-3 col-sm-4 ">
 
                                 <div class="search-form"><h4><span class="glyphicon glyphicon-search"></span> Search for</h4>
 
-                                    <h:inputText  class="form-control" value="#{ozglobalbean.searchText}"  onfocus="if (this.value === 'Search property...')
-                                                this.value = '';" 
-                                                  onblur="if (this.value === '')
-                                                              this.value = 'Search property...';" />
+                                    <h:inputText class="form-control" value="#{ozglobalbean.searchText}" id="searchText"/>
+                                    <!--                                     <h:messages errorStyle="color:red" for="searchText" layout="table" />-->
                                     <div class="row">
                                         <div class="col-lg-6">
                                             <h:selectOneMenu class="form-control" value="#{ozglobalbean.state}">
-                                                <f:selectItem itemLabel="Select state..." itemValue="" />
-                                                <f:selectItems value="#{ozglobalbean.states}" />
+                                                <f:selectItems  value="#{ozglobalbean.states}" />
                                             </h:selectOneMenu>
                                         </div>
                                         <div class="col-lg-6">
@@ -46,7 +43,6 @@
 
                                         <div class="col-lg-6">
                                             <h:selectOneMenu class="form-control" value="#{ozglobalbean.propertyType}">
-                                                <f:selectItem itemLabel="Type" itemValue="" />
                                                 <f:selectItems value="#{ozglobalbean.propertyTypes}" />
                                             </h:selectOneMenu>
                                         </div>
@@ -112,7 +108,7 @@
                                         </div>
                                     </div>
                                     <br/>
-                                    <h:commandButton value="Filter" class="btn btn-success" action="#{ozglobalbean.getPropertyWithFilters}" />
+                                    <h:commandButton value="Filter" class="btn btn-success" action="#{ozglobalbean.searchProperty}" />
 
                                 </div>
 
@@ -121,36 +117,40 @@
                             <div class="col-lg-9 col-sm-8">
 
                                 <div class="row">
+<!--                                    <h:outputText value="#{ozglobalbean.properties}"></h:outputText>-->
+                                 
+                                        <l:forEach items="#{ozglobalbean.properties}" var="property">       
+                                            <!-- properties -->
+                                               <l:if test="#{property != null}">
+                                            <div class="col-lg-4 col-sm-6" rendered="#{ozglobalbean.showListing()}">
+                                                <!--<h:outputText value="#{property}"></h:outputText>-->
+    <!--                                               <h:outputText value="#{ozglobalbean.properties}"></h:outputText>-->
+                                                <div class="properties">
+                                                    <div class="image-holder">
 
+                                                        <img class="img-responsive" src="#{request.contextPath}/uploaded-images/#{property.mainImage}" />
 
-                                    <l:forEach items="#{ozglobalbean.properties}" var="property">       
-                                        <!-- properties -->
-                                        <div class="col-lg-4 col-sm-6">
-<!--                                            <h:outputText value="#{property}"></h:outputText>-->
-                                            <div class="properties">
-                                                <div class="image-holder">
-                                                  
-                                            <img class="img-responsive" src="#{request.contextPath}/uploaded-images/#{property.mainImage}" />
-                                                    
-                                            <div class="status new">New</div>
+                                                        <div class="status new">New</div>
+                                                    </div>
+
+                                                    <h4><h:outputLink value="#{request.contextPath}/property-detail.faces?id=#{property.pid}">
+                                                            #{property.address.unit}, #{property.address.street_number}, #{property.address.street_name}, #{property.address.suburb}
+                                                        </h:outputLink></h4>
+                                                    <h:outputText value="#{property.rent} / week" styleClass="price" /> <br/>
+                                                    <div class="listing-detail">
+                                                        <span data-toggle="tooltip" data-placement="bottom" data-original-title="Bed Room">#{property.noOfBedroom}</span> 
+                                                        <span data-toggle="tooltip" data-placement="bottom" data-original-title="Parking">#{property.noOfParking}</span> 
+                                                        <span data-toggle="tooltip" data-placement="bottom" data-original-title="Bathroom">#{property.noOfBathroom}</span>
+                                                    </div>
+                                                    <h:outputLink styleClass="btn btn-success" value="#{request.contextPath}/property-detail.faces?id=#{property.pid}">
+                                                        View Details
+                                                    </h:outputLink>
                                                 </div>
-                                                
-                                                <h4><h:outputLink value="#{request.contextPath}/property-detail.faces?id=#{property.pid}">
-                                                        #{property.address.unit}, #{property.address.street_number}, #{property.address.street_name}, #{property.address.suburb}
-                                                    </h:outputLink></h4>
-                                                <h:outputText value="#{property.rent} / week" styleClass="price" /> <br/>
-                                                <div class="listing-detail">
-                                                    <span data-toggle="tooltip" data-placement="bottom" data-original-title="Bed Room">#{property.noOfBedroom}</span> 
-                                                    <span data-toggle="tooltip" data-placement="bottom" data-original-title="Parking">#{property.noOfParking}</span> 
-                                                    <span data-toggle="tooltip" data-placement="bottom" data-original-title="Bathroom">#{property.noOfBathroom}</span>
-                                                </div>
-                                                <h:outputLink styleClass="btn btn-success" value="#{request.contextPath}/property-detail.faces?id=#{property.pid}">
-                                                    View Details
-                                                </h:outputLink>
                                             </div>
-                                        </div>
-                                        <!-- properties -->
-                                    </l:forEach>
+                                            <!-- properties -->
+                                                 </l:if>
+                                        </l:forEach>
+                               
                                 </div>
                             </div>
                         </div>

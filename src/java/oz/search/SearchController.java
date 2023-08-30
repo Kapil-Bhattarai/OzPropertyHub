@@ -13,9 +13,9 @@ import oz.property.PropertyEntity;
 @SessionScoped
 public class SearchController {
 
-    private StateType state;
-    private PropertyType propertyType;
-    private String rent;
+    private StateType state = StateType.NSW;
+    private PropertyType propertyType = PropertyType.APARTMENT;
+    private String rent = "0-300";
     private Integer lowerBound;
     private Integer upperBound;
     private String searchText;
@@ -132,16 +132,24 @@ public class SearchController {
         this.noOfParking = noOfParking;
     }
 
-    public void getPropertyWithFilters() {
-        List<PropertyEntity> properties = searchEJB.getPropertyWithFilters(searchText, lowerBound, upperBound,
-                propertyType, hasAc, hasSecureParking,
-                hasDishwater, hasBalcony, hasWardrobe, Integer.parseInt(noOfParking),
-                Integer.parseInt(noOfBathroom), Integer.parseInt(noOfBedroom));
+    public void searchProperty() {
+        List<PropertyEntity> properties = new ArrayList();
+        properties.addAll(searchEJB.getPropertyWithFilters(searchText, state, lowerBound, upperBound,
+        propertyType, hasAc, hasSecureParking,
+        hasDishwater, hasBalcony, hasWardrobe, Integer.parseInt(noOfParking),
+        Integer.parseInt(noOfBathroom), Integer.parseInt(noOfBedroom)));
         this.properties.clear();
         this.properties.addAll(properties);
         System.out.println("search properties " + this.properties + " Size is " + this.properties.size());
     }
 
+//    public void getPropertyWithoutFilters() {
+//        List<PropertyEntity> properties = searchEJB.getPropertyWithoutFilters();
+//        this.properties.clear();
+//        this.properties.addAll(properties);
+//        System.out.println("search properties " + this.properties + " Size is " + this.properties.size());
+//    }
+    
     public String getRent() {
         return rent;
     }
@@ -188,6 +196,35 @@ public class SearchController {
         return userId == null;
     }
 
+    public String clearFilter(String path) {
+        this.hasAc = false;
+        this.hasBalcony = false;
+        this.hasDishwater = false;
+        this.hasSecureParking = false;
+        this.hasWardrobe = false;
+        
+        this.noOfBathroom = "0";
+        this.noOfParking = "0";
+        this.noOfBedroom = "0";
+        
+        this.lowerBound = 0;
+        this.upperBound = Integer.MAX_VALUE;
+        
+        this.rent = "";
+        this.propertyType = null;
+        this.searchText = null;
+        this.state = StateType.NSW;
+        
+        this.properties.clear();
+         
+        return path;
+    }
+    
+    
+    public boolean showListing() {
+       return this.properties.size() > 0;
+    }
+    
     @Override
     public String toString() {
         return "SearchController{" + "state=" + state + ", propertyType=" + propertyType + ", rent=" + rent + ", lowerBound=" + lowerBound + ", upperBound=" + upperBound + ", searchText=" + searchText + ", hasBalcony=" + hasBalcony + ", hasDishwater=" + hasDishwater + ", hasAc=" + hasAc + ", hasSecureParking=" + hasSecureParking + ", hasWardrobe=" + hasWardrobe + ", noOfBedroom=" + noOfBedroom + ", noOfBathroom=" + noOfBathroom + ", noOfParking=" + noOfParking + ", properties=" + properties + ", searchEJB=" + searchEJB + '}';
