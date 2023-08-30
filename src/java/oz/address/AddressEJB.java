@@ -3,8 +3,6 @@ package oz.address;
 import jakarta.ejb.Stateless;
 import oz.OzEJB;
 
-
-
 @Stateless
 public class AddressEJB  extends OzEJB {
     public Boolean addAddress(AddressEntity address) {
@@ -14,5 +12,9 @@ public class AddressEJB  extends OzEJB {
         } catch (Exception e) {
             return false;
         }
+    }
+    
+    public AddressEntity updateAddress(AddressEntity address) {
+        return entityManager.merge(address);
     }
 }

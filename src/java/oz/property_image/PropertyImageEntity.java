@@ -36,7 +36,7 @@ public class PropertyImageEntity implements Serializable {
     @Column(name = "image")
     private String image;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "pid")
     private PropertyEntity property;
 

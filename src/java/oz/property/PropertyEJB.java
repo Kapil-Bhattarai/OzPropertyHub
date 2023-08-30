@@ -37,4 +37,8 @@ public class PropertyEJB extends OzEJB {
             return null;
         }
     }
+    
+    public PropertyEntity updateProperty(PropertyEntity property) {
+        return entityManager.merge(property);
+    }
 }
