@@ -207,11 +207,22 @@ public class SearchController {
         String[] bounds = range.split("-");
 
         if (bounds.length == 2) {
-            this.lowerBound = Integer.parseInt(bounds[0]);
-            this.upperBound = Integer.parseInt(bounds[1]);
+            String lower = bounds[0];
+            String upper = bounds[1];
+            if (!lower.equalsIgnoreCase("below")) {
+                 this.lowerBound = Integer.parseInt(bounds[0]);
+            } else {
+                this.lowerBound = 0;
+            }
+            if (!upper.equalsIgnoreCase("above")) {
+                this.upperBound = Integer.parseInt(bounds[1]);
+            } else {
+                 this.upperBound = Integer.MAX_VALUE;
+            }
+            
         } else {
             this.lowerBound =0;
-            this.upperBound = 0;
+            this.upperBound = Integer.MAX_VALUE;
         }
     }
 
