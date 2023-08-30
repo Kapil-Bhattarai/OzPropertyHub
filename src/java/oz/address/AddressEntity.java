@@ -10,7 +10,6 @@ import jakarta.persistence.Enumerated;
 import static jakarta.persistence.GenerationType.IDENTITY;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import oz.PropertyType;
 import oz.StateType;
 
 

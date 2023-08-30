@@ -1,6 +1,5 @@
 package oz.property;
 
-import jakarta.mail.Address;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
@@ -22,7 +21,6 @@ import jakarta.persistence.Table;
 import java.util.ArrayList;
 import java.util.List;
 import oz.PropertyType;
-import oz.UserType;
 import oz.address.AddressEntity;
 import oz.property_image.PropertyImageEntity;
 import oz.user.UserEntity;
@@ -37,7 +35,7 @@ import oz.user.UserEntity;
             name = "PropertyEntity.search",
             query = "SELECT p FROM PropertyEntity p WHERE"
             + "(:lowerRent IS NULL OR p.rent >= :lowerRent)"
-            + " AND (:upperRent IS NULL OR p.rent <= :upperRent)" 
+            + " AND (:upperRent IS NULL OR p.rent <= :upperRent)"
             + " AND (:type IS NULL OR p.type = :type)"
             + " AND (:hasAc IS NULL OR p.hasAc = :hasAc)"
             + " AND (:hasSecureParking IS NULL OR p.hasSecureParking = :hasSecureParking)"
@@ -261,5 +259,5 @@ public class PropertyEntity implements Serializable {
     public String toString() {
         return "PropertyEntity{" + "pid=" + pid + ", rent=" + rent + ", type=" + type + ", inspection=" + inspection + ", listedDate=" + listedDate + ", hasAc=" + hasAc + ", mainImage=" + mainImage + ", hasSecureParking=" + hasSecureParking + ", hasDishWasher=" + hasDishWasher + ", hasBalcony=" + hasBalcony + ", hasWardrobe=" + hasWardrobe + ", noOfParking=" + noOfParking + ", noOfBathroom=" + noOfBathroom + ", noOfBedroom=" + noOfBedroom + ", address=" + address + ", agent=" + agent + ", images=" + images + '}';
     }
-    
+
 }

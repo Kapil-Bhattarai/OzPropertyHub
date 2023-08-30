@@ -5,16 +5,13 @@
 package oz.property;
 
 import oz.property_image.PropertyImageEJB;
-import static com.sun.faces.facelets.util.Path.context;
 import jakarta.annotation.PostConstruct;
 import jakarta.ejb.EJB;
 import jakarta.faces.application.FacesMessage;
 import jakarta.faces.bean.ManagedBean;
 import jakarta.faces.bean.ManagedProperty;
-import jakarta.faces.bean.SessionScoped;
 import jakarta.faces.bean.ViewScoped;
 import jakarta.faces.context.FacesContext;
-import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.servlet.http.Part;
@@ -29,8 +26,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import org.eclipse.persistence.jpa.jpql.parser.DateTime;
-import org.primefaces.model.file.UploadedFile;
 import org.primefaces.model.file.UploadedFiles;
 import oz.PropertyType;
 import oz.StateType;
