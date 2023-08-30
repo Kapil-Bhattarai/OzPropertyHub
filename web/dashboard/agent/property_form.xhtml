@@ -38,14 +38,14 @@
                                             <h:messages errorStyle="color:red" for="unitNumber" layout="table"/>
                                         </div>
                                         <div class="col-lg-6">
-                                            <h:outputLabel value="Street Name and Number"/>
+                                            <h:outputLabel value="Street Number"/>
                                             <h:inputText  class="form-control"  value="#{propertyBean.streetNumber}" required="true" requiredMessage="Required!" id="streetNumber" />
                                             <h:messages errorStyle="color:red" for="streetNumber" layout="table"/>
                                         </div>
                                     </div>
                                     <div class="row">
-                                         <div class="col-lg-6">
-                                            <h:outputLabel value="Street Name and Number"/>
+                                        <div class="col-lg-6">
+                                            <h:outputLabel value="Street Name"/>
                                             <h:inputText  class="form-control"  value="#{propertyBean.streetName}" required="true" requiredMessage="Required!" id="streetName" />
                                             <h:messages errorStyle="color:red" for="streetName" layout="table"/>
                                         </div>
@@ -79,6 +79,9 @@
                                             <h:outputLabel value="Main Image"/>
                                             <h:inputFile  class="form-control"  value="#{propertyBean.mainImage}" id="mainImage" />
                                             <h:messages errorStyle="color:red" for="mainImage" layout="table"/>
+                                            <h:panelGroup rendered="#{not empty propertyBean.mainImageUrl}">
+                                                <img style="height: 50px;width:50px;margin-bottom: 20px;" src="#{request.contextPath}/uploaded-images/#{propertyBean.mainImageUrl}" alt="Property Image" />
+                                            </h:panelGroup>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -86,7 +89,28 @@
                                             <h:outputLabel value="Additional Images"/>
                                             <p:fileUpload value="#{propertyBean.additionalImages}"  multiple="true" mode="simple" dragDropSupport="true" />
                                         </div>
+
                                     </div>
+                                    <h:panelGroup rendered="#{not empty propertyBean.additionalImagesE}">
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <h:outputLabel value="Images" />
+                                                <p:dataList value="#{propertyBean.additionalImagesE}" var="image" id="foo_m">
+                                                    <div class="agent-prop-image-container">
+                                                        <img src="#{request.contextPath}/uploaded-images/#{image.image}" alt="Property Image" />
+
+
+
+                                                        <h:commandButton value="Remove"  action="#{propertyBean.removeImage(image)}">
+                                                            <f:ajax execute="@this" render="foo_m" />
+                                                        </h:commandButton>
+
+                                                    </div>
+                                                </p:dataList>
+                                            </div>
+                                        </div>
+
+                                    </h:panelGroup>
                                     <div class="row">
                                         <div class="col-lg-6">
                                             <h:outputLabel value="Property"/>
@@ -165,6 +189,7 @@
                                 </div>
 
                                 <h:commandButton value="Submit"  class="btn btn-success" action="#{propertyBean.submit}" />
+
 
                             </h:form>
                         </div>
