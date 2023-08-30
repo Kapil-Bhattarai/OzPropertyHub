@@ -45,6 +45,8 @@ import oz.user.UserEntity;
             + " AND (:noOfParking IS NULL OR p.noOfParking >= :noOfParking)"
             + " AND (:noOfBathroom IS NULL OR p.noOfBathroom >= :noOfBathroom)"
             + " AND (:noOfBedroom IS NULL OR p.noOfBedroom >= :noOfBedroom)"
+            + " AND (:searchText IS NULL OR p.address.suburb = :searchText)" 
+            + " OR (:searchText IS NULL OR p.address.postcode = :searchText)"
     )
 })
 public class PropertyEntity implements Serializable {

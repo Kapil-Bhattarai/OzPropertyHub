@@ -133,7 +133,7 @@ public class SearchController {
     }
 
     public void getPropertyWithFilters() {
-        List<PropertyEntity> properties = searchEJB.getPropertyWithFilters(lowerBound, upperBound,
+        List<PropertyEntity> properties = searchEJB.getPropertyWithFilters(searchText, lowerBound, upperBound,
                 propertyType, hasAc, hasSecureParking,
                 hasDishwater, hasBalcony, hasWardrobe, Integer.parseInt(noOfParking),
                 Integer.parseInt(noOfBathroom), Integer.parseInt(noOfBedroom));

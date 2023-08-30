@@ -13,6 +13,7 @@ import oz.property.PropertyEntity;
 public class SearchEJB extends OzEJB {
 
     public List<PropertyEntity> getPropertyWithFilters(
+            String searchText,
             Integer lowerBound,
             Integer upperBound,
             PropertyType type,
@@ -28,6 +29,7 @@ public class SearchEJB extends OzEJB {
         try {
             TypedQuery<PropertyEntity> query = entityManager.createNamedQuery(PropertyEntity.QUERY_SEARCH_QUERY, PropertyEntity.class);
 
+            query.setParameter("searchText", searchText);
             query.setParameter("lowerRent", lowerBound);
               query.setParameter("upperRent", upperBound);
             query.setParameter("type", type);
