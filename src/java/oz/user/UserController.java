@@ -102,7 +102,6 @@ public class UserController {
 
     public List<UserEntity> getActiveUsersByType(Boolean isActive) {
         List<UserEntity> list = userEJB.getActiveUsersByType(UserType.AGENT, isActive);
-        System.out.println("values of agent " + list.toString());
         return list;
     }
 

@@ -133,10 +133,10 @@ public class SearchController {
     }
 
     public void getPropertyWithFilters() {
-        System.out.println("getPropertyWithFilters");
         List<PropertyEntity> properties = searchEJB.getPropertyWithFilters(lowerBound, upperBound,
                 propertyType, hasAc, hasSecureParking,
-                hasDishwater, hasBalcony, hasWardrobe, Integer.parseInt(noOfParking), Integer.parseInt(noOfBathroom), Integer.parseInt(noOfBedroom));
+                hasDishwater, hasBalcony, hasWardrobe, Integer.parseInt(noOfParking),
+                Integer.parseInt(noOfBathroom), Integer.parseInt(noOfBedroom));
         this.properties.clear();
         this.properties.addAll(properties);
         System.out.println("search properties " + this.properties + " Size is " + this.properties.size());
