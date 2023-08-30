@@ -110,6 +110,10 @@ public class AddressEntity implements Serializable {
         this.state = state;
         this.street_number = street_number;
     }
-    
 
+    @Override
+    public String toString() {
+        return "AddressEntity{" + "id=" + id + ", unit=" + unit + ", street_number=" + street_number + ", street_name=" + street_name + ", suburb=" + suburb + ", postcode=" + postcode + ", state=" + state + '}';
+    }
+    
 }

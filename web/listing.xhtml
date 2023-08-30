@@ -128,19 +128,25 @@
                                         <div class="col-lg-4 col-sm-6">
 <!--                                            <h:outputText value="#{property}"></h:outputText>-->
                                             <div class="properties">
-                                                <div class="image-holder"><img src="resources/images/properties/1.jpg" class="img-responsive" alt="properties"/>
+                                                <div class="image-holder">
+                                                    <h:graphicImage library="images" name="properties/1.jpg" class="img-responsive" rendered="#{property.mainImage == null}"/>
+
+                                                    <h:graphicImage library="images" name="uploaded-images/#{property.mainImage}" rendered="#{property.mainImage != null}"/>
+
                                                     <div class="status new">New</div>
                                                 </div>
-                                                <h4><a href="property-detail.faces">Kingswood</a></h4>
-                                          
-                                                <h:outputText value="#{property.rent}" styleClass="price" />
+                                                <h4><h:outputLink value="#{request.contextPath}/property-detail.faces?id=#{property.pid}">
+                                                        #{property.address.unit}, #{property.address.street_number}, #{property.address.street_name}, #{property.address.suburb}
+                                                    </h:outputLink></h4>
+                                                <h:outputText value="#{property.rent} / week" styleClass="price" /> <br/>
                                                 <div class="listing-detail">
-                                                    <span data-toggle="tooltip" data-placement="bottom" data-original-title="Bed Room">2</span> 
-                                                    <span data-toggle="tooltip" data-placement="bottom" data-original-title="Living Room">1</span>
-                                                    <span data-toggle="tooltip" data-placement="bottom" data-original-title="Parking">1</span> 
-                                                    <span data-toggle="tooltip" data-placement="bottom" data-original-title="Kitchen">1</span>
+                                                    <span data-toggle="tooltip" data-placement="bottom" data-original-title="Bed Room">#{property.noOfBedroom}</span> 
+                                                    <span data-toggle="tooltip" data-placement="bottom" data-original-title="Parking">#{property.noOfParking}</span> 
+                                                    <span data-toggle="tooltip" data-placement="bottom" data-original-title="Bathroom">#{property.noOfBathroom}</span>
                                                 </div>
-                                                <a class="btn btn-primary" href="property-detail.faces">View Details</a>
+                                                <h:outputLink styleClass="btn btn-success" value="#{request.contextPath}/property-detail.faces?id=#{property.pid}">
+                                                    View Details
+                                                </h:outputLink>
                                             </div>
                                         </div>
                                         <!-- properties -->
