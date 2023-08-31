@@ -234,22 +234,6 @@ public class PropertyEntity implements Serializable {
         this.images.add(image);
     }
 
-    public void removeImage(PropertyImageEntity image) {
-//        PropertyImageEntity imageToRemove = null;
-//
-//        for (PropertyImageEntity i : this.images) {
-//            if (i.getId().equals(image.getId())) {
-//                imageToRemove = image;
-//                break;
-//            }
-//        }
-//
-//        // Remove the image from the list
-//        if (imageToRemove != null) {
-//            this.images.remove(imageToRemove);
-//        }
-    }
-
     public PropertyEntity() {
     }
 }

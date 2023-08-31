@@ -310,7 +310,7 @@ public class PropertyController {
         String id = params.get("id");
         if (id != null) {
             PropertyEntity propertyEntity = propertyEJB.getProperty(Integer.parseInt(id));
-            
+
             this.aid = propertyEntity.getAddress().getId();
             this.pid = propertyEntity.getPid();
             this.unitNumber = propertyEntity.getAddress().getUnit();
@@ -340,7 +340,7 @@ public class PropertyController {
         FacesContext context = FacesContext.getCurrentInstance();
 
         try {
-           propertyEntity = new PropertyEntity();
+            propertyEntity = new PropertyEntity();
             if (mainImage != null) {
                 try (InputStream input = mainImage.getInputStream()) {
                     String fileName = getSubmittedFileName(mainImage);
@@ -353,7 +353,7 @@ public class PropertyController {
                         while ((bytesRead = input.read(buffer)) != -1) {
                             output.write(buffer, 0, bytesRead);
                         }
-                        
+
                         propertyEntity.setMainImage(fileName);
                     }
 
@@ -439,7 +439,6 @@ public class PropertyController {
             }
 
             for (PropertyImageEntity removedImage : removedImagesE) {
-                propertyEntity.removeImage(removedImage);
                 propertyImageEJB.removePropertyImage(removedImage);
             }
             propertyEJB.updateProperty(propertyEntity);
