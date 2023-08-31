@@ -41,4 +41,21 @@ public class PropertyEJB extends OzEJB {
     public PropertyEntity updateProperty(PropertyEntity property) {
         return entityManager.merge(property);
     }
+    
+    public String deleteProperty(PropertyEntity property) {
+        
+        try {
+             PropertyEntity propertyToDelete = entityManager.find(PropertyEntity.class, property.getPid());
+        
+        if (propertyToDelete != null) {
+            PropertyEntity managedProperty = entityManager.merge(propertyToDelete); // Re-attach the entity
+            entityManager.remove(managedProperty); // Now remove the managed entity
+        }
+            return "success";
+        } catch (Exception e) {
+            System.out.println("exception value  " + e.getMessage());
+            return null;
+        }
+    }
+     
 }

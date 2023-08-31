@@ -25,7 +25,6 @@ import oz.user.UserEntity;
 
 @Entity
 @Table(name = "OZ_PROPERTY_IMAGE")
-
 public class PropertyImageEntity implements Serializable {
 
     @Id

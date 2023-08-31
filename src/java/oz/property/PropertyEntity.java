@@ -31,7 +31,8 @@ import oz.user.UserEntity;
 @Table(name = "OZ_PROPERTY")
 @NamedQueries({
     @NamedQuery(name = "PropertyEntity.getPropertiesByAgent", query = "SELECT p FROM PropertyEntity p WHERE p.agent.id = :id"),
-    @NamedQuery(name = "PropertyEntity.getProperty", query = "SELECT p FROM PropertyEntity p WHERE p.pid = :id")
+    @NamedQuery(name = "PropertyEntity.getProperty", query = "SELECT p FROM PropertyEntity p WHERE p.pid = :id"),
+    @NamedQuery(name = "PropertyEntity.deletePropertyById", query = "DELETE FROM PropertyEntity p WHERE p.pid = :id")
 })
 public class PropertyEntity implements Serializable {
 
@@ -227,6 +228,26 @@ public class PropertyEntity implements Serializable {
 
     public void setNoOfBedroom(int noOfBedroom) {
         this.noOfBedroom = noOfBedroom;
+    }
+
+    public void addImage(PropertyImageEntity image) {
+        this.images.add(image);
+    }
+
+    public void removeImage(PropertyImageEntity image) {
+//        PropertyImageEntity imageToRemove = null;
+//
+//        for (PropertyImageEntity i : this.images) {
+//            if (i.getId().equals(image.getId())) {
+//                imageToRemove = image;
+//                break;
+//            }
+//        }
+//
+//        // Remove the image from the list
+//        if (imageToRemove != null) {
+//            this.images.remove(imageToRemove);
+//        }
     }
 
     public PropertyEntity() {

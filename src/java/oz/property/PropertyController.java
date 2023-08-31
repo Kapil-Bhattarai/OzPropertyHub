@@ -414,6 +414,8 @@ public class PropertyController {
 
             propertyEntity.setAgent(existingAgent);
 
+            propertyEntity.setImages(additionalImagesE);
+
             if (this.pid != 0) {
                 propertyEntity.setPid(pid);
                 propertyEJB.updateProperty(propertyEntity);
@@ -423,32 +425,38 @@ public class PropertyController {
                 propertyEJB.addProperty(propertyEntity);
             }
 
-            System.out.println("aru");
-            for (org.primefaces.model.file.UploadedFile uploadedFile : additionalImages.getFiles()) {
-                try {
-                    System.out.println("aru2");
-                    String fileName = uploadedFile.getFileName();
-                    String fileLocation = "/Users/louisevanrooyen/codehome/COIT20273/OzPropertyHub/uploads" + "/" + fileName;
-                    try (InputStream inputStream = uploadedFile.getInputStream()) {
-                        Files.copy(inputStream, Paths.get(fileLocation), StandardCopyOption.REPLACE_EXISTING);
-                        PropertyImageEntity pie = new PropertyImageEntity();
-                        pie.setProperty(propertyEntity);
-                        pie.setImage(fileName);
-                        propertyImageEJB.addPropertyImage(pie);
-                    } catch (IOException e) {
-                        System.out.println(e);
+            if (additionalImages.getSize() > 0) {
+                for (org.primefaces.model.file.UploadedFile uploadedFile : additionalImages.getFiles()) {
+                    System.out.println("======>");
+                    System.out.println(additionalImages.getSize());
+                    try {
+                        System.out.println("aru2");
+                        String fileName = uploadedFile.getFileName();
+                        String fileLocation = "/Users/louisevanrooyen/codehome/COIT20273/OzPropertyHub/uploads" + "/" + fileName;
+                        try (InputStream inputStream = uploadedFile.getInputStream()) {
+                            Files.copy(inputStream, Paths.get(fileLocation), StandardCopyOption.REPLACE_EXISTING);
+                            PropertyImageEntity pie = new PropertyImageEntity();
+                            pie.setProperty(propertyEntity);
+                            pie.setImage(fileName);
+                            propertyImageEJB.addPropertyImage(pie);
+                            propertyEntity.addImage(pie);
+                        } catch (IOException e) {
+                            System.out.println(e);
+                            // Handle the exception
+                        }
+                        // Process the file content, save it, or do whatever you need.
+                    } catch (Exception e) {
                         // Handle the exception
+                        System.out.println(e);
                     }
-                    // Process the file content, save it, or do whatever you need.
-                } catch (Exception e) {
-                    // Handle the exception
-                    System.out.println(e);
                 }
             }
 
             for (PropertyImageEntity removedImage : removedImagesE) {
+                propertyEntity.removeImage(removedImage);
                 propertyImageEJB.removePropertyImage(removedImage);
             }
+            propertyEJB.updateProperty(propertyEntity);
 
             return "/dashboard/agent/agent_dashboard.faces?faces-redirect=true";
 
@@ -469,6 +477,11 @@ public class PropertyController {
     public List<PropertyEntity> getPropertiesByAgent(Boolean isActive) {
         System.out.println("get all values");
         List<PropertyEntity> list = propertyEJB.getPropertiesByAgent(userBean.getId());
+        for (PropertyEntity pe : list) {
+            System.out.println(" ======= >");
+            System.out.println(pe.getPid());
+            System.out.println(pe.getImages());
+        }
         System.out.println("values of agent " + list.toString());
         return list;
     }
@@ -477,8 +490,12 @@ public class PropertyController {
         return "/dashboard/agent/property_form.faces?faces-redirect=true&id=" + property.getPid();
     }
 
-    public String deleteProperty(PropertyEntity user) {
-        return "";
+    public String deleteProperty(PropertyEntity property) {
+        if (propertyEJB.deleteProperty(property) != null) {
+            return "/dashboard/agent/agent_dashboard.faces?faces-redirect=true";
+        } else {
+            return null;
+        }
     }
 
     public void removeImage(PropertyImageEntity image) {
