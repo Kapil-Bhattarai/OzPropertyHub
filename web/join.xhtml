@@ -28,7 +28,7 @@
                                 <h:messages errorStyle="color:red" for="email" layout="table" />
 
                                 <h:outputLabel value="Password"/>
-                                <h:inputText  value="#{userBean.password}" class="form-control" id="password"/>                  
+                                <h:inputSecret value="#{userBean.password}" class="form-control" id="password"/>                  
                                 <h:messages errorStyle="color:red" for="password" layout="table" />
 
                                 <h:commandButton value="Login" class="btn btn-success" action="#{userBean.loginUser}" />
