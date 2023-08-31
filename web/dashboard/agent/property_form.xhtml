@@ -91,7 +91,7 @@
                                         </div>
 
                                     </div>
-                                    <h:panelGroup rendered="#{not empty propertyBean.additionalImagesE}">
+                                    <h:panelGroup rendered="#{propertyBean.pid != 0}">
                                         <div class="row">
                                             <div class="col-lg-12">
                                                 <h:outputLabel value="Images" />
@@ -109,7 +109,6 @@
                                                 </p:dataList>
                                             </div>
                                         </div>
-
                                     </h:panelGroup>
                                     <div class="row">
                                         <div class="col-lg-6">
