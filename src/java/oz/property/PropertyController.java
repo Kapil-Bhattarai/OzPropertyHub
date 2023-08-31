@@ -124,7 +124,6 @@ public class PropertyController {
     }
 
     public void setMainImage(Part mainImage) {
-        System.out.println("Set main image");
         this.mainImage = mainImage;
     }
 
@@ -306,14 +305,12 @@ public class PropertyController {
 
     @PostConstruct
     public void init() {
-        System.out.println("initiate");
         FacesContext context = FacesContext.getCurrentInstance();
         Map<String, String> params = context.getExternalContext().getRequestParameterMap();
         String id = params.get("id");
-        System.out.println("=====>");
         if (id != null) {
             PropertyEntity propertyEntity = propertyEJB.getProperty(Integer.parseInt(id));
-            System.out.println(propertyEntity.getImages());
+            
             this.aid = propertyEntity.getAddress().getId();
             this.pid = propertyEntity.getPid();
             this.unitNumber = propertyEntity.getAddress().getUnit();
@@ -342,18 +339,12 @@ public class PropertyController {
     public String submit() {
         FacesContext context = FacesContext.getCurrentInstance();
 
-        System.out.println("submit");
         try {
-            // Begin a new transaction
-            //em.getTransaction().begin();
-            System.out.println("suru");
-            propertyEntity = new PropertyEntity();
+           propertyEntity = new PropertyEntity();
             if (mainImage != null) {
                 try (InputStream input = mainImage.getInputStream()) {
                     String fileName = getSubmittedFileName(mainImage);
-                    System.out.println(System.getenv("OZPROPERTYHUB_UPLOAD_LOCATION"));
-                    System.out.println("hello");
-                    String fileLocation = "/Users/louisevanrooyen/codehome/COIT20273/OzPropertyHub/uploads" + "/" + fileName;
+                    String fileLocation = System.getenv("OZPROPERTYHUB_UPLOAD_LOCATION") + "/" + fileName;
                     File outputFile = new File(fileLocation);
 
                     try (FileOutputStream output = new FileOutputStream(outputFile)) {
@@ -362,7 +353,7 @@ public class PropertyController {
                         while ((bytesRead = input.read(buffer)) != -1) {
                             output.write(buffer, 0, bytesRead);
                         }
-                        System.out.println("hello");
+                        
                         propertyEntity.setMainImage(fileName);
                     }
 
@@ -375,7 +366,6 @@ public class PropertyController {
                 propertyEntity.setMainImage(mainImageUrl);
             }
 
-            System.out.println(propertyEntity.getMainImage());
             addressEntity = new AddressEntity();
             addressEntity.setUnit(unitNumber);
             addressEntity.setStreet_number(streetNumber);
@@ -392,7 +382,6 @@ public class PropertyController {
                 addressEJB.addAddress(addressEntity);
             }
 
-            System.out.println("mid");
             // Create a new PropertyEntity and set its attributes
             propertyEntity.setRent(rent);
             propertyEntity.setType(propertyType);
@@ -427,12 +416,9 @@ public class PropertyController {
 
             if (additionalImages.getSize() > 0) {
                 for (org.primefaces.model.file.UploadedFile uploadedFile : additionalImages.getFiles()) {
-                    System.out.println("======>");
-                    System.out.println(additionalImages.getSize());
                     try {
-                        System.out.println("aru2");
                         String fileName = uploadedFile.getFileName();
-                        String fileLocation = "/Users/louisevanrooyen/codehome/COIT20273/OzPropertyHub/uploads" + "/" + fileName;
+                        String fileLocation = System.getenv("OZPROPERTYHUB_UPLOAD_LOCATION") + "/" + fileName;
                         try (InputStream inputStream = uploadedFile.getInputStream()) {
                             Files.copy(inputStream, Paths.get(fileLocation), StandardCopyOption.REPLACE_EXISTING);
                             PropertyImageEntity pie = new PropertyImageEntity();
@@ -461,7 +447,6 @@ public class PropertyController {
             return "/dashboard/agent/agent_dashboard.faces?faces-redirect=true";
 
         } catch (Exception e) {
-            System.out.println(e);
             // Rollback the transaction if an exception occurs
 //            if (em.getTransaction().isActive()) {
 //                em.getTransaction().rollback();
@@ -475,14 +460,7 @@ public class PropertyController {
     }
 
     public List<PropertyEntity> getPropertiesByAgent(Boolean isActive) {
-        System.out.println("get all values");
         List<PropertyEntity> list = propertyEJB.getPropertiesByAgent(userBean.getId());
-        for (PropertyEntity pe : list) {
-            System.out.println(" ======= >");
-            System.out.println(pe.getPid());
-            System.out.println(pe.getImages());
-        }
-        System.out.println("values of agent " + list.toString());
         return list;
     }
 
@@ -499,10 +477,7 @@ public class PropertyController {
     }
 
     public void removeImage(PropertyImageEntity image) {
-        System.out.println("Remove image");
-        System.out.println(image.getImage());
         additionalImagesE.remove(image);
-        System.out.println(additionalImagesE.size());
         removedImagesE.add(image);
     }
 
