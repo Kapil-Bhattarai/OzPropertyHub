@@ -2,6 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets">
 
     <ui:composition template="layout.xhtml">
@@ -16,50 +17,105 @@
 
                     <div class="row">
                         <div class="col-lg-3 col-sm-4 ">
-
-                            <div class="search-form"><h4><span class="glyphicon glyphicon-search"></span> Search for</h4>
-                                <input type="text" class="form-control" placeholder="Postcode/Suburb"/>
-                                <div class="row">
-
-                                    <div class="col-lg-6">
-                                        <select class="form-control">
-                                           <option>$200 - $300 / week</option>
-                                            <option>$300 - $400 / week</option>
-                                            <option>$400 - $5000 / week</option>
-                                            <option>$500 - above /week</option>
-                                        </select>
+                            <h:form>
+                                <div class="search-form"><h4><span class="glyphicon glyphicon-search"></span> Search for</h4>
+                                    <input type="text" class="form-control" placeholder="Postcode/Suburb"/>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <h:selectOneMenu class="form-control" value="#{ozglobalbean.state}" required="true" requiredMessage="Required!">
+                                                <f:selectItem itemLabel="Select state..." itemValue="" />
+                                                <f:selectItems value="#{ozglobalbean.states}" />
+                                            </h:selectOneMenu>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <select class="form-control">
+                                                <option>Rent</option>
+                                                <option>$200 - $300/w</option>
+                                                <option>$300 - $400/w</option>
+                                                <option>$400 - $500/w</option>
+                                                <option>$500 - above/w</option>
+                                            </select>
+                                        </div>
                                     </div>
-                                    <div class="col-lg-6">
-                                        <select class="form-control">
-                                            <option>Apartment</option>
-                                            <option>Building</option>
-                                            <option>Office Space</option>
-                                        </select>
+                                    <div class="row">
+
+                                        <div class="col-lg-6">
+                                            <h:selectOneMenu class="form-control" value="#{ozglobalbean.propertyType}" required="true" requiredMessage="Required!">
+                                                <f:selectItem itemLabel="Type" itemValue="" />
+                                                <f:selectItems value="#{ozglobalbean.propertyTypes}" />
+                                            </h:selectOneMenu>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <select class="form-control">
+                                                <option>Bedroom</option>
+                                                <option>1 Bedroom</option>
+                                                <option>2 Bedroom</option>
+                                                <option>3 Bedroom</option>
+                                            </select>
+                                        </div>
                                     </div>
+
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <select class="form-control">
+                                                <option>Washroom</option>
+                                                <option>1 Washroom</option>
+                                                <option>2 Washroom</option>
+                                                <option>3 Bedroom</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="col-lg-6">
+                                            <select class="form-control">
+                                                <option>Parking</option>
+                                                <option>1 Parking</option>
+                                                <option>2 Parking</option>
+                                                <option>3 Parking</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="row" style="padding-left: 15px;">
+                                        <h4>Features</h4>
+                                        <div class="row features">
+                                            <div class="col-lg-6">
+                                                <h:selectBooleanCheckbox value="#{ozglobalbean.hasBalcony}" id="hasBalcony"/>
+                                                <h:outputLabel value="Balcony"/>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <h:selectBooleanCheckbox   value="#{ozglobalbean.hasDishwater}" id="hasDishwater"/>
+                                                <h:outputLabel value="Dishwater"/>
+                                            </div>
+
+                                        </div>
+                                        <div class="row features">
+                                            <div class="col-lg-6">
+                                                <h:selectBooleanCheckbox   value="#{ozglobalbean.hasAc}" id="hasAc"/>
+                                                <h:outputLabel value="AC"/>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <h:selectBooleanCheckbox   value="#{ozglobalbean.hasWardrobe}" id="hasWardrobe"/>
+                                                <h:outputLabel value="Wardrobe"/>
+                                            </div>
+                                        </div>
+                                        <div class="row features">
+                                            <div class="col-lg-12">
+                                                <h:selectBooleanCheckbox   value="#{ozglobalbean.hasSecureParking}" id="hasSecureParking"/>
+                                                <h:outputLabel value="Secure Parking"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br/>
+                                    <button class="btn btn-primary">Filter</button>
+
                                 </div>
-                                <button class="btn btn-primary">Find Now</button>
-
-                            </div>
+                            </h:form>
                         </div>
 
                         <div class="col-lg-9 col-sm-8">
 
                             <div class="row">
 
-                              <!-- properties -->
-                                <div class="col-lg-4 col-sm-6">
-                                    <div class="properties">
-                                        <div class="image-holder"><img src="resources/images/properties/1.jpg" class="img-responsive" alt="properties"/>
-                                            <div class="status sold">Leased</div>
-                                        </div>
-                                        <h4><a href="property-detail.faces">Royal Inn</a></h4>
-                                        <p class="price">Price: $600</p>
-                                        <div class="listing-detail"><span data-toggle="tooltip" data-placement="bottom" data-original-title="Bed Room">5</span> <span data-toggle="tooltip" data-placement="bottom" data-original-title="Living Room">2</span> <span data-toggle="tooltip" data-placement="bottom" data-original-title="Parking">2</span> <span data-toggle="tooltip" data-placement="bottom" data-original-title="Kitchen">1</span> </div>
-                                        <a class="btn btn-primary" href="property-detail.faces">View Details</a>
-                                    </div>
-                                </div>
-                                <!-- properties -->
-                                
                                 <!-- properties -->
                                 <div class="col-lg-4 col-sm-6">
                                     <div class="properties">
@@ -73,7 +129,7 @@
                                     </div>
                                 </div>
                                 <!-- properties -->
-                                
+
                                 <!-- properties -->
                                 <div class="col-lg-4 col-sm-6">
                                     <div class="properties">
@@ -87,8 +143,7 @@
                                     </div>
                                 </div>
                                 <!-- properties -->
-                                
-                                
+
                                 <!-- properties -->
                                 <div class="col-lg-4 col-sm-6">
                                     <div class="properties">
@@ -102,7 +157,8 @@
                                     </div>
                                 </div>
                                 <!-- properties -->
-                                
+
+
                                 <!-- properties -->
                                 <div class="col-lg-4 col-sm-6">
                                     <div class="properties">
@@ -116,7 +172,7 @@
                                     </div>
                                 </div>
                                 <!-- properties -->
-                                
+
                                 <!-- properties -->
                                 <div class="col-lg-4 col-sm-6">
                                     <div class="properties">
@@ -130,7 +186,7 @@
                                     </div>
                                 </div>
                                 <!-- properties -->
-                                
+
                                 <!-- properties -->
                                 <div class="col-lg-4 col-sm-6">
                                     <div class="properties">
@@ -144,7 +200,7 @@
                                     </div>
                                 </div>
                                 <!-- properties -->
-                                
+
                                 <!-- properties -->
                                 <div class="col-lg-4 col-sm-6">
                                     <div class="properties">
@@ -158,7 +214,21 @@
                                     </div>
                                 </div>
                                 <!-- properties -->
-                                
+
+                                <!-- properties -->
+                                <div class="col-lg-4 col-sm-6">
+                                    <div class="properties">
+                                        <div class="image-holder"><img src="resources/images/properties/1.jpg" class="img-responsive" alt="properties"/>
+                                            <div class="status sold">Leased</div>
+                                        </div>
+                                        <h4><a href="property-detail.faces">Royal Inn</a></h4>
+                                        <p class="price">Price: $600</p>
+                                        <div class="listing-detail"><span data-toggle="tooltip" data-placement="bottom" data-original-title="Bed Room">5</span> <span data-toggle="tooltip" data-placement="bottom" data-original-title="Living Room">2</span> <span data-toggle="tooltip" data-placement="bottom" data-original-title="Parking">2</span> <span data-toggle="tooltip" data-placement="bottom" data-original-title="Kitchen">1</span> </div>
+                                        <a class="btn btn-primary" href="property-detail.faces">View Details</a>
+                                    </div>
+                                </div>
+                                <!-- properties -->
+
                                 <!-- properties -->
                                 <div class="col-lg-4 col-sm-6">
                                     <div class="properties">

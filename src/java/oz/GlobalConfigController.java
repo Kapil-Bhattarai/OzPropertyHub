@@ -24,7 +24,18 @@ public class GlobalConfigController {
     private PropertyType propertyType;
     private String price;
     private String searchText;
+    
+    private boolean hasBalcony;
+    private boolean hasDishwater;
+    private boolean hasAc;
+    private boolean hasSecureParking;
+    private boolean hasWardrobe;
 
+    private int noOfBedroom;
+    private int noOfBathroom;
+    private int noOfParking;
+    
+    
     public PropertyType getPropertyType() {
         return propertyType;
     }
@@ -66,5 +77,70 @@ public class GlobalConfigController {
      public StateType[] getStates() {
         return StateType.values();
     }
+
+    public boolean isHasBalcony() {
+        return hasBalcony;
+    }
+
+    public void setHasBalcony(boolean hasBalcony) {
+        this.hasBalcony = hasBalcony;
+    }
+
+    public boolean isHasDishwater() {
+        return hasDishwater;
+    }
+
+    public void setHasDishwater(boolean hasDishwater) {
+        this.hasDishwater = hasDishwater;
+    }
+
+    public boolean isHasAc() {
+        return hasAc;
+    }
+
+    public void setHasAc(boolean hasAc) {
+        this.hasAc = hasAc;
+    }
+
+    public boolean isHasSecureParking() {
+        return hasSecureParking;
+    }
+
+    public void setHasSecureParking(boolean hasSecureParking) {
+        this.hasSecureParking = hasSecureParking;
+    }
+
+    public boolean isHasWardrobe() {
+        return hasWardrobe;
+    }
+
+    public void setHasWardrobe(boolean hasWardrobe) {
+        this.hasWardrobe = hasWardrobe;
+    }
+
+    public int getNoOfBedroom() {
+        return noOfBedroom;
+    }
+
+    public void setNoOfBedroom(int noOfBedroom) {
+        this.noOfBedroom = noOfBedroom;
+    }
+
+    public int getNoOfBathroom() {
+        return noOfBathroom;
+    }
+
+    public void setNoOfBathroom(int noOfBathroom) {
+        this.noOfBathroom = noOfBathroom;
+    }
+
+    public int getNoOfParking() {
+        return noOfParking;
+    }
+
+    public void setNoOfParking(int noOfParking) {
+        this.noOfParking = noOfParking;
+    }
     
+     
 }
