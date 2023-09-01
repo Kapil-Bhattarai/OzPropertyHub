@@ -1,4 +1,4 @@
-package oz;
+package oz.search;
 
 import oz.user.*;
 import jakarta.annotation.PostConstruct;
@@ -13,6 +13,8 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Date;
 import java.util.List;
+import oz.PropertyType;
+import oz.StateType;
 import oz.UserType;
 import oz.Util;
 
