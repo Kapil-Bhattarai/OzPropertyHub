@@ -28,8 +28,8 @@ public class SearchEJB extends OzEJB {
         try {
             TypedQuery<PropertyEntity> query = entityManager.createNamedQuery(PropertyEntity.QUERY_SEARCH_QUERY, PropertyEntity.class);
 
-            query.setParameter("lowerBound", lowerBound);
-              query.setParameter("upperBound", lowerBound);
+            query.setParameter("lowerRent", lowerBound);
+              query.setParameter("upperRent", upperBound);
             query.setParameter("type", type);
             if (hasAc) {
                 query.setParameter("hasAc", hasAc);

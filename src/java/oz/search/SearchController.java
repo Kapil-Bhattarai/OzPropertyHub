@@ -208,7 +208,7 @@ public class SearchController {
 
         if (bounds.length == 2) {
             this.lowerBound = Integer.parseInt(bounds[0]);
-            this.upperBound = Integer.parseInt(bounds[0]);
+            this.upperBound = Integer.parseInt(bounds[1]);
         } else {
             this.lowerBound =0;
             this.upperBound = 0;
