@@ -28,7 +28,7 @@
                     <f:forEach items="#{propertyBean.getPropertiesByAgent(true)}" var="property">       
                         <tr>
                             <td><img style="height: 100px; width: 100px;" src="#{request.contextPath}/uploaded-images/#{property.mainImage}" /></td>
-                            <td>#{property.address.unit}, #{property.address.street_name}, #{property.address.suburb}</td>
+                            <td>#{property.address.unit}, #{property.address.street_name}, #{property.address.suburb}, #{property.address.state}, #{property.address.postcode}</td>
                             <td>#{property.rent}</td>
                             <td>
                                 <h:form>
