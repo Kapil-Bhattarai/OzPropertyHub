@@ -32,9 +32,30 @@ import oz.user.UserEntity;
 @NamedQueries({
     @NamedQuery(name = "PropertyEntity.getPropertiesByAgent", query = "SELECT p FROM PropertyEntity p WHERE p.agent.id = :id"),
     @NamedQuery(name = "PropertyEntity.getProperty", query = "SELECT p FROM PropertyEntity p WHERE p.pid = :id"),
-    @NamedQuery(name = "PropertyEntity.deletePropertyById", query = "DELETE FROM PropertyEntity p WHERE p.pid = :id")
+    @NamedQuery(name = "PropertyEntity.deletePropertyById", query = "DELETE FROM PropertyEntity p WHERE p.pid = :id"),
+    @NamedQuery(
+            name = "PropertyEntity.search",
+            query = "SELECT p FROM PropertyEntity p WHERE"
+            + "(:rent IS NULL OR p.rent <= :rent)"
+            + " AND (:type IS NULL OR p.type = :type)"
+            + " AND (:inspection IS NULL OR p.inspection >= :inspection)"
+            + " AND (:listedDate IS NULL OR p.listedDate >= :listedDate)"
+            + " AND (:hasAc IS NULL OR p.hasAc = :hasAc)"
+            + " AND (:hasSecureParking IS NULL OR p.hasSecureParking = :hasSecureParking)"
+            + " AND (:hasDishWasher IS NULL OR p.hasDishWasher = :hasDishWasher)"
+            + " AND (:hasBalcony IS NULL OR p.hasBalcony = :hasBalcony)"
+            + " AND (:hasWardrobe IS NULL OR p.hasWardrobe = :hasWardrobe)"
+            + " AND (:noOfParking IS NULL OR p.noOfParking >= :noOfParking)"
+            + " AND (:noOfBathroom IS NULL OR p.noOfBathroom >= :noOfBathroom)"
+            + " AND (:noOfBedroom IS NULL OR p.noOfBedroom >= :noOfBedroom)"
+    )
 })
 public class PropertyEntity implements Serializable {
+
+    public static final String QUERY_SEARCH_QUERY = "PropertyEntity.search";
+    public static final String QUERY_GET_PROPERTY_BY_AGENT = "PropertyEntity.getPropertiesByAgent";
+    public static final String QUERY_GET_PROPERTY = "PropertyEntity.getProperty";
+    public static final String QUERY_DELETE_PROPERTY_BY_ID = "PropertyEntity.deletePropertyById";
 
     @Id
     @jakarta.persistence.GeneratedValue(strategy = IDENTITY)
