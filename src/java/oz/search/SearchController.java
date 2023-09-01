@@ -20,7 +20,7 @@ import oz.Util;
 
 @ManagedBean(name = "ozglobalbean")
 @SessionScoped
-public class GlobalConfigController {
+public class SearchController {
 
     private StateType state;
     private PropertyType propertyType;

@@ -42,43 +42,7 @@ public class PropertyEJB extends OzEJB {
         }
     }
 
-    public List<PropertyEntity> getPropertyWithFilters(
-    Double rent,
-    PropertyType type,
-    Date inspection,
-    Date listedDate,
-    Boolean hasAc,
-    Boolean hasSecureParking,
-    Boolean hasDishWasher,
-    Boolean hasBalcony,
-    Boolean hasWardrobe,
-    Integer noOfParking,
-    Integer noOfBathroom,
-    Integer noOfBedroom
-    ) {
-        try {
-            TypedQuery<PropertyEntity> query = entityManager.createNamedQuery(PropertyEntity.QUERY_SEARCH_QUERY, PropertyEntity.class);
 
-            query.setParameter("rent", rent);
-            query.setParameter("type", type);
-            query.setParameter("inspection", inspection);
-            query.setParameter("listedDate", listedDate);
-            query.setParameter("hasAc", hasAc);
-            query.setParameter("hasSecureParking", hasSecureParking);
-            query.setParameter("hasDishWasher", hasDishWasher);
-            query.setParameter("hasBalcony", hasBalcony);
-            query.setParameter("hasWardrobe", hasWardrobe);
-            query.setParameter("noOfParking", noOfParking);
-            query.setParameter("noOfBathroom", noOfBathroom);
-            query.setParameter("noOfBedroom", noOfBedroom);
-
-            return query.getResultList();
-        } catch (Exception e) {
-            System.out.println("exception value  " + e.getMessage());
-            return new ArrayList<>();
-        }
-    }
-         
     public PropertyEntity updateProperty(PropertyEntity property) {
         return entityManager.merge(property);
     }
