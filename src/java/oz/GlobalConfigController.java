@@ -143,4 +143,23 @@ public class GlobalConfigController {
     }
     
      
+    public boolean clearGlobalConfigAndReturn(Integer userId) {
+        
+        this.hasAc = false;
+        this.hasBalcony = false;
+        this.hasDishwater = false;
+        this.hasSecureParking = false;
+        this.hasWardrobe = false;
+        
+        this.noOfBathroom = 0;
+        this.noOfParking = 0;
+        this.noOfBedroom = 0;
+        
+        this.price = null;
+        this.propertyType = null;
+        this.searchText = null;
+        this.state = null;
+        
+        return userId == null;
+    }
 }
