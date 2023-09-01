@@ -365,6 +365,9 @@ input[type = checkbox] {
 }
 
 
+.searchbar h5 {
+    color: white;
+}
 
 @media (max-width: 600px) {
 .header{text-align: center;}

@@ -1,9 +1,12 @@
 package oz.property;
 
 import jakarta.ejb.Stateless;
+import jakarta.persistence.TypedQuery;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import oz.OzEJB;
+import oz.PropertyType;
 import oz.UserType;
 import oz.address.AddressEntity;
 import oz.user.UserEntity;
@@ -22,7 +25,7 @@ public class PropertyEJB extends OzEJB {
 
     public List<PropertyEntity> getPropertiesByAgent(int id) {
         try {
-            return entityManager.createNamedQuery("PropertyEntity.getPropertiesByAgent", PropertyEntity.class)
+            return entityManager.createNamedQuery(PropertyEntity.QUERY_GET_PROPERTY_BY_AGENT, PropertyEntity.class)
                     .setParameter("id", id).getResultList();
         } catch (Exception e) {
             System.out.println("exception value  " + e.getMessage());
@@ -32,12 +35,13 @@ public class PropertyEJB extends OzEJB {
 
     public PropertyEntity getProperty(int id) {
         try {
-            return entityManager.createNamedQuery("PropertyEntity.getProperty", PropertyEntity.class).setParameter("id", id).getResultList().get(0);
+            return entityManager.createNamedQuery(PropertyEntity.QUERY_GET_PROPERTY, PropertyEntity.class).setParameter("id", id).getResultList().get(0);
         } catch (Exception e) {
             System.out.println("exception value  " + e.getMessage());
             return null;
         }
     }
+
 
     public PropertyEntity updateProperty(PropertyEntity property) {
         return entityManager.merge(property);

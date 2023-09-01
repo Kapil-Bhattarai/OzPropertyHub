@@ -35,7 +35,7 @@
     <body>
 
         <div id="content">
-            <!--<h:outputText value="#{userBean}"></h:outputText>-->
+<!--            <h:outputText value="#{ozglobalbean}"></h:outputText>-->
 
             <!-- Header Starts -->
             <div class="navbar-wrapper">
@@ -65,17 +65,16 @@
 <!--                                 <li><h:outputLink value="#{request.contextPath}/blog.faces" rendered="#{userBean.id == null}">Blog</h:outputLink><br/></li>
                                     <li><h:outputLink value="#{request.contextPath}/blogdetail.faces" rendered="#{userBean.id == null}">Blog Detail</h:outputLink><br/></li>-->
                                     <li><h:outputLink value="#{request.contextPath}/contact.faces" rendered="#{userBean.id == null}">Contact</h:outputLink><br/></li>
-                                    <li><h:outputLink value="#{request.contextPath}/listing.faces" rendered="#{userBean.id == null}">Rent</h:outputLink><br/></li>
+                                    <li><h:outputLink value="#{request.contextPath}/listing.faces" rendered="#{ozglobalbean.clearGlobalConfigAndReturn(userBean.id)}">Rent</h:outputLink><br/></li>
                                     <!--<li><h:outputLink value="#{request.contextPath}/property-detail.faces" rendered="#{userBean.id == null}">Property Detail</h:outputLink><br/></li>-->
 
                                     <li><h:outputLink value="#{request.contextPath}/join.faces" rendered="#{userBean.id == null}" >Login</h:outputLink><br/></li>
                                     <li><h:outputLink value="#{request.contextPath}/signup.faces" rendered="#{userBean.id == null}">Sign up</h:outputLink><br/></li>
-                                    <li><h:outputLink value="#{request.contextPath}/dashboard/agent/property_form.faces" rendered="#{userBean.showAgentDashboard()}">Add Property</h:outputLink><br/></li>
                                     <li><h:outputLink value="#{request.contextPath}/dashboard/agent/agent_dashboard.faces" rendered="#{userBean.showAgentDashboard()}">Manage Property</h:outputLink><br/></li>
 <!--                                    <li><h:outputLink value="#{request.contextPath}/signup.faces" rendered="#{userBean.showAdminDashboard()}">Add Agents</h:outputLink><br/></li>-->
                                     <li><h:outputLink value="#{request.contextPath}/dashboard/admin/admin_dashboard.faces" rendered="#{userBean.showAdminDashboard()}">Manage Agents</h:outputLink><br/></li>
                                     <li><h:outputLink value="#{request.contextPath}/dashboard/admin/admin_pending_request_dashboard.faces" rendered="#{userBean.showAdminDashboard()}">Pending Requests</h:outputLink><br/></li> 
-                                     <li><h:outputLink value="#{request.contextPath}/dashboard/admin/admin_dashboard_manage_gallery.faces" rendered="#{userBean.showAdminDashboard()}">Manage Gallery</h:outputLink><br/></li>
+                                    <li><h:outputLink value="#{request.contextPath}/dashboard/admin/admin_dashboard_manage_gallery.faces" rendered="#{userBean.showAdminDashboard()}">Manage Gallery</h:outputLink><br/></li>
                                     <li><h:outputLink value="#{request.contextPath}/signup.faces" rendered="#{userBean.showUserDashboard()}">View Application</h:outputLink><br/></li>
                                     <li><h:outputLink value="#{request.contextPath}/logout.faces" rendered="#{userBean.id != null}">Sign out</h:outputLink><br/></li>
 
@@ -89,9 +88,9 @@
 
             </div>
             <!-- #Header Starts -->
-           
+
             <ui:insert name="content"> 
-            
+
             </ui:insert>
 
 
