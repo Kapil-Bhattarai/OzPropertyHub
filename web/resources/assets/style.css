@@ -399,3 +399,10 @@ h2{font-size: 25px;}
     margin-right: 15px;
     margin-bottom: 5px;
 }
+
+.agent-prop-image-container img {
+    margin-right: 20px;
+    height: 50px;
+    width: 50px;
+    margin-bottom: 15px;
+}

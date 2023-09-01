@@ -6,6 +6,7 @@ package oz.property;
 
 import oz.property_image.PropertyImageEJB;
 import static com.sun.faces.facelets.util.Path.context;
+import jakarta.annotation.PostConstruct;
 import jakarta.ejb.EJB;
 import jakarta.faces.application.FacesMessage;
 import jakarta.faces.bean.ManagedBean;
@@ -27,6 +28,7 @@ import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import org.eclipse.persistence.jpa.jpql.parser.DateTime;
 import org.primefaces.model.file.UploadedFile;
 import org.primefaces.model.file.UploadedFiles;
@@ -50,14 +52,18 @@ public class PropertyController {
     @PersistenceContext
     private EntityManager em;
 
-    private int unitNumber;
+    private int pid;
+    private int aid;
+    private String unitNumber;
     private String streetName;
+    private String streetNumber;
     private String suburb;
     private StateType state;
-    private int postCode;
+    private String postCode;
     private Part mainImage;
+    private String mainImageUrl;
     private PropertyType propertyType;
-    private int rent;
+    private double rent;
     private int noOfBedroom;
     private int noOfBathroom;
     private int noOfParking;
@@ -70,13 +76,15 @@ public class PropertyController {
     private Date inspectionDate;
 
     private UploadedFiles additionalImages;
+    private List<PropertyImageEntity> additionalImagesE = new ArrayList<>();
+    private List<PropertyImageEntity> removedImagesE = new ArrayList<>();
 
     @EJB
     private PropertyEJB propertyEJB;
 
     @EJB
     private AddressEJB addressEJB;
-    
+
     @EJB
     private PropertyImageEJB propertyImageEJB;
 
@@ -86,14 +94,6 @@ public class PropertyController {
     private PropertyEntity propertyEntity;
 
     private AddressEntity addressEntity;
-
-    public int getUnitNumber() {
-        return unitNumber;
-    }
-
-    public void setUnitNumber(int unitNumber) {
-        this.unitNumber = unitNumber;
-    }
 
     public String getStreetName() {
         return streetName;
@@ -119,14 +119,6 @@ public class PropertyController {
         this.state = state;
     }
 
-    public int getPostCode() {
-        return postCode;
-    }
-
-    public void setPostCode(int postCode) {
-        this.postCode = postCode;
-    }
-
     public Part getMainImage() {
         return mainImage;
     }
@@ -149,14 +141,6 @@ public class PropertyController {
 
     public void setPropertyType(PropertyType propertyType) {
         this.propertyType = propertyType;
-    }
-
-    public int getRent() {
-        return rent;
-    }
-
-    public void setRent(int rent) {
-        this.rent = rent;
     }
 
     public int getNoOfBedroom() {
@@ -255,21 +239,111 @@ public class PropertyController {
         this.userBean = userBean;
     }
 
+    public int getPid() {
+        return pid;
+    }
+
+    public void setPid(int pid) {
+        this.pid = pid;
+    }
+
+    public String getUnitNumber() {
+        return unitNumber;
+    }
+
+    public void setUnitNumber(String unitNumber) {
+        this.unitNumber = unitNumber;
+    }
+
+    public String getStreetNumber() {
+        return streetNumber;
+    }
+
+    public void setStreetNumber(String streetNumber) {
+        this.streetNumber = streetNumber;
+    }
+
+    public String getPostCode() {
+        return postCode;
+    }
+
+    public void setPostCode(String postCode) {
+        this.postCode = postCode;
+    }
+
+    public double getRent() {
+        return rent;
+    }
+
+    public void setRent(double rent) {
+        this.rent = rent;
+    }
+
+    public int getAid() {
+        return aid;
+    }
+
+    public void setAid(int aid) {
+        this.aid = aid;
+    }
+
+    public String getMainImageUrl() {
+        return mainImageUrl;
+    }
+
+    public void setMainImageUrl(String mainImageUrl) {
+        this.mainImageUrl = mainImageUrl;
+    }
+
+    public List<PropertyImageEntity> getAdditionalImagesE() {
+        return additionalImagesE;
+    }
+
+    public void setAdditionalImagesE(List<PropertyImageEntity> additionalImagesE) {
+        this.additionalImagesE = additionalImagesE;
+    }
+
+    @PostConstruct
+    public void init() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        Map<String, String> params = context.getExternalContext().getRequestParameterMap();
+        String id = params.get("id");
+        if (id != null) {
+            PropertyEntity propertyEntity = propertyEJB.getProperty(Integer.parseInt(id));
+
+            this.aid = propertyEntity.getAddress().getId();
+            this.pid = propertyEntity.getPid();
+            this.unitNumber = propertyEntity.getAddress().getUnit();
+            this.streetName = propertyEntity.getAddress().getStreet_name();
+            this.streetNumber = propertyEntity.getAddress().getStreet_number();
+            this.suburb = propertyEntity.getAddress().getSuburb();
+            this.state = propertyEntity.getAddress().getState();
+            this.postCode = propertyEntity.getAddress().getPostcode();
+            this.mainImageUrl = propertyEntity.getMainImage();
+            this.propertyType = propertyEntity.getType();
+            this.rent = propertyEntity.getRent();
+            this.noOfBedroom = propertyEntity.getNoOfBedroom();
+            this.noOfBathroom = propertyEntity.getNoOfBathroom();
+            this.noOfParking = propertyEntity.getNoOfParking();
+            this.hasBalcony = propertyEntity.getHasBalcony();
+            this.hasDishwater = propertyEntity.getHasDishWasher();
+            this.hasSecureParking = propertyEntity.getHasSecureParking();
+            this.hasAc = propertyEntity.getHasAc();
+            this.hasWardrobe = propertyEntity.getHasWardrobe();
+            this.listedDate = propertyEntity.getListedDate();
+            this.inspectionDate = propertyEntity.getInspection();
+            this.additionalImagesE = propertyEntity.getImages();
+        }
+    }
 
     public String submit() {
         FacesContext context = FacesContext.getCurrentInstance();
 
-        System.out.println("submit");
         try {
-            // Begin a new transaction
-            //em.getTransaction().begin();
-            System.out.println("suru");
             propertyEntity = new PropertyEntity();
             if (mainImage != null) {
                 try (InputStream input = mainImage.getInputStream()) {
                     String fileName = getSubmittedFileName(mainImage);
-                    System.out.println(System.getenv("OZPROPERTYHUB_UPLOAD_LOCATION"));
-                    System.out.println("hello");
                     String fileLocation = System.getenv("OZPROPERTYHUB_UPLOAD_LOCATION") + "/" + fileName;
                     File outputFile = new File(fileLocation);
 
@@ -279,28 +353,35 @@ public class PropertyController {
                         while ((bytesRead = input.read(buffer)) != -1) {
                             output.write(buffer, 0, bytesRead);
                         }
-                        System.out.println("hello");
+
                         propertyEntity.setMainImage(fileName);
                     }
 
                     // Additional logic after saving the file
                 } catch (IOException e) {
                     // Handle exception
+                    System.out.println(e);
                 }
+            } else if (mainImageUrl != null) {
+                propertyEntity.setMainImage(mainImageUrl);
             }
 
-            
-            System.out.println(propertyEntity.getMainImage());
             addressEntity = new AddressEntity();
-            addressEntity.setUnit(String.valueOf(unitNumber));
+            addressEntity.setUnit(unitNumber);
+            addressEntity.setStreet_number(streetNumber);
             addressEntity.setStreet_name(streetName);
             addressEntity.setSuburb(suburb);
-            addressEntity.setPostcode(String.valueOf(postCode));
+            addressEntity.setPostcode(postCode);
             addressEntity.setState(state); // Convert enum to string
 
-            // Save the AddressEntity in the database
-            addressEJB.addAddress(addressEntity);
-            System.out.println("mid");
+            if (this.aid != 0) {
+                addressEntity.setId(aid);
+                addressEJB.updateAddress(addressEntity);
+            } else {
+                // Save the AddressEntity in the database
+                addressEJB.addAddress(addressEntity);
+            }
+
             // Create a new PropertyEntity and set its attributes
             propertyEntity.setRent(rent);
             propertyEntity.setType(propertyType);
@@ -313,36 +394,55 @@ public class PropertyController {
             propertyEntity.setHasWardrobe(hasWardrobe);
             propertyEntity.setNoOfParking(noOfParking);
             propertyEntity.setNoOfBathroom(noOfBathroom);
+            propertyEntity.setNoOfBedroom(noOfBedroom);
 
             // Associate the created AddressEntity with the PropertyEntity
             propertyEntity.setAddress(addressEntity);
+
             UserEntity existingAgent = em.find(UserEntity.class, userBean.getId()); // Use the correct agent ID here
 
             propertyEntity.setAgent(existingAgent);
 
-            // Save the PropertyEntity in the database
-            propertyEJB.addProperty(propertyEntity);
-            
-        for (org.primefaces.model.file.UploadedFile uploadedFile : additionalImages.getFiles()) {
-                try {
-                    
-                    String fileName = uploadedFile.getFileName();
-                    String fileLocation = System.getenv("OZPROPERTYHUB_UPLOAD_LOCATION") + "/" + fileName;
-                    try (InputStream inputStream = uploadedFile.getInputStream()) {
-                        Files.copy(inputStream, Paths.get(fileLocation), StandardCopyOption.REPLACE_EXISTING);
-                        PropertyImageEntity pie = new PropertyImageEntity();
-                        pie.setProperty(propertyEntity);
-                        pie.setImage(fileName);
-                        propertyImageEJB.addPropertyImage(pie);
-                    } catch (IOException e) {
+            propertyEntity.setImages(additionalImagesE);
+
+            if (this.pid != 0) {
+                propertyEntity.setPid(pid);
+                propertyEJB.updateProperty(propertyEntity);
+            } else {
+                // Save the PropertyEntity in the database
+
+                propertyEJB.addProperty(propertyEntity);
+            }
+
+            if (additionalImages.getSize() > 0) {
+                for (org.primefaces.model.file.UploadedFile uploadedFile : additionalImages.getFiles()) {
+                    try {
+                        String fileName = uploadedFile.getFileName();
+                        String fileLocation = System.getenv("OZPROPERTYHUB_UPLOAD_LOCATION") + "/" + fileName;
+                        try (InputStream inputStream = uploadedFile.getInputStream()) {
+                            Files.copy(inputStream, Paths.get(fileLocation), StandardCopyOption.REPLACE_EXISTING);
+                            PropertyImageEntity pie = new PropertyImageEntity();
+                            pie.setProperty(propertyEntity);
+                            pie.setImage(fileName);
+                            propertyImageEJB.addPropertyImage(pie);
+                            propertyEntity.addImage(pie);
+                        } catch (IOException e) {
+                            System.out.println(e);
+                            // Handle the exception
+                        }
+                        // Process the file content, save it, or do whatever you need.
+                    } catch (Exception e) {
                         // Handle the exception
+                        System.out.println(e);
                     }
-                    // Process the file content, save it, or do whatever you need.
-                } catch (Exception e) {
-                    // Handle the exception.
                 }
             }
-            System.out.println("end");
+
+            for (PropertyImageEntity removedImage : removedImagesE) {
+                propertyImageEJB.removePropertyImage(removedImage);
+            }
+            propertyEJB.updateProperty(propertyEntity);
+
             return "/dashboard/agent/agent_dashboard.faces?faces-redirect=true";
 
         } catch (Exception e) {
@@ -359,10 +459,25 @@ public class PropertyController {
     }
 
     public List<PropertyEntity> getPropertiesByAgent(Boolean isActive) {
-        System.out.println("get all values");
         List<PropertyEntity> list = propertyEJB.getPropertiesByAgent(userBean.getId());
-        System.out.println("values of agent " + list.toString());
         return list;
+    }
+
+    public String editProperty(PropertyEntity property) {
+        return "/dashboard/agent/property_form.faces?faces-redirect=true&id=" + property.getPid();
+    }
+
+    public String deleteProperty(PropertyEntity property) {
+        if (propertyEJB.deleteProperty(property) != null) {
+            return "/dashboard/agent/agent_dashboard.faces?faces-redirect=true";
+        } else {
+            return null;
+        }
+    }
+
+    public void removeImage(PropertyImageEntity image) {
+        additionalImagesE.remove(image);
+        removedImagesE.add(image);
     }
 
     private String getSubmittedFileName(Part part) {

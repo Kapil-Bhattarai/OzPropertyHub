@@ -1,6 +1,7 @@
 package oz.property;
 
 import jakarta.mail.Address;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 import java.io.Serializable;
@@ -9,6 +10,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import static jakarta.persistence.GenerationType.IDENTITY;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
@@ -17,6 +19,7 @@ import jakarta.persistence.NamedQuery;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import java.util.ArrayList;
 import java.util.List;
 import oz.PropertyType;
 import oz.UserType;
@@ -26,12 +29,13 @@ import oz.user.UserEntity;
 
 @Entity
 @Table(name = "OZ_PROPERTY")
-@NamedQueries( {
-    @NamedQuery(name = "PropertyEntity.getPropertiesByAgent", query = "SELECT p FROM PropertyEntity p WHERE p.agent.id = :id")
+@NamedQueries({
+    @NamedQuery(name = "PropertyEntity.getPropertiesByAgent", query = "SELECT p FROM PropertyEntity p WHERE p.agent.id = :id"),
+    @NamedQuery(name = "PropertyEntity.getProperty", query = "SELECT p FROM PropertyEntity p WHERE p.pid = :id"),
+    @NamedQuery(name = "PropertyEntity.deletePropertyById", query = "DELETE FROM PropertyEntity p WHERE p.pid = :id")
 })
 public class PropertyEntity implements Serializable {
 
-   
     @Id
     @jakarta.persistence.GeneratedValue(strategy = IDENTITY)
     @Column(name = "pid", nullable = false)
@@ -54,7 +58,7 @@ public class PropertyEntity implements Serializable {
 
     @Column(name = "hasAc")
     private Boolean hasAc = false;
-    
+
     @Column(name = "mainImage")
     private String mainImage;
 
@@ -76,17 +80,20 @@ public class PropertyEntity implements Serializable {
     @Column(name = "noOfBathroom")
     private int noOfBathroom = 0;
 
+    @Column(name = "noOfBedroom")
+    private int noOfBedroom = 0;
+
     @OneToOne
     @JoinColumn(name = "addressId")
     private AddressEntity address;
-    
+
     @OneToOne
     @JoinColumn(name = "agentId")
     private UserEntity agent;
-    
-    @OneToMany
-    private List<PropertyImageEntity> images;
-    
+
+    @OneToMany(mappedBy = "property", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    private List<PropertyImageEntity> images = new ArrayList<>();
+
     public Integer getPid() {
         return pid;
     }
@@ -215,6 +222,18 @@ public class PropertyEntity implements Serializable {
         this.images = images;
     }
 
-    
-    public PropertyEntity() {}
+    public int getNoOfBedroom() {
+        return noOfBedroom;
+    }
+
+    public void setNoOfBedroom(int noOfBedroom) {
+        this.noOfBedroom = noOfBedroom;
+    }
+
+    public void addImage(PropertyImageEntity image) {
+        this.images.add(image);
+    }
+
+    public PropertyEntity() {
+    }
 }
