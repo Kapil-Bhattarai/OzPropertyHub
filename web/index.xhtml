@@ -2,6 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets">
 
     <ui:composition template="layout.xhtml">
@@ -91,38 +92,49 @@
             <div class="banner-search">
                 <div class="container"> 
 
-                    
-                    <div class="searchbar">
-                        <div class="row">
-                            <div class="col-lg-3 col-sm-3"></div>
-                            <div class="col-lg-7 col-sm-7">
-                                <h3>Search</h3>
-                                <input type="text" class="form-control" placeholder="Postcode/Suburb"/>
-                                <div class="row">
-                                    <div class="col-lg-4 col-sm-4">
-                                        <select class="form-control">
-                                            <option>$200 - $300 / week</option>
-                                            <option>$300 - $400 / week</option>
-                                            <option>$400 - $5000 / week</option>
-                                            <option>$500 - above /week</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-lg-4 col-sm-4">
-                                        <select class="form-control">
-                                            <option>Property</option>
-                                            <option>Apartment</option>
-                                            <option>Building</option>
-                                            <option>Office Space</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-lg-4 col-sm-4">
-                                        <button class="btn btn-success"  onclick="window.location.href = 'listing.faces'">Find Now</button>
-                                    </div>
-                                </div>
+                    <h:form>
+                        <div class="searchbar">
+                            <div class="row">
+                                <div class="col-lg-3 col-sm-3"></div>
+                                <div class="col-lg-7 col-sm-7">
+                                    <h5>Search with Suburb, Zip-code or Street name</h5>
 
+                                    <h:inputText  class="form-control" value="#{ozglobalbean.searchText}"  onfocus="if (this.value === 'Search property...')
+                                                this.value = '';" 
+                                                  onblur="if (this.value === '')
+                                                              this.value = 'Search property...';" />
+                                    <div class="row"> 
+                                        <div class="col-lg-3">
+                                            <select class="form-control">
+                                                <option>$200 - $300/w</option>
+                                                <option>$300 - $400/w</option>
+                                                <option>$400 - $5000/w</option>
+                                                <option>$500 - above/w</option>
+                                            </select>
+
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <h:selectOneMenu class="form-control" value="#{ozglobalbean.propertyType}" required="true" requiredMessage="Required!">
+                                                <f:selectItem itemLabel="Select property type..." itemValue="" />
+                                                <f:selectItems value="#{ozglobalbean.propertyTypes}" />
+                                            </h:selectOneMenu>
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <h:selectOneMenu class="form-control" value="#{ozglobalbean.state}" required="true" requiredMessage="Required!">
+                                                <f:selectItem itemLabel="Select state..." itemValue="" />
+                                                <f:selectItems value="#{ozglobalbean.states}" />
+                                            </h:selectOneMenu>
+
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <button class="btn btn-success"  onclick="window.location.href = 'listing.faces'">Find Now</button>
+                                        </div>
+                                    </div>
+
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    </h:form>
                 </div>
             </div>
             <!-- banner -->
@@ -150,7 +162,7 @@
                         </div>
                         <div class="properties">
                             <div class="image-holder"><img src="resources/images/properties/3.jpg" class="img-responsive" alt="properties"/>
-                            <div class="status sold">Sold</div>
+                                <div class="status sold">Sold</div>
                             </div>
                             <h4><a href="property-detail.faces">Royal Inn</a></h4>
                             <p class="price">Price: $234,900</p>
@@ -159,7 +171,7 @@
                         </div>
                         <div class="properties">
                             <div class="image-holder"><img src="resources/images/properties/4.jpg" class="img-responsive" alt="properties"/>
-                            <div class="status sold">Sold</div>
+                                <div class="status sold">Sold</div>
                             </div>
                             <h4><a href="property-detail.faces">Royal Inn</a></h4>
                             <p class="price">Price: $234,900</p>
@@ -195,7 +207,7 @@
                         </div>
                         <div class="properties">
                             <div class="image-holder"><img src="resources/images/properties/4.jpg" class="img-responsive" alt="properties"/>
-                              <div class="status new">New</div>
+                                <div class="status new">New</div>
                             </div>
                             <h4><a href="property-detail.faces">Royal Inn</a></h4>
                             <p class="price">Price: $234,900</p>
@@ -204,7 +216,7 @@
                         </div>
                         <div class="properties">
                             <div class="image-holder"><img src="resources/images/properties/1.jpg" class="img-responsive" alt="properties"/>
-                             <div class="status new">New</div>
+                                <div class="status new">New</div>
                             </div>
                             <h4><a href="property-detail.faces">Royal Inn</a></h4>
                             <p class="price">Price: $234,900</p>
@@ -213,7 +225,7 @@
                         </div>
                         <div class="properties">
                             <div class="image-holder"><img src="resources/images/properties/2.jpg" class="img-responsive" alt="properties"/>
-                            <div class="status sold">Sold</div>
+                                <div class="status sold">Sold</div>
                             </div>
                             <h4><a href="property-detail.faces">Royal Inn</a></h4>
                             <p class="price">Price: $234,900</p>
