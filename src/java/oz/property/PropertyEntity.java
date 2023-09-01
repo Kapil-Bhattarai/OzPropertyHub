@@ -36,10 +36,9 @@ import oz.user.UserEntity;
     @NamedQuery(
             name = "PropertyEntity.search",
             query = "SELECT p FROM PropertyEntity p WHERE"
-            + "(:rent IS NULL OR p.rent <= :rent)"
+            + "(:lowerRent IS NULL OR p.rent >= :lowerRent)"
+            + " AND (:upperRent IS NULL OR p.rent <= :upperRent)" 
             + " AND (:type IS NULL OR p.type = :type)"
-            + " AND (:inspection IS NULL OR p.inspection >= :inspection)"
-            + " AND (:listedDate IS NULL OR p.listedDate >= :listedDate)"
             + " AND (:hasAc IS NULL OR p.hasAc = :hasAc)"
             + " AND (:hasSecureParking IS NULL OR p.hasSecureParking = :hasSecureParking)"
             + " AND (:hasDishWasher IS NULL OR p.hasDishWasher = :hasDishWasher)"
@@ -257,4 +256,10 @@ public class PropertyEntity implements Serializable {
 
     public PropertyEntity() {
     }
+
+    @Override
+    public String toString() {
+        return "PropertyEntity{" + "pid=" + pid + ", rent=" + rent + ", type=" + type + ", inspection=" + inspection + ", listedDate=" + listedDate + ", hasAc=" + hasAc + ", mainImage=" + mainImage + ", hasSecureParking=" + hasSecureParking + ", hasDishWasher=" + hasDishWasher + ", hasBalcony=" + hasBalcony + ", hasWardrobe=" + hasWardrobe + ", noOfParking=" + noOfParking + ", noOfBathroom=" + noOfBathroom + ", noOfBedroom=" + noOfBedroom + ", address=" + address + ", agent=" + agent + ", images=" + images + '}';
+    }
+    
 }

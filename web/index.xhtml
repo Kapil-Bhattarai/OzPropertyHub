@@ -105,22 +105,23 @@
                                                               this.value = 'Search property...';" />
                                     <div class="row"> 
                                         <div class="col-lg-3">
-                                            <select class="form-control">
-                                                <option>$200 - $300/w</option>
-                                                <option>$300 - $400/w</option>
-                                                <option>$400 - $5000/w</option>
-                                                <option>$500 - above/w</option>
-                                            </select>
+
+                                            <h:selectOneMenu class="form-control" value="#{ozglobalbean.noOfBathroom}">
+                                                <f:selectItem itemValue = "0" itemLabel="Washroom"/>
+                                                <f:selectItem itemValue = "1" itemLabel="1 washroom"/>
+                                                <f:selectItem itemValue = "2" itemLabel="2 washroom"/>
+                                                <f:selectItem itemValue = "3" itemLabel="3 washroom"/>                                                   
+                                            </h:selectOneMenu>
 
                                         </div>
                                         <div class="col-lg-3">
-                                            <h:selectOneMenu class="form-control" value="#{ozglobalbean.propertyType}" required="true" requiredMessage="Required!">
+                                            <h:selectOneMenu class="form-control" value="#{ozglobalbean.propertyType}">
                                                 <f:selectItem itemLabel="Select property type..." itemValue="" />
                                                 <f:selectItems value="#{ozglobalbean.propertyTypes}" />
                                             </h:selectOneMenu>
                                         </div>
                                         <div class="col-lg-3">
-                                            <h:selectOneMenu class="form-control" value="#{ozglobalbean.state}" required="true" requiredMessage="Required!">
+                                            <h:selectOneMenu class="form-control" value="#{ozglobalbean.state}" >
                                                 <f:selectItem itemLabel="Select state..." itemValue="" />
                                                 <f:selectItems value="#{ozglobalbean.states}" />
                                             </h:selectOneMenu>
