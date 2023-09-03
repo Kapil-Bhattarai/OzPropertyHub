@@ -129,12 +129,12 @@
 <!--                                            <h:outputText value="#{property}"></h:outputText>-->
                                             <div class="properties">
                                                 <div class="image-holder">
-                                                    <h:graphicImage library="images" name="properties/1.jpg" class="img-responsive" rendered="#{property.mainImage == null}"/>
-
-                                                    <h:graphicImage library="images" name="uploaded-images/#{property.mainImage}" rendered="#{property.mainImage != null}"/>
-
-                                                    <div class="status new">New</div>
+                                                  
+                                            <img class="img-responsive" src="#{request.contextPath}/uploaded-images/#{property.mainImage}" />
+                                                    
+                                            <div class="status new">New</div>
                                                 </div>
+                                                
                                                 <h4><h:outputLink value="#{request.contextPath}/property-detail.faces?id=#{property.pid}">
                                                         #{property.address.unit}, #{property.address.street_number}, #{property.address.street_name}, #{property.address.suburb}
                                                     </h:outputLink></h4>
