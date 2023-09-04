@@ -54,6 +54,8 @@ public class PropertyController {
     private String streetNumber;
     private String suburb;
     private StateType state;
+    private String propertyDetails;
+    private String map;
     private String postCode;
     private Part mainImage;
     private String mainImageUrl;
@@ -258,6 +260,22 @@ public class PropertyController {
         this.streetNumber = streetNumber;
     }
 
+    public String getPropertyDetails() {
+        return propertyDetails;
+    }
+
+    public void setPropertyDetails(String propertyDetails) {
+        this.propertyDetails = propertyDetails;
+    }
+
+    public String getMap() {
+        return map;
+    }
+
+    public void setMap(String map) {
+        this.map = map;
+    }
+
     public String getPostCode() {
         return postCode;
     }
@@ -328,6 +346,8 @@ public class PropertyController {
             this.listedDate = propertyEntity.getListedDate();
             this.inspectionDate = propertyEntity.getInspection();
             this.additionalImagesE = propertyEntity.getImages();
+            this.map = propertyEntity.getMap();
+            this.propertyDetails = propertyEntity.getPropertyDetails();
         }
     }
 
@@ -390,6 +410,8 @@ public class PropertyController {
             propertyEntity.setNoOfParking(noOfParking);
             propertyEntity.setNoOfBathroom(noOfBathroom);
             propertyEntity.setNoOfBedroom(noOfBedroom);
+            propertyEntity.setMap(map);
+            propertyEntity.setPropertyDetails(propertyDetails);
 
             // Associate the created AddressEntity with the PropertyEntity
             propertyEntity.setAddress(addressEntity);

@@ -104,6 +104,13 @@ public class PropertyEntity implements Serializable {
 
     @Column(name = "noOfBedroom")
     private int noOfBedroom = 0;
+    
+    @Column(name = "propertyDetails")
+    private String propertyDetails = "";
+    
+    @Column(name = "map")
+    private String map = "";
+    
 
     @OneToOne
     @JoinColumn(name = "addressId")
@@ -259,6 +266,23 @@ public class PropertyEntity implements Serializable {
     public PropertyEntity() {
     }
 
+    public String getPropertyDetails() {
+        return propertyDetails;
+    }
+
+    public void setPropertyDetails(String propertyDetails) {
+        this.propertyDetails = propertyDetails;
+    }
+
+    public String getMap() {
+        return map;
+    }
+
+    public void setMap(String map) {
+        this.map = map;
+    }
+
+    
     @Override
     public String toString() {
         return "PropertyEntity{" + "pid=" + pid + ", rent=" + rent + ", type=" + type + ", inspection=" + inspection + ", listedDate=" + listedDate + ", hasAc=" + hasAc + ", mainImage=" + mainImage + ", hasSecureParking=" + hasSecureParking + ", hasDishWasher=" + hasDishWasher + ", hasBalcony=" + hasBalcony + ", hasWardrobe=" + hasWardrobe + ", noOfParking=" + noOfParking + ", noOfBathroom=" + noOfBathroom + ", noOfBedroom=" + noOfBedroom + ", address=" + address + ", agent=" + agent + ", images=" + images + '}';
