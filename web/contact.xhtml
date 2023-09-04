@@ -30,7 +30,7 @@
                                 <h:messages errorStyle="color:red" for="formNumber" layout="table" />
                                 
                                   <h:outputLabel value="Message"/>
-                                <h:inputText  value="#{userBean.formMessage}" required="true" requiredMessage="Required!" class="form-control" id="formMessage" />
+                                <h:inputTextarea rows="8" cols="40" value="#{userBean.formMessage}" required="true" requiredMessage="Required!" class="form-control" id="formMessage" />
                                 <h:messages errorStyle="color:red" for="formMessage" layout="table" />
 
                                 <h:commandButton value="Send Message" class="btn btn-success" action="#{userBean.contactForm}" />
