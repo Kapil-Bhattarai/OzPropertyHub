@@ -24,11 +24,11 @@
                                         />
                             <h:form>
                                 <h:outputLabel value="Email"/>
-                                <h:inputText  value="#{userBean.email}" class="form-control" id="email" />
+                                <h:inputText  value="#{userBean.email}"  required="true" requiredMessage="Required!" class="form-control" id="email" />
                                 <h:messages errorStyle="color:red" for="email" layout="table" />
 
                                 <h:outputLabel value="Password"/>
-                                <h:inputSecret value="#{userBean.password}" class="form-control" id="password"/>                  
+                                <h:inputSecret value="#{userBean.password}" required="true" requiredMessage="Required!" class="form-control" id="password"/>                  
                                 <h:messages errorStyle="color:red" for="password" layout="table" />
 
                                 <h:commandButton value="Login" class="btn btn-success" action="#{userBean.loginUser}" />
