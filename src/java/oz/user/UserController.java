@@ -115,6 +115,9 @@ public class UserController {
     }
 
     public String suspendAgent(UserEntity user) {
+        Util.sendEmail(user.getEmail(), "admin@gmail.com", 
+                "Account Suspension", 
+                "Your account has been suspended. Please contact admin for further information.");
         if (userEJB.suspendAgent(user) != null) {
             return "/dashboard/admin/admin_dashboard.faces?faces-redirect=true";
         } else {
@@ -123,6 +126,9 @@ public class UserController {
     }
     
      public String activateAgent(UserEntity user) {
+          Util.sendEmail(user.getEmail(), "admin@gmail.com", 
+                "Account activation", 
+                "Congratulations!. Your account has been activated. Now, you can add properties to OZ Property Hub.");
         if (userEJB.activateAgent(user) != null) {
             return "/dashboard/admin/admin_pending_request_dashboard.faces?faces-redirect=true";
         } else {
@@ -131,6 +137,9 @@ public class UserController {
     }
     
      public String deleteAgent(UserEntity user) {
+         Util.sendEmail(user.getEmail(), "admin@gmail.com", 
+                "Account deletion", 
+                "Your account has been deleted from Oz Property Hub. Please contact admin for further information.");
         if (userEJB.deleteAgent(user) != null) {
             return "/dashboard/admin/admin_dashboard.faces?faces-redirect=true";
         } else {
