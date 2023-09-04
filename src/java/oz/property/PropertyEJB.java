@@ -2,6 +2,7 @@ package oz.property;
 
 import jakarta.ejb.Stateless;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import oz.OzEJB;
 import oz.address.AddressEntity;
@@ -37,6 +38,14 @@ public class PropertyEJB extends OzEJB {
         }
     }
 
+      public PropertyEntity getPropertyByDate(Date date) {
+        try {
+            return entityManager.createNamedQuery(PropertyEntity.QUERY_GET_PROPERTY_BY_DATE, PropertyEntity.class).setParameter("dateValue", date).getResultList().get(0);
+        } catch (Exception e) {
+            System.out.println("exception value  " + e.getMessage());
+            return null;
+        }
+    }
 
     public PropertyEntity updateProperty(PropertyEntity property) {
         return entityManager.merge(property);

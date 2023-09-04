@@ -18,6 +18,7 @@ import jakarta.persistence.NamedQuery;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.Lob;
 import java.util.ArrayList;
 import java.util.List;
 import oz.PropertyType;
@@ -30,6 +31,7 @@ import oz.user.UserEntity;
 @NamedQueries({
     @NamedQuery(name = "PropertyEntity.getPropertiesByAgent", query = "SELECT p FROM PropertyEntity p WHERE p.agent.id = :id"),
     @NamedQuery(name = "PropertyEntity.getProperty", query = "SELECT p FROM PropertyEntity p WHERE p.pid = :id"),
+    @NamedQuery(name = "PropertyEntity.getPropertyByDate", query = "SELECT p FROM PropertyEntity p WHERE p.listedDate = :dateValue"),
     @NamedQuery(name = "PropertyEntity.deletePropertyById", query = "DELETE FROM PropertyEntity p WHERE p.pid = :id"),
     @NamedQuery(name = "PropertyEntity.getAll", query = "SELECT p FROM PropertyEntity p"),
     @NamedQuery(
@@ -55,6 +57,7 @@ public class PropertyEntity implements Serializable {
     public static final String QUERY_SEARCH_QUERY = "PropertyEntity.search";
     public static final String QUERY_GET_PROPERTY_BY_AGENT = "PropertyEntity.getPropertiesByAgent";
     public static final String QUERY_GET_PROPERTY = "PropertyEntity.getProperty";
+    public static final String QUERY_GET_PROPERTY_BY_DATE = "PropertyEntity.getPropertyByDate";
     public static final String QUERY_DELETE_PROPERTY_BY_ID = "PropertyEntity.deletePropertyById";
     public static final String QUERY_GET_ALL = "PropertyEntity.getAll";
 
@@ -105,13 +108,14 @@ public class PropertyEntity implements Serializable {
     @Column(name = "noOfBedroom")
     private int noOfBedroom = 0;
     
-    @Column(name = "propertyDetails")
+    @Lob
+    @Column(name = "propertyDetails", length = 65535)
     private String propertyDetails = "";
     
-    @Column(name = "map")
+    @Lob
+    @Column(name = "map", length = 65535)
     private String map = "";
     
-
     @OneToOne
     @JoinColumn(name = "addressId")
     private AddressEntity address;
