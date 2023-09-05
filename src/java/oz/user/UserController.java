@@ -192,11 +192,7 @@ public class UserController {
 
     }
        
-
-    public void registerUser(String firstName, String lastName, String password, String phone, String address, UserType type, String email, boolean isLive) {
-        UserEntity user = userEJB.getUserbyEmail(email);
-
-    public String contactForm() {
+   public String contactForm() {
         if (formEmail.length() > 0 && formUserName.length() > 0 && formMessage.length() > 0  && formNumber.length() > 0) {
             Util.sendEmail("admin@gmail.com", formEmail, "Feedback from "+formUserName, formMessage+"\n Contact Details: \n"+formNumber);
             return "feedback_success.faces?faces-redirect=true";
@@ -204,9 +200,9 @@ public class UserController {
             return null;
         }
     }
-    
-    public void registerAdmin() {
-        UserEntity user = userEJB.getUserbyEmail("admin@gmail.com");
+   
+    public void registerUser(String firstName, String lastName, String password, String phone, String address, UserType type, String email, boolean isLive) {
+        UserEntity user = userEJB.getUserbyEmail(email);
         if (user == null) {
             user = new UserEntity();
             user.setFirstName(firstName);
