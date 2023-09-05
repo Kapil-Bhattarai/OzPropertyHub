@@ -40,6 +40,12 @@ public class UserController {
     private OzUserEJB userEJB;
 
     private UserEntity ozUser;
+    
+    private String formUserName;
+    private String formEmail;
+    private String formNumber;
+    private String formMessage;
+
 
     @PostConstruct
     public void init() {
@@ -177,8 +183,21 @@ public class UserController {
 
     }
        
+
     public void registerUser(String firstName, String lastName, String password, String phone, String address, UserType type, String email, boolean isLive) {
         UserEntity user = userEJB.getUserbyEmail(email);
+
+    public String contactForm() {
+        if (formEmail.length() > 0 && formUserName.length() > 0 && formMessage.length() > 0  && formNumber.length() > 0) {
+            Util.sendEmail("admin@gmail.com", formEmail, "Feedback from "+formUserName, formMessage+"\n Contact Details: \n"+formNumber);
+            return "feedback_success.faces?faces-redirect=true";
+        }  else {
+            return null;
+        }
+    }
+    
+    public void registerAdmin() {
+        UserEntity user = userEJB.getUserbyEmail("admin@gmail.com");
         if (user == null) {
             user = new UserEntity();
             user.setFirstName(firstName);
@@ -367,6 +386,39 @@ public class UserController {
         this.lastName = lastName;
     }
 
+    public String getFormUserName() {
+        return formUserName;
+    }
+
+    public void setFormUserName(String formUserName) {
+        this.formUserName = formUserName;
+    }
+
+    public String getFormEmail() {
+        return formEmail;
+    }
+
+    public void setFormEmail(String formEmail) {
+        this.formEmail = formEmail;
+    }
+
+    public String getFormNumber() {
+        return formNumber;
+    }
+
+    public void setFormNumber(String formNumber) {
+        this.formNumber = formNumber;
+    }
+
+    public String getFormMessage() {
+        return formMessage;
+    }
+
+    public void setFormMessage(String formMessage) {
+        this.formMessage = formMessage;
+    }
+
+    
     @Override
     public String toString() {
         return "UserController{ id=" + id + ", firstName=" + firstName + ", password=" + password + ", confirmPassword=" + confirmPassword + ", lastName=" + lastName + ", email=" + email + ", bio=" + bio + ", phone=" + phone + ", since=" + since + ", isLive=" + isLive + ", type=" + type + ", userEJB=" + userEJB + ", ozUser=" + ozUser + '}';

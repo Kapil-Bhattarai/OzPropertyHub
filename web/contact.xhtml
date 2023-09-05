@@ -15,13 +15,28 @@
                     <div class="row contact">
                         <div class="col-lg-6 col-sm-6 ">
 
+    
+                              <h:form>
+                                <h:outputLabel value="Full Name"/>
+                                <h:inputText  value="#{userBean.formUserName}" required="true" requiredMessage="Required!" class="form-control" id="formName" />
+                                <h:messages errorStyle="color:red" for="formName" layout="table" />
 
-                            <input type="text" class="form-control" placeholder="Full Name"/>
-                            <input type="text" class="form-control" placeholder="Email Address"/>
-                            <input type="text" class="form-control" placeholder="Contact Number"/>
-                            <textarea rows="6" class="form-control" placeholder="Message"></textarea>
-                            <button type="submit" class="btn btn-success" name="Submit">Send Message</button>
+                                  <h:outputLabel value="Email"/>
+                                <h:inputText  value="#{userBean.formEmail}" required="true" requiredMessage="Required!" class="form-control" id="formEmail" />
+                                <h:messages errorStyle="color:red" for="formEmail" layout="table" />
+                                
+                                  <h:outputLabel value="Number"/>
+                                <h:inputText  value="#{userBean.formNumber}" required="true" requiredMessage="Required!" class="form-control" id="formNumber" />
+                                <h:messages errorStyle="color:red" for="formNumber" layout="table" />
+                                
+                                  <h:outputLabel value="Message"/>
+                                <h:inputTextarea rows="8" cols="40" value="#{userBean.formMessage}" required="true" requiredMessage="Required!" class="form-control" id="formMessage" />
+                                <h:messages errorStyle="color:red" for="formMessage" layout="table" />
 
+                                <h:commandButton value="Send Message" class="btn btn-success" action="#{userBean.contactForm}" />
+                               
+                              </h:form>
+                            
                         </div>
                         <div class="col-lg-6 col-sm-6 ">
                             <div class="well"><iframe width="100%" height="300" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3312.7081619008386!2d151.20256887642336!3d-33.87141127322549!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6b12ae38ac7b59c3%3A0xfe1a2414acd05bdb!2sCQUniversity%20Sydney!5e0!3m2!1sen!2sau!4v1691202775933!5m2!1sen!2sau"></iframe></div>
