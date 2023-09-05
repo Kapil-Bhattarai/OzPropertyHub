@@ -50,7 +50,10 @@ public class UserController {
     @PostConstruct
     public void init() {
         ozUser = new UserEntity();
-        registerAdmin();
+        registerUser("admin", "Deo", HashConvert("password"), "123456789", "200,Kent Street, NSW, Australia", UserType.ADMIN, "admin@gmail.com", true);
+        registerUser("test1", "User 1", HashConvert("password"), "123456789", "200,Kent Street, NSW, Australia", UserType.AGENT, "test1@gmail.com", true);
+        registerUser("test2", "User 2", HashConvert("password"), "123456789", "200,Kent Street, NSW, Australia", UserType.AGENT, "test2@gmail.com", true);
+        registerUser("test3", "User 3", HashConvert("password"), "123456789", "200,Kent Street, NSW, Australia", UserType.AGENT, "test3@gmail.com", false);
     }
 
     public String loginUser() {
@@ -108,7 +111,6 @@ public class UserController {
 
     public List<UserEntity> getActiveUsersByType(Boolean isActive) {
         List<UserEntity> list = userEJB.getActiveUsersByType(UserType.AGENT, isActive);
-        System.out.println("values of agent " + list.toString());
         return list;
     }
 
@@ -181,6 +183,10 @@ public class UserController {
 
     }
        
+
+    public void registerUser(String firstName, String lastName, String password, String phone, String address, UserType type, String email, boolean isLive) {
+        UserEntity user = userEJB.getUserbyEmail(email);
+
     public String contactForm() {
         if (formEmail.length() > 0 && formUserName.length() > 0 && formMessage.length() > 0  && formNumber.length() > 0) {
             Util.sendEmail("admin@gmail.com", formEmail, "Feedback from "+formUserName, formMessage+"\n Contact Details: \n"+formNumber);
@@ -194,19 +200,19 @@ public class UserController {
         UserEntity user = userEJB.getUserbyEmail("admin@gmail.com");
         if (user == null) {
             user = new UserEntity();
-            user.setFirstName("admin");
-            user.setLastName("Deo");
-            user.setPassword(HashConvert("password"));
-            user.setPhone("123456789");
-            user.setAddress("200,Kent Street, NSW, Australia");
-            user.setType(UserType.ADMIN);
+            user.setFirstName(firstName);
+            user.setLastName(lastName);
+            user.setPassword(password);
+            user.setPhone(phone);
+            user.setAddress(address);
+            user.setType(type);
             user.setSince(new Date());
-            user.setIsLive(true);
-            user.setEmail("admin@gmail.com");
+            user.setIsLive(isLive);
+            user.setEmail(email);
             userEJB.addUser(user);
         } 
     }
-
+     
     private void setUserData(UserEntity user) {
         email = user.getEmail();
         password = user.getPassword();

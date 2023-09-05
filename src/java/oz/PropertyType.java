@@ -1,7 +1,7 @@
 package oz;
 
 public enum PropertyType {
-    HOUSE,
     APARTMENT,
+    HOUSE,
     STUDIO,
 }

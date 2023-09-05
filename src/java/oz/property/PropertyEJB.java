@@ -1,15 +1,10 @@
 package oz.property;
 
 import jakarta.ejb.Stateless;
-import jakarta.persistence.TypedQuery;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import oz.OzEJB;
-import oz.PropertyType;
-import oz.UserType;
 import oz.address.AddressEntity;
-import oz.user.UserEntity;
 
 @Stateless
 public class PropertyEJB extends OzEJB {

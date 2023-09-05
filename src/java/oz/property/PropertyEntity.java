@@ -1,6 +1,5 @@
 package oz.property;
 
-import jakarta.mail.Address;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
@@ -22,7 +21,6 @@ import jakarta.persistence.Table;
 import java.util.ArrayList;
 import java.util.List;
 import oz.PropertyType;
-import oz.UserType;
 import oz.address.AddressEntity;
 import oz.property_image.PropertyImageEntity;
 import oz.user.UserEntity;
@@ -33,11 +31,12 @@ import oz.user.UserEntity;
     @NamedQuery(name = "PropertyEntity.getPropertiesByAgent", query = "SELECT p FROM PropertyEntity p WHERE p.agent.id = :id"),
     @NamedQuery(name = "PropertyEntity.getProperty", query = "SELECT p FROM PropertyEntity p WHERE p.pid = :id"),
     @NamedQuery(name = "PropertyEntity.deletePropertyById", query = "DELETE FROM PropertyEntity p WHERE p.pid = :id"),
+    @NamedQuery(name = "PropertyEntity.getAll", query = "SELECT p FROM PropertyEntity p"),
     @NamedQuery(
             name = "PropertyEntity.search",
             query = "SELECT p FROM PropertyEntity p WHERE"
             + "(:lowerRent IS NULL OR p.rent >= :lowerRent)"
-            + " AND (:upperRent IS NULL OR p.rent <= :upperRent)" 
+            + " AND (:upperRent IS NULL OR p.rent <= :upperRent)"
             + " AND (:type IS NULL OR p.type = :type)"
             + " AND (:hasAc IS NULL OR p.hasAc = :hasAc)"
             + " AND (:hasSecureParking IS NULL OR p.hasSecureParking = :hasSecureParking)"
@@ -47,6 +46,8 @@ import oz.user.UserEntity;
             + " AND (:noOfParking IS NULL OR p.noOfParking >= :noOfParking)"
             + " AND (:noOfBathroom IS NULL OR p.noOfBathroom >= :noOfBathroom)"
             + " AND (:noOfBedroom IS NULL OR p.noOfBedroom >= :noOfBedroom)"
+            + " AND (:state IS NULL OR p.address.state = :state)" 
+            + " AND (:searchText IS NULL OR (p.address.suburb = :searchText OR p.address.postcode = :searchText))"
     )
 })
 public class PropertyEntity implements Serializable {
@@ -55,6 +56,7 @@ public class PropertyEntity implements Serializable {
     public static final String QUERY_GET_PROPERTY_BY_AGENT = "PropertyEntity.getPropertiesByAgent";
     public static final String QUERY_GET_PROPERTY = "PropertyEntity.getProperty";
     public static final String QUERY_DELETE_PROPERTY_BY_ID = "PropertyEntity.deletePropertyById";
+    public static final String QUERY_GET_ALL = "PropertyEntity.getAll";
 
     @Id
     @jakarta.persistence.GeneratedValue(strategy = IDENTITY)
@@ -261,5 +263,5 @@ public class PropertyEntity implements Serializable {
     public String toString() {
         return "PropertyEntity{" + "pid=" + pid + ", rent=" + rent + ", type=" + type + ", inspection=" + inspection + ", listedDate=" + listedDate + ", hasAc=" + hasAc + ", mainImage=" + mainImage + ", hasSecureParking=" + hasSecureParking + ", hasDishWasher=" + hasDishWasher + ", hasBalcony=" + hasBalcony + ", hasWardrobe=" + hasWardrobe + ", noOfParking=" + noOfParking + ", noOfBathroom=" + noOfBathroom + ", noOfBedroom=" + noOfBedroom + ", address=" + address + ", agent=" + agent + ", images=" + images + '}';
     }
-    
+
 }
