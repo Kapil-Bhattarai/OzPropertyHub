@@ -494,7 +494,7 @@ public class PropertyController {
             propertyDetails,
              random.nextBoolean(), random.nextBoolean(), random.nextBoolean(), random.nextBoolean(), random.nextBoolean(), 
              random.nextInt(1,4),  random.nextInt(1,4),  random.nextInt(1,4),
-             random.nextInt(1, 20)+"", "street name","hawkesbury road", "Strathfied", "2145", StateType.values()[random.nextInt(StateType.values().length)],
+             random.nextInt(1, 20)+"", "street name","hawkesbury road", "Westmead", "2145", StateType.values()[random.nextInt(StateType.values().length)],
              random.nextInt(2,5), new ArrayList()
             );
  
@@ -503,7 +503,7 @@ public class PropertyController {
             propertyDetails,
              random.nextBoolean(), random.nextBoolean(), random.nextBoolean(), random.nextBoolean(), random.nextBoolean(), 
              random.nextInt(1,4),  random.nextInt(1,4),  random.nextInt(1,4),
-             random.nextInt(1, 20)+"", "street name","hawkesbury road", "Strathfied", "2145", StateType.values()[random.nextInt(StateType.values().length)],
+             random.nextInt(1, 20)+"", "street name","hawkesbury road", "Strathfield", "2145", StateType.values()[random.nextInt(StateType.values().length)],
              random.nextInt(2,5), new ArrayList()
             );
              
@@ -512,7 +512,7 @@ public class PropertyController {
             propertyDetails,
              random.nextBoolean(), random.nextBoolean(), random.nextBoolean(), random.nextBoolean(), random.nextBoolean(), 
              random.nextInt(1,4),  random.nextInt(1,4),  random.nextInt(1,4),
-             random.nextInt(1, 20)+"", "street name","hawkesbury road", "Strathfied", "2145", StateType.values()[random.nextInt(StateType.values().length)],
+             random.nextInt(1, 20)+"", "street name","hawkesbury road", "Auburn", "2145", StateType.values()[random.nextInt(StateType.values().length)],
              random.nextInt(2,5), new ArrayList()
             );
     }
