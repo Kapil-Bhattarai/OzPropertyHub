@@ -415,3 +415,8 @@ h2{font-size: 25px;}
     width: 75%;
     border-radius: 50%;
 }
+
+.agent img {
+    height: 100px;
+    width: 100px;
+}

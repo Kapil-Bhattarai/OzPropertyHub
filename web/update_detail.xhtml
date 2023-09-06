@@ -26,7 +26,7 @@
                                         layout="table"
                                         errorStyle="color:red"
                                         />
-                            <h:form id="updateProfileForm" enctype="multipart/form-data">
+                            <h:form enctype="multipart/form-data">
                                 <div class="col-lg-3 col-sm-4 col-xs-5 profile-picture-wrapper">
                                     <h:graphicImage value="uploaded-images/#{userBean.mainImageUrl}" rendered="#{not empty userBean.mainImageUrl}" />
                                     <h:graphicImage value="resources/images/profile_picture.png" rendered="#{empty userBean.mainImageUrl}" />
@@ -76,17 +76,4 @@
 
         </ui:define>
     </ui:composition> 
-    <script>
-        $(document).ready(function () {
-            $('#updateProfileForm').submit(function () {
-                // Get the validation errors.
-                var errors = $(this).find('.msg_error');
-
-                // If there are any validation errors, prevent the form from submitting.
-                if (errors.length > 0) {
-                    return false;
-                }
-            });
-        });
-    </script>
 </html>
