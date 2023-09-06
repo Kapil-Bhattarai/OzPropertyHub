@@ -344,7 +344,7 @@ public class PropertyController {
             if (mainImage != null) {
                 try (InputStream input = mainImage.getInputStream()) {
                     String fileName = getSubmittedFileName(mainImage);
-                    String fileLocation = System.getenv("OZPROPERTYHUB_UPLOAD_LOCATION") + "/" + fileName;
+                    String fileLocation = System.getProperty("OZPROPERTYHUB_UPLOAD_LOCATION") + "/" + fileName;
                     File outputFile = new File(fileLocation);
 
                     try (FileOutputStream output = new FileOutputStream(outputFile)) {
@@ -418,7 +418,7 @@ public class PropertyController {
                 for (org.primefaces.model.file.UploadedFile uploadedFile : additionalImages.getFiles()) {
                     try {
                         String fileName = uploadedFile.getFileName();
-                        String fileLocation = System.getenv("OZPROPERTYHUB_UPLOAD_LOCATION") + "/" + fileName;
+                        String fileLocation = System.getProperty("OZPROPERTYHUB_UPLOAD_LOCATION") + "/" + fileName;
                         try (InputStream inputStream = uploadedFile.getInputStream()) {
                             Files.copy(inputStream, Paths.get(fileLocation), StandardCopyOption.REPLACE_EXISTING);
                             PropertyImageEntity pie = new PropertyImageEntity();
