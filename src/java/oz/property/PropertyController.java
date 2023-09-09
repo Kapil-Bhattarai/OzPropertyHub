@@ -474,7 +474,7 @@ public class PropertyController {
 
     }
 
-    public void executeDemoListing() {
+    public void executeDemoListing(Integer agentId) {
         //         registerDemoProperties(Integer propertyId, String mainImageUrl, Double rent, PropertyType propertyType, 
 //          String map, 
 //         String propertyDetails, 
@@ -495,7 +495,7 @@ public class PropertyController {
              random.nextBoolean(), random.nextBoolean(), random.nextBoolean(), random.nextBoolean(), random.nextBoolean(), 
              random.nextInt(1,4),  random.nextInt(1,4),  random.nextInt(1,4),
              random.nextInt(1, 20)+"", "street name","hawkesbury road", "Westmead", "2145", StateType.values()[random.nextInt(StateType.values().length)],
-             random.nextInt(2,5), new ArrayList()
+             agentId, new ArrayList()
             );
  
              registerDemoProperties("1.jpg", Double.parseDouble(decimalFormat.format(random.nextDouble(50.0, 750.0))), PropertyType.values()[random.nextInt(PropertyType.values().length)],
@@ -504,7 +504,7 @@ public class PropertyController {
              random.nextBoolean(), random.nextBoolean(), random.nextBoolean(), random.nextBoolean(), random.nextBoolean(), 
              random.nextInt(1,4),  random.nextInt(1,4),  random.nextInt(1,4),
              random.nextInt(1, 20)+"", "street name","hawkesbury road", "Strathfield", "2145", StateType.values()[random.nextInt(StateType.values().length)],
-             random.nextInt(2,5), new ArrayList()
+             agentId, new ArrayList()
             );
              
               registerDemoProperties("1.jpg", Double.parseDouble(decimalFormat.format(random.nextDouble(50.0, 750.0))), PropertyType.values()[random.nextInt(PropertyType.values().length)],
@@ -513,7 +513,7 @@ public class PropertyController {
              random.nextBoolean(), random.nextBoolean(), random.nextBoolean(), random.nextBoolean(), random.nextBoolean(), 
              random.nextInt(1,4),  random.nextInt(1,4),  random.nextInt(1,4),
              random.nextInt(1, 20)+"", "street name","hawkesbury road", "Auburn", "2145", StateType.values()[random.nextInt(StateType.values().length)],
-             random.nextInt(2,5), new ArrayList()
+             agentId, new ArrayList()
             );
     }
     
@@ -541,8 +541,6 @@ public class PropertyController {
             addressEntity.setSuburb(suburb);
             addressEntity.setPostcode(postCode);
             addressEntity.setState(state); 
-
-            addressEJB.addAddress(addressEntity);  
     
             
             // Create a new PropertyEntity and set its attributes

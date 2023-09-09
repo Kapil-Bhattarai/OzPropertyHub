@@ -15,7 +15,7 @@
             <a class="btn btn-success" href="#{request.contextPath}/dashboard/agent/property_form.faces">Add Property</a>
             </div>
              <h:form>
-                <h:commandButton value="Load Test Data" action="#{propertyBean.executeDemoListing()}" style="margin-left: 2%;" />
+                <h:commandButton value="Load Test Data" action="#{propertyBean.executeDemoListing(userBean.getId())}" style="margin-left: 2%;" />
             </h:form>
              <table id="tableContent">
                 <thead>

@@ -116,7 +116,7 @@ public class PropertyEntity implements Serializable {
     @Column(name = "map", length = 65535)
     private String map = "";
     
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "addressId")
     private AddressEntity address;
 
