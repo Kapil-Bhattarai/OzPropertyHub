@@ -3,6 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title><ui:insert name="title">Application Title</ui:insert></title>
@@ -31,7 +33,7 @@
         <h:outputScript library="assets" name="owl-carousel/owl.carousel.js"/>
 
         <!--<h:outputScript library="assets" name="style.js"/>-->
-           <f:metadata>
+        <f:metadata>
             <f:event type="preRenderView" listener="#{ozglobalbean.searchProperty}" />
         </f:metadata>
     </h:head>
@@ -112,14 +114,16 @@
                             </ul>
                         </div>
 
-                        <div class="col-lg-3 col-sm-3">
-                            <h4>Newsletter</h4>
-                            <p>Get notified about the latest properties in our marketplace.</p>
-                            <form class="form-inline" role="form">
-                                <input type="text" placeholder="Enter Your email address" class="form-control"/>
-                                <button class="btn btn-success" type="button">Notify Me!</button></form>
-                        </div>
-
+                        <h:panelGroup rendered="#{userBean.isUser() || !userBean.isLoggedIn()}">
+                            <div class="col-lg-3 col-sm-3">
+                                <h4>Newsletter</h4>
+                                <p>Get notified about the latest properties in our marketplace.</p>
+                                <h:form class="form-inline" role="form">
+                                    <h:inputText rendered="#{!userBean.isLoggedIn()}" value="#{userBean.email}" a:placeholder="Enter Your email address" class="form-control" />
+                                    <h:commandButton value="Notify Me!"  class="btn btn-success" action="#{userBean.subscribeToNewsletter}" />
+                                </h:form>
+                            </div>
+                        </h:panelGroup>
                         <div class="col-lg-3 col-sm-3">
                             <h4>Follow us</h4>
                             <a href="#"><img src="#{request.contextPath}/resources/images/facebook.png" alt="facebook"/></a>
@@ -179,6 +183,6 @@
             <!-- /.modal -->
 
         </div>
-
+            <p:growl id="growl" showDetail="true" life="3000" />
     </body>
 </html>
