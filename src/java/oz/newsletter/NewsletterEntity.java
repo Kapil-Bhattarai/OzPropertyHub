@@ -13,11 +13,13 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "OZ_NEWSLETTER")
 @NamedQueries({
-    @NamedQuery(name = "NewsletterEntity.findById", query = "SELECT n FROM NewsletterEntity n WHERE n.id = :id")
+    @NamedQuery(name = "NewsletterEntity.findById", query = "SELECT n FROM NewsletterEntity n WHERE n.id = :id"),
+    @NamedQuery(name = "NewsletterEntity.getAll", query = "SELECT n FROM NewsletterEntity n"),
 })
 public class NewsletterEntity implements Serializable {
 
     public static final String QUERY_GET_NEWSLETTER = "NewsletterEntity.findById";
+    public static final String QUERY_GET_ALL = "NewsletterEntity.getAll";
     
     @Id
     @GeneratedValue(strategy = IDENTITY)
