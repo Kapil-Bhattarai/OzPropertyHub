@@ -14,6 +14,8 @@ import java.util.Date;
 import java.util.List;
 import oz.UserType;
 import oz.Util;
+import oz.newsletter_subscriber.NewsletterSubscriberEJB;
+import oz.newsletter_subscriber.NewsletterSubscriberEntity;
 
 @ManagedBean(name = "userBean")
 @SessionScoped
@@ -30,7 +32,7 @@ public class UserController {
     private String email;
     private String bio;
     private String phone;
-     private String address;
+    private String address;
     private Date since;
     private Boolean isLive = true;
 
@@ -39,13 +41,15 @@ public class UserController {
     @EJB
     private OzUserEJB userEJB;
 
+    @EJB
+    private NewsletterSubscriberEJB newsletterEJB;
+
     private UserEntity ozUser;
-    
+
     private String formUserName;
     private String formEmail;
     private String formNumber;
     private String formMessage;
-
 
     @PostConstruct
     public void init() {
@@ -78,7 +82,7 @@ public class UserController {
 
                     user = userEJB.getUserbyEmail(email);
                     setUserData(user);
-                        System.out.println(type);
+                    System.out.println(type);
 
                     return switch (type) {
                         case ADMIN ->
@@ -95,6 +99,10 @@ public class UserController {
 
     public boolean isLoggedIn() {
         return id != null;
+    }
+
+    public boolean isUser() {
+        return type == UserType.USER;
     }
 
     public boolean showAgentDashboard() {
@@ -115,8 +123,8 @@ public class UserController {
     }
 
     public String suspendAgent(UserEntity user) {
-        Util.sendEmail(user.getEmail(), "admin@gmail.com", 
-                "Account Suspension", 
+        Util.sendEmail(user.getEmail(), "admin@gmail.com",
+                "Account Suspension",
                 "Your account has been suspended. Please contact admin for further information.");
         if (userEJB.suspendAgent(user) != null) {
             return "/dashboard/admin/admin_dashboard.faces?faces-redirect=true";
@@ -124,10 +132,10 @@ public class UserController {
             return null;
         }
     }
-    
-     public String activateAgent(UserEntity user) {
-          Util.sendEmail(user.getEmail(), "admin@gmail.com", 
-                "Account activation", 
+
+    public String activateAgent(UserEntity user) {
+        Util.sendEmail(user.getEmail(), "admin@gmail.com",
+                "Account activation",
                 "Congratulations!. Your account has been activated. Now, you can add properties to OZ Property Hub.");
         if (userEJB.activateAgent(user) != null) {
             return "/dashboard/admin/admin_pending_request_dashboard.faces?faces-redirect=true";
@@ -135,10 +143,10 @@ public class UserController {
             return null;
         }
     }
-    
-     public String deleteAgent(UserEntity user) {
-         Util.sendEmail(user.getEmail(), "admin@gmail.com", 
-                "Account deletion", 
+
+    public String deleteAgent(UserEntity user) {
+        Util.sendEmail(user.getEmail(), "admin@gmail.com",
+                "Account deletion",
                 "Your account has been deleted from Oz Property Hub. Please contact admin for further information.");
         if (userEJB.deleteAgent(user) != null) {
             return "/dashboard/admin/admin_dashboard.faces?faces-redirect=true";
@@ -147,8 +155,8 @@ public class UserController {
         }
 
     }
-    
-       public String registerUser() {
+
+    public String registerUser() {
         FacesContext context = FacesContext.getCurrentInstance();
         UserEntity user = userEJB.getUserbyEmail(email);
         if (user == null) {
@@ -191,16 +199,16 @@ public class UserController {
         }
 
     }
-       
-   public String contactForm() {
-        if (formEmail.length() > 0 && formUserName.length() > 0 && formMessage.length() > 0  && formNumber.length() > 0) {
-            Util.sendEmail("admin@gmail.com", formEmail, "Feedback from "+formUserName, formMessage+"\n Contact Details: \n"+formNumber);
+
+    public String contactForm() {
+        if (formEmail.length() > 0 && formUserName.length() > 0 && formMessage.length() > 0 && formNumber.length() > 0) {
+            Util.sendEmail("admin@gmail.com", formEmail, "Feedback from " + formUserName, formMessage + "\n Contact Details: \n" + formNumber);
             return "feedback_success.faces?faces-redirect=true";
-        }  else {
+        } else {
             return null;
         }
     }
-   
+
     public void registerUser(String firstName, String lastName, String password, String phone, String address, UserType type, String email, boolean isLive) {
         UserEntity user = userEJB.getUserbyEmail(email);
         if (user == null) {
@@ -215,9 +223,9 @@ public class UserController {
             user.setIsLive(isLive);
             user.setEmail(email);
             userEJB.addUser(user);
-        } 
+        }
     }
-     
+
     private void setUserData(UserEntity user) {
         email = user.getEmail();
         password = user.getPassword();
@@ -270,6 +278,22 @@ public class UserController {
         } catch (NoSuchAlgorithmException e) {
             throw new UnsupportedOperationException(e);
         }
+    }
+
+    public void subscribeToNewsletter() {
+        if (email == null || email.isEmpty()) {
+            return;
+        }
+
+        if (newsletterEJB.canAddToTheList(email)) {
+            newsletterEJB.addEmail(new NewsletterSubscriberEntity(email));
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Successfully subscribed to the mailing list."));
+        } else {
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "You are already in the mailing list."));
+        }
+
     }
 
     public UserEntity getOzUser() {
@@ -423,7 +447,6 @@ public class UserController {
         this.formMessage = formMessage;
     }
 
-    
     @Override
     public String toString() {
         return "UserController{ id=" + id + ", firstName=" + firstName + ", password=" + password + ", confirmPassword=" + confirmPassword + ", lastName=" + lastName + ", email=" + email + ", bio=" + bio + ", phone=" + phone + ", since=" + since + ", isLive=" + isLive + ", type=" + type + ", userEJB=" + userEJB + ", ozUser=" + ozUser + '}';
@@ -453,5 +476,4 @@ public class UserController {
         this.address = address;
     }
 
-    
 }
