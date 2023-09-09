@@ -16,10 +16,9 @@ import jakarta.persistence.NamedQuery;
 import jakarta.persistence.Table;
 import oz.UserType;
 
-
 @Entity
 @Table(name = "OZ_USER")
-@NamedQueries( {
+@NamedQueries({
     @NamedQuery(name = "UserEntity.findByEmail", query = "SELECT u FROM UserEntity u WHERE u.email = :email"),
     @NamedQuery(name = "UserEntity.findByEmailAndPassword", query = "SELECT u FROM UserEntity u WHERE u.email = :email AND u.password = :password"),
     @NamedQuery(name = "UserEntity.findActiveUserByType", query = "SELECT u FROM UserEntity u WHERE u.type = :type AND u.isLive = :isLive"),
@@ -32,41 +31,45 @@ public class UserEntity implements Serializable {
     @GeneratedValue(strategy = IDENTITY)
     @Column(name = "id", nullable = false)
     private Integer id;
-    
+
     @Column(name = "firstName", nullable = false)
     private String firstName;
-    
+
     @Column(name = "password", nullable = false)
     private String password;
-     
+
     @Column(name = "lastName", nullable = false)
     private String lastName;
-       
+
     @Column(name = "email", nullable = false, length = 128)
     private String email;
-    
+
     @Column(name = "bio", nullable = true)
     private String bio;
-      
+
     @Column(name = "phone", nullable = false, length = 12)
     private String phone;
-    
+
     @Column(name = "address", nullable = false)
     private String address;
-    
+
     @Column(name = "since")
     @Temporal(TemporalType.TIMESTAMP)
     private Date since;
 
     @Column(name = "isLive")
     private Boolean isLive = true;
-      
+
     @Column(name = "type")
     @Enumerated(EnumType.STRING)
     private UserType type;
-    
-     public UserEntity() {}
-     
+
+    @Column(name = "mainImage", nullable = true)
+    private String mainImage;
+
+    public UserEntity() {
+    }
+
     public Integer getId() {
         return id;
     }
@@ -132,7 +135,9 @@ public class UserEntity implements Serializable {
     }
 
     public String getFirstName() {
-        if (firstName == null || firstName.length() == 0) return firstName;  
+        if (firstName == null || firstName.length() == 0) {
+            return firstName;
+        }
         return firstName.substring(0, 1).toUpperCase() + firstName.substring(1);
     }
 
@@ -156,6 +161,14 @@ public class UserEntity implements Serializable {
         this.address = address;
     }
 
+    public String getMainImage() {
+        return mainImage;
+    }
+
+    public void setMainImage(String mainImage) {
+        this.mainImage = mainImage;
+    }
+
     public UserEntity(Integer id, String firstname, String password, String lastname, String email, String bio, String phone, String address, Date since, UserType type) {
         this.id = id;
         this.firstName = firstname;
@@ -168,5 +181,5 @@ public class UserEntity implements Serializable {
         this.since = since;
         this.type = type;
     }
-     
+
 }

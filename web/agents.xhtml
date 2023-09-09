@@ -2,6 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsp/jstl/core"
       xmlns:ui="http://java.sun.com/jsf/facelets">
 
     <ui:composition template="layout.xhtml">
@@ -10,12 +11,12 @@
 
         <ui:define name="content">
             <!-- banner -->
-<!--            <div class="inside-banner">
-                <div class="container"> 
-                    <span class="pull-right"><a href="#">Home</a> / Agents</span>
-                    <h2>Agents</h2>
-                </div>
-            </div>-->
+            <!--            <div class="inside-banner">
+                            <div class="container"> 
+                                <span class="pull-right"><a href="#">Home</a> / Agents</span>
+                                <h2>Agents</h2>
+                            </div>
+                        </div>-->
             <!-- banner -->
 
 
@@ -23,51 +24,24 @@
                 <div class="spacer agents">
 
                     <div class="row">
-                        <div class="col-lg-8  col-lg-offset-2 col-sm-12">
-                            <!-- agents -->
-                            <div class="row">
-                                <div class="col-lg-2 col-sm-2 "><a href="#"><img src="resources/images/agents/1.jpg" class="img-responsive"  alt="agent name"/></a></div>
-                                <div class="col-lg-7 col-sm-7 "><h4>John Smith</h4><p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p></div>
-                                <div class="col-lg-3 col-sm-3 "><span class="glyphicon glyphicon-envelope"></span> <a href="mailto:abc@realestate.com">abc@realestete.com</a><br/>
-                                        <span class="glyphicon glyphicon-earphone"></span> (9009) 899 889</div>
-                            </div>
-                            <!-- agents -->
 
-                            <!-- agents -->
-                            <div class="row">
-                                <div class="col-lg-2 col-sm-2 "><a href="#"><img src="resources/images/agents/2.jpg" class="img-responsive" alt="agent name"/></a></div>
-                                <div class="col-lg-7 col-sm-7 "><h4>John Smith</h4><p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p></div>
-                                <div class="col-lg-3 col-sm-3 "><span class="glyphicon glyphicon-envelope"></span> <a href="mailto:abc@realestate.com">abc@realestete.com</a><br/>
-                                        <span class="glyphicon glyphicon-earphone"></span> (9009) 899 889</div>
-                            </div>
-                            <!-- agents -->
-
-
-                            <!-- agents -->
-                            <div class="row">
-                                <div class="col-lg-2 col-sm-2 "><a href="#"><img src="resources/images/agents/3.jpg" class="img-responsive" alt="agent name"/></a></div>
-                                <div class="col-lg-7 col-sm-7 "><h4>John Smith</h4><p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p></div>
-                                <div class="col-lg-3 col-sm-3 "><span class="glyphicon glyphicon-envelope"></span> <a href="mailto:abc@realestate.com">abc@realestete.com</a><br/>
-                                        <span class="glyphicon glyphicon-earphone"></span> (9009) 899 889</div>
-                            </div>
-                            <!-- agents -->
-
-
-                            <!-- agents -->
-                            <div class="row">
-                                <div class="col-lg-2 col-sm-2 "><a href="#"><img src="resources/images/agents/4.jpg" class="img-responsive" alt="agent name"/></a></div>
-                                <div class="col-lg-7 col-sm-7 "><h4>John Smith</h4><p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p></div>
-                                <div class="col-lg-3 col-sm-3 "><span class="glyphicon glyphicon-envelope"></span> <a href="mailto:abc@realestate.com">abc@realestete.com</a><br/>
-                                        <span class="glyphicon glyphicon-earphone"></span> (9009) 899 889</div>
-                            </div>
-                            <!-- agents -->
-
-
+                        <div class="col-lg-10  col-lg-offset-1 col-sm-12">
+                            <f:forEach items="#{userBean.getActiveUsersByType(true)}" var="agent">       
+                                <div class="row agent">
+                                    <div class="col-lg-2 col-sm-2 ">
+                                        <h:graphicImage value="uploaded-images/#{agent.mainImage}" rendered="#{not empty agent.mainImage}" class="img-responsive"  alt="agent name" />
+                                        <h:graphicImage value="resources/images/profile_picture.png" rendered="#{empty agent.mainImage}" />
+                                    </div>
+                                    <div class="col-lg-7 col-sm-7 "><h4>#{agent.firstName}${agent.lastName}</h4><p>#{agent.bio}</p></div>
+                                    <div class="col-lg-3 col-sm-3 "><span class="glyphicon glyphicon-envelope"></span> <a href="mailto:abc@realestate.com">#{agent.email}</a><br/>
+                                        <span class="glyphicon glyphicon-earphone"></span> #{agent.phone}</div>
+                                </div>
+                            </f:forEach>
                         </div>
                     </div>
 
                 </div>
             </div>
-                    </ui:define>
-                    </ui:composition> 
-                    </html>
+        </ui:define>
+    </ui:composition> 
+</html>

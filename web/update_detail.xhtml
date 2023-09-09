@@ -1,0 +1,79 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+
+    <ui:composition template="layout.xhtml">
+
+        <ui:define name="title">Oz Property Hub</ui:define>
+
+        <ui:define name="content">
+
+            <div class="container">
+
+                <div class="spacer">
+                    <div class="row register">
+                        <div class="col-lg-9 col-lg-offset-2 col-sm-12 col-xs-12">
+                            <h1 style="color:#000;margin-bottom: 40px;">Update Profile</h1>
+                            <h:messages globalOnly="true" showDetail="false"
+                                        errorClass="msg_error"
+
+                                        infoClass="msg_info"
+                                        fatalClass="msg_error"
+                                        warnClass="msg_warn"
+                                        layout="table"
+                                        errorStyle="color:red"
+                                        />
+                            <h:form enctype="multipart/form-data">
+                                <div class="col-lg-3 col-sm-4 col-xs-5 profile-picture-wrapper">
+                                    <h:graphicImage value="uploaded-images/#{userBean.mainImageUrl}" rendered="#{not empty userBean.mainImageUrl}" />
+                                    <h:graphicImage value="resources/images/profile_picture.png" rendered="#{empty userBean.mainImageUrl}" />
+                                    <div class="col-lg-12">
+                                        <p:fileUpload value="#{userBean.mainImage}"  multiple="false" mode="simple" dragDropSupport="true" />
+                                    </div>
+                                </div>
+                                <div class="col-lg-9 col-sm-8 col-xs-7">
+                                    <h:outputLabel value="First Name"/>
+                                    <h:inputText  class="form-control"  value="#{userBean.firstName}" required="true" requiredMessage="Please enter first name!" id="firstName" />
+                                    <h:messages errorStyle="color:red" for="firstName" layout="table"/>
+
+                                    <h:outputLabel value="Last Name"/>
+                                    <h:inputText  class="form-control"  value="#{userBean.lastName}" required="true" requiredMessage="Please enter last name!" id="lastName" />
+                                    <h:messages errorStyle="color:red" for="lastName"  layout="table"/>                               
+
+                                    <h:panelGroup rendered="#{userBean.type == 'AGENT'}">
+                                        <h:outputLabel value="Bio"/>
+                                        <h:inputTextarea  class="form-control"  value="#{userBean.bio}" required="true" requiredMessage="Please enter your bio!" id="bio" />
+                                        <h:messages errorStyle="color:red" for="bio"  layout="table"/>                               
+                                    </h:panelGroup>
+
+                                    <h:outputLabel value="Phone"/>
+                                    <h:inputText  class="form-control"  value="#{userBean.phone}" required="true" requiredMessage="Please enter your phone" id="phone" />
+                                    <h:messages errorStyle="color:red" for="phone" layout="table" />
+
+                                    <h:outputLabel value="Address"/>
+                                    <h:inputText  class="form-control"  value="#{userBean.address}" required="true" requiredMessage="Please enter your address" id="address" />
+                                    <h:messages errorStyle="color:red" for="address" layout="table" />
+
+                                    <h:outputLabel value="Email"/>
+                                    <h:inputText  class="form-control"  value="#{userBean.newEmail}" required="true" requiredMessage="Please enter email" id="email" />
+                                    <h:messages errorStyle="color:red" for="email" layout="table" />
+
+                                    <h:outputLabel value="Password"/>
+                                    <h:inputSecret  class="form-control"  value="#{userBean.password}" required="true" requiredMessage="Please enter Password" id="password" />
+                                    <h:messages errorStyle="color:red" for="password" layout="table" />
+                                    <h:commandButton value="Update Profile"  class="btn btn-success" action="#{userBean.updateProfile}" />
+                                </div>
+                            </h:form>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+        </ui:define>
+    </ui:composition> 
+</html>
