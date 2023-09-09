@@ -382,17 +382,17 @@ h2{font-size: 25px;}
 }
 
 
-.agent-header-wrapper {
+.header-wrapper {
     display: flex;
     width: 96%;
     margin: 20px auto 10px;
 }
 
-.agent-header-wrapper h4 {
+.header-wrapper h4 {
     flex: 1;
 }
 
-.agent-header-wrapper a {
+.header-wrapper a {
     width: auto;
 }
 
