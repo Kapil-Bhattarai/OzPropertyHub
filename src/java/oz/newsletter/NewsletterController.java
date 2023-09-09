@@ -32,6 +32,7 @@ import oz.Util;
 import oz.address.AddressEJB;
 import oz.address.AddressEntity;
 import oz.newsletter_subscriber.NewsletterSubscriberEJB;
+import oz.newsletter_subscriber.NewsletterSubscriberEntity;
 import oz.property_image.PropertyImageEntity;
 import oz.user.UserController;
 import oz.user.UserEntity;
@@ -50,13 +51,14 @@ public class NewsletterController {
     private int id;
     private String subject;
     private String body;
+    private boolean isSent;
 
     @EJB
     private NewsletterEJB newsletterEJB;
 
     @EJB
     private NewsletterSubscriberEJB newsletterSubscriberEJB;
-    
+
     @ManagedProperty("#{userBean}")
     private UserController userBean; // Inject the UserController bean
 
@@ -86,6 +88,22 @@ public class NewsletterController {
         this.body = body;
     }
 
+    public UserController getUserBean() {
+        return userBean;
+    }
+
+    public void setUserBean(UserController userBean) {
+        this.userBean = userBean;
+    }
+
+    public boolean isIsSent() {
+        return isSent;
+    }
+
+    public void setIsSent(boolean isSent) {
+        this.isSent = isSent;
+    }
+
     @PostConstruct
     public void init() {
         FacesContext context = FacesContext.getCurrentInstance();
@@ -107,7 +125,7 @@ public class NewsletterController {
             newsletterEntity = new NewsletterEntity();
             newsletterEntity.setSubject(subject);
             newsletterEntity.setBody(body);
-            
+
             if (this.id != 0) {
                 newsletterEntity.setId(id);
                 newsletterEJB.updateNewsletter(newsletterEntity);
@@ -124,15 +142,38 @@ public class NewsletterController {
 
     }
 
+    public List<NewsletterEntity> getNewsletters() {
+        List<NewsletterEntity> list = newsletterEJB.getNewsletters();
+        return list;
+    }
+
     public String editNewsletter(NewsletterEntity n) {
         return "/dashboard/admin/newsletter_form.faces?faces-redirect=true&id=" + n.getId();
     }
 
-    public String deleteProperty(NewsletterEntity n) {
+    public String deleteNewsletter(NewsletterEntity n) {
         if (newsletterEJB.deleteProperty(n) != null) {
             return "/dashboard/admin/newsletter_list.faces?faces-redirect=true";
         } else {
             return null;
+        }
+    }
+
+    public void sendToAll(NewsletterEntity ne) {
+        FacesContext context = FacesContext.getCurrentInstance();
+        try {
+            List<NewsletterSubscriberEntity> nse = newsletterSubscriberEJB.getAllSubscribers();
+            for (NewsletterSubscriberEntity subscriber : nse) {
+                Util.sendEmail(subscriber.getEmail(), userBean.getEmail(), ne.getSubject(), ne.getBody());
+            }
+            ne.setIsSent(true);
+            Util.showMessage(context, FacesMessage.SEVERITY_INFO, "Emails sent successfully.", null);
+            
+            newsletterEJB.updateNewsletter(ne);
+        } catch (Exception e) {
+            System.out.println("Send to all error ======>");
+            System.out.println(e);
+            Util.showMessage(context, FacesMessage.SEVERITY_ERROR, "There were some errors while sending emails.", null);
         }
     }
 }
