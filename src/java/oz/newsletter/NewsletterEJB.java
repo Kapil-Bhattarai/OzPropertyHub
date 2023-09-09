@@ -2,6 +2,7 @@ package oz.newsletter;
 
 import oz.OzEJB;
 import jakarta.ejb.Stateless;
+import java.util.List;
 
 @Stateless
 public class NewsletterEJB extends OzEJB {
@@ -40,6 +41,16 @@ public class NewsletterEJB extends OzEJB {
             return "success";
         } catch (Exception e) {
             System.out.println("exception value  " + e.getMessage());
+            return null;
+        }
+    }
+    
+    public List<NewsletterEntity> getNewsletters() {
+        try {
+            return entityManager.createNamedQuery(NewsletterEntity.QUERY_GET_ALL, NewsletterEntity.class).
+                    getResultList();
+        } catch (Exception e) {
+            System.out.println("ne exception  " + e.getMessage());
             return null;
         }
     }
