@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+
+    <ui:composition template="layout.xhtml">
+
+        <ui:define name="title">Oz Property Hub</ui:define>
+
+        <ui:define name="content">
+            <div class="container">
+                <div class="spacer">
+                    <div class="row register">
+                        <div class="col-lg-6 col-lg-offset-3 col-sm-6 col-sm-offset-3 col-xs-12 ">
+
+                            <h:messages globalOnly="true" showDetail="false"
+                                        errorClass="msg_error"
+                                        infoClass="msg_info"
+                                        fatalClass="msg_error"
+                                        warnClass="msg_warn"
+                                        layout="table"
+                                        errorStyle="color:red"
+                                        />
+                            <h:form>
+                                <h:outputLabel value="Subject"/>
+                                <h:inputText  value="#{newsletterBean.subject}"  required="true" requiredMessage="Required!" class="form-control" id="subject" />
+                                <h:messages errorStyle="color:red" for="subject" layout="table" />
+
+                                <h:outputLabel value="Body"/>
+                                <h:inputTextarea rows="20" value="#{newsletterBean.body}" required="true" requiredMessage="Required!" class="form-control" id="body"/>                  
+                                <h:messages errorStyle="color:red" for="body" layout="table" />
+
+                                <h:commandButton value="Login" class="btn btn-success" action="#{newsletterBean.submit}" />
+                            </h:form>
+                        </div>
+
+                    </div>
+                </div>
+            </div>   
+        </ui:define>
+    </ui:composition> 
+</html>
