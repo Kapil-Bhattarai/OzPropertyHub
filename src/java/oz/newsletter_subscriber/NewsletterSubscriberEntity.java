@@ -1,25 +1,20 @@
 package oz.newsletter_subscriber;
 
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
 import java.io.Serializable;
-import java.util.Date;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import static jakarta.persistence.GenerationType.IDENTITY;
 import jakarta.persistence.Id;
 import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
 import jakarta.persistence.Table;
-import oz.UserType;
 
 @Entity
 @Table(name = "OZ_NEWSLETTER_SUBSCRIBER")
 @NamedQueries({
-    @NamedQuery(name = "NewsletterEntity.findByEmail", query = "SELECT n FROM NewsletterEntity n WHERE n.email = :email")
+    @NamedQuery(name = "NewsletterSubscriberEntity.findByEmail", query = "SELECT n FROM NewsletterSubscriberEntity n WHERE n.email = :email"),
+    @NamedQuery(name = "NewsletterSubscriberEntity.getAll", query = "SELECT n FROM NewsletterSubscriberEntity n"),
 })
 public class NewsletterSubscriberEntity implements Serializable {
 
