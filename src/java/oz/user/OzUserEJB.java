@@ -65,6 +65,7 @@ public class OzUserEJB extends OzEJB {
         if (userToDelete != null) {
             for (PropertyEntity property : user.getProperties()) {
                 property.setAgent(null); 
+                property.setAddress(null);
             }
             
             UserEntity managedUser = entityManager.merge(userToDelete); // Re-attach the entity
