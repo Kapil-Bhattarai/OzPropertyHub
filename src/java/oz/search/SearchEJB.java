@@ -3,7 +3,6 @@ package oz.search;
 import jakarta.ejb.Stateless;
 import jakarta.persistence.TypedQuery;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import oz.OzEJB;
 import oz.PropertyType;

@@ -5,7 +5,6 @@ import jakarta.ejb.Stateless;
 import java.util.ArrayList;
 import java.util.List;
 import oz.UserType;
-import oz.property.PropertyEntity;
 
 @Stateless
 public class OzUserEJB extends OzEJB {
@@ -63,11 +62,6 @@ public class OzUserEJB extends OzEJB {
              UserEntity userToDelete = entityManager.find(UserEntity.class, user.getId());
         
         if (userToDelete != null) {
-            for (PropertyEntity property : user.getProperties()) {
-                property.setAgent(null); 
-                property.setAddress(null);
-            }
-            
             UserEntity managedUser = entityManager.merge(userToDelete); // Re-attach the entity
             entityManager.remove(managedUser); // Now remove the managed entity
         }

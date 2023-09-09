@@ -8,7 +8,6 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.faces.bean.SessionScoped;
 import jakarta.faces.context.FacesContext;
-import jakarta.servlet.http.Part;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -25,7 +24,6 @@ import static oz.UserType.AGENT;
 import oz.Util;
 import oz.newsletter_subscriber.NewsletterSubscriberEJB;
 import oz.newsletter_subscriber.NewsletterSubscriberEntity;
-import oz.property_image.PropertyImageEntity;
 
 @ManagedBean(name = "userBean")
 @SessionScoped

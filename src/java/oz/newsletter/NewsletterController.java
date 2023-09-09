@@ -1,6 +1,5 @@
 package oz.newsletter;
 
-import oz.property_image.PropertyImageEJB;
 import jakarta.annotation.PostConstruct;
 import jakarta.ejb.EJB;
 import jakarta.faces.application.FacesMessage;
@@ -10,32 +9,12 @@ import jakarta.faces.bean.ViewScoped;
 import jakarta.faces.context.FacesContext;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
-import jakarta.servlet.http.Part;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
-import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
-import org.primefaces.model.file.UploadedFiles;
-import oz.PropertyType;
-import oz.StateType;
 import oz.Util;
-import oz.address.AddressEJB;
-import oz.address.AddressEntity;
 import oz.newsletter_subscriber.NewsletterSubscriberEJB;
 import oz.newsletter_subscriber.NewsletterSubscriberEntity;
-import oz.property_image.PropertyImageEntity;
 import oz.user.UserController;
-import oz.user.UserEntity;
 
 /**
  *
