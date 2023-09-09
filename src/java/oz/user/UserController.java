@@ -8,14 +8,24 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.faces.bean.SessionScoped;
 import jakarta.faces.context.FacesContext;
+import jakarta.servlet.http.Part;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Date;
 import java.util.List;
+import org.primefaces.model.file.UploadedFile;
 import oz.UserType;
+import static oz.UserType.ADMIN;
+import static oz.UserType.AGENT;
 import oz.Util;
 import oz.newsletter_subscriber.NewsletterSubscriberEJB;
 import oz.newsletter_subscriber.NewsletterSubscriberEntity;
+import oz.property_image.PropertyImageEntity;
 
 @ManagedBean(name = "userBean")
 @SessionScoped
@@ -35,6 +45,9 @@ public class UserController {
     private String address;
     private Date since;
     private Boolean isLive = true;
+    private UploadedFile mainImage;
+    private String mainImageUrl;
+    private String newEmail;
 
     private UserType type;
 
@@ -94,6 +107,48 @@ public class UserController {
                     };
                 }
             }
+        }
+    }
+
+    public void updateProfile() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        UserEntity user = userEJB.getUserbyEmailAndPassword(email, HashConvert(password));
+        if (user == null) {
+            // not registered before.
+            Util.showMessage(context, FacesMessage.SEVERITY_ERROR, "You have entered a wrong password.", null);
+            //return "";
+        } else {
+            
+            if (mainImage != null || mainImage.getSize() == 0) {
+                try {
+                    String fileName = mainImage.getFileName();
+                    String fileLocation = System.getProperty("OZPROPERTYHUB_UPLOAD_LOCATION") + "/" + fileName;
+                    try (InputStream inputStream = mainImage.getInputStream()) {
+                        Files.copy(inputStream, Paths.get(fileLocation), StandardCopyOption.REPLACE_EXISTING);
+                        user.setMainImage(fileName);
+                    } catch (IOException e) {
+                        System.out.println(e);
+                        // Handle the exception
+                    }
+                    // Process the file content, save it, or do whatever you need.
+                } catch (Exception e) {
+                    // Handle the exception
+                    System.out.println(e);
+                }
+            } else if (mainImageUrl != null) {
+                user.setMainImage(mainImageUrl);
+            }
+
+            user.setFirstName(firstName);
+            user.setLastName(lastName);
+            user.setEmail(newEmail);
+            user.setBio(bio);
+            user.setPhone(phone);
+            user.setAddress(address);
+            userEJB.updateUser(user);
+            Util.showMessage(context, FacesMessage.SEVERITY_INFO, "Profile successfully updated.", null);
+            this.setMainImageUrl(user.getMainImage());
+            this.setEmail(newEmail);
         }
     }
 
@@ -228,6 +283,7 @@ public class UserController {
 
     private void setUserData(UserEntity user) {
         email = user.getEmail();
+        newEmail = user.getEmail();
         password = user.getPassword();
         firstName = user.getFirstName();
         lastName = user.getLastName();
@@ -237,6 +293,8 @@ public class UserController {
         type = user.getType();
         bio = user.getBio();
         isLive = user.getIsLive();
+        address = user.getAddress();
+        mainImageUrl = user.getMainImage();
     }
 
     public void resetUserData() {
@@ -251,6 +309,7 @@ public class UserController {
         since = null;
         isLive = true;
         address = null;
+        bio = null;
         type = UserType.USER;
     }
 
@@ -476,4 +535,27 @@ public class UserController {
         this.address = address;
     }
 
+    public UploadedFile getMainImage() {
+        return mainImage;
+    }
+
+    public void setMainImage(UploadedFile mainImage) {
+        this.mainImage = mainImage;
+    }
+
+    public String getMainImageUrl() {
+        return mainImageUrl;
+    }
+
+    public void setMainImageUrl(String mainImageUrl) {
+        this.mainImageUrl = mainImageUrl;
+    }
+
+    public String getNewEmail() {
+        return newEmail;
+    }
+
+    public void setNewEmail(String newEmail) {
+        this.newEmail = newEmail;
+    }
 }

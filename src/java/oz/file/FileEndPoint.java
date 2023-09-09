@@ -15,7 +15,7 @@ import java.nio.file.Paths;
 @Path("/")
 public class FileEndPoint {
 
-    private static final String BASE_PATH = System.getenv("OZPROPERTYHUB_UPLOAD_LOCATION");
+    private static final String BASE_PATH = System.getProperty("OZPROPERTYHUB_UPLOAD_LOCATION");
 
     @GET
     @Path("/{filename}")
