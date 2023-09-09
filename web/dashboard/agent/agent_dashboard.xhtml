@@ -14,6 +14,9 @@
             <h4>Agent Dashboard</h4>
             <a class="btn btn-success" href="#{request.contextPath}/dashboard/agent/property_form.faces">Add Property</a>
             </div>
+             <h:form>
+                <h:commandButton value="Load Test Data" action="#{propertyBean.executeDemoListing()}" style="margin-left: 2%;" />
+            </h:form>
              <table id="tableContent">
                 <thead>
                     <tr>
@@ -39,7 +42,7 @@
                         </tr>
                     </f:forEach>
                 </tbody>
-    </table>
+            </table>
         </ui:define>
     </ui:composition> 
 </html>

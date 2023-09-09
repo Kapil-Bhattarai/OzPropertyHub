@@ -35,7 +35,6 @@ public class LoginFilter implements Filter {
             "property_form.faces?faces-redirect=true",
             };
         String url = req.getRequestURI();
-        System.out.println("Url is "+url);
         if (session == null || !session.isLoggedIn()) {
             boolean risk = false;
             for (String afterLog1 : afterLog) {
@@ -50,7 +49,6 @@ public class LoginFilter implements Filter {
                 chain.doFilter(request, response);
             }
         } else if (url.contains("logout.faces")) {
-              System.out.println("Url kapil");
             req.getSession().removeAttribute("userBean");
             session.resetUserData();
             resp.sendRedirect(req.getServletContext().getContextPath() + "/index.faces");

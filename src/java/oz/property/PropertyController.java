@@ -1,20 +1,13 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package oz.property;
 
 import oz.property_image.PropertyImageEJB;
-import static com.sun.faces.facelets.util.Path.context;
 import jakarta.annotation.PostConstruct;
 import jakarta.ejb.EJB;
 import jakarta.faces.application.FacesMessage;
 import jakarta.faces.bean.ManagedBean;
 import jakarta.faces.bean.ManagedProperty;
-import jakarta.faces.bean.SessionScoped;
 import jakarta.faces.bean.ViewScoped;
 import jakarta.faces.context.FacesContext;
-import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.servlet.http.Part;
@@ -25,12 +18,13 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import org.eclipse.persistence.jpa.jpql.parser.DateTime;
-import org.primefaces.model.file.UploadedFile;
+import java.util.Random;
 import org.primefaces.model.file.UploadedFiles;
 import oz.PropertyType;
 import oz.StateType;
@@ -59,6 +53,8 @@ public class PropertyController {
     private String streetNumber;
     private String suburb;
     private StateType state;
+    private String propertyDetails;
+    private String map;
     private String postCode;
     private Part mainImage;
     private String mainImageUrl;
@@ -263,6 +259,22 @@ public class PropertyController {
         this.streetNumber = streetNumber;
     }
 
+    public String getPropertyDetails() {
+        return propertyDetails;
+    }
+
+    public void setPropertyDetails(String propertyDetails) {
+        this.propertyDetails = propertyDetails;
+    }
+
+    public String getMap() {
+        return map;
+    }
+
+    public void setMap(String map) {
+        this.map = map;
+    }
+
     public String getPostCode() {
         return postCode;
     }
@@ -333,6 +345,8 @@ public class PropertyController {
             this.listedDate = propertyEntity.getListedDate();
             this.inspectionDate = propertyEntity.getInspection();
             this.additionalImagesE = propertyEntity.getImages();
+            this.map = propertyEntity.getMap();
+            this.propertyDetails = propertyEntity.getPropertyDetails();
         }
     }
 
@@ -395,6 +409,8 @@ public class PropertyController {
             propertyEntity.setNoOfParking(noOfParking);
             propertyEntity.setNoOfBathroom(noOfBathroom);
             propertyEntity.setNoOfBedroom(noOfBedroom);
+            propertyEntity.setMap(map);
+            propertyEntity.setPropertyDetails(propertyDetails);
 
             // Associate the created AddressEntity with the PropertyEntity
             propertyEntity.setAddress(addressEntity);
@@ -458,6 +474,115 @@ public class PropertyController {
 
     }
 
+    public void executeDemoListing() {
+        //         registerDemoProperties(Integer propertyId, String mainImageUrl, Double rent, PropertyType propertyType, 
+//          String map, 
+//         String propertyDetails, 
+//            Boolean hasAc, Boolean hasSecureParking, Boolean hasDishwater, Boolean hasWardrobe, Boolean hasBalcony,
+//            Integer noOfParking, Integer noOfBathroom, Integer noOfBedroom,
+//            String unitNumber, String streetNumber, String streetName,String suburb, String postCode, StateType state,
+//            Integer agentId, List<PropertyImageEntity> additionalImagesE )
+
+            Random random = new Random();
+            String propertyDetails = "The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from \"de Finibus Bonorum et Malorum\" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.";
+            String map = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3312.7081619008386!2d151.20256887642336!3d-33.87141127322549!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6b12ae38ac7b59c3%3A0xfe1a2414acd05bdb!2sCQUniversity%20Sydney!5e0!3m2!1sen!2sau!4v1691202775933!5m2!1sen!2sau";
+            
+              DecimalFormat decimalFormat = new DecimalFormat("#.##");
+        
+            registerDemoProperties("1.jpg", Double.parseDouble(decimalFormat.format(random.nextDouble(50.0, 750.0))), PropertyType.values()[random.nextInt(PropertyType.values().length)],
+            map,
+            propertyDetails,
+             random.nextBoolean(), random.nextBoolean(), random.nextBoolean(), random.nextBoolean(), random.nextBoolean(), 
+             random.nextInt(1,4),  random.nextInt(1,4),  random.nextInt(1,4),
+             random.nextInt(1, 20)+"", "street name","hawkesbury road", "Westmead", "2145", StateType.values()[random.nextInt(StateType.values().length)],
+             random.nextInt(2,5), new ArrayList()
+            );
+ 
+             registerDemoProperties("1.jpg", Double.parseDouble(decimalFormat.format(random.nextDouble(50.0, 750.0))), PropertyType.values()[random.nextInt(PropertyType.values().length)],
+            map,
+            propertyDetails,
+             random.nextBoolean(), random.nextBoolean(), random.nextBoolean(), random.nextBoolean(), random.nextBoolean(), 
+             random.nextInt(1,4),  random.nextInt(1,4),  random.nextInt(1,4),
+             random.nextInt(1, 20)+"", "street name","hawkesbury road", "Strathfield", "2145", StateType.values()[random.nextInt(StateType.values().length)],
+             random.nextInt(2,5), new ArrayList()
+            );
+             
+              registerDemoProperties("1.jpg", Double.parseDouble(decimalFormat.format(random.nextDouble(50.0, 750.0))), PropertyType.values()[random.nextInt(PropertyType.values().length)],
+            map,
+            propertyDetails,
+             random.nextBoolean(), random.nextBoolean(), random.nextBoolean(), random.nextBoolean(), random.nextBoolean(), 
+             random.nextInt(1,4),  random.nextInt(1,4),  random.nextInt(1,4),
+             random.nextInt(1, 20)+"", "street name","hawkesbury road", "Auburn", "2145", StateType.values()[random.nextInt(StateType.values().length)],
+             random.nextInt(2,5), new ArrayList()
+            );
+    }
+    
+    public void registerDemoProperties( String mainImageUrl, Double rent, PropertyType propertyType, String map, String propertyDetails, 
+            Boolean hasAc, Boolean hasSecureParking, Boolean hasDishwater, Boolean hasWardrobe, Boolean hasBalcony,
+            Integer noOfParking, Integer noOfBathroom, Integer noOfBedroom,
+            String unitNumber, String streetNumber, String streetName,String suburb, String postCode, StateType state,
+            Integer agentId, List<PropertyImageEntity> additionalImagesE ) {
+        
+        try {
+//             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//             Date date = dateFormat.parse("2023-09-04 14:00:55");
+//            PropertyEntity propertyEntity = propertyEJB.getProperty(propertyId);
+//            if (propertyEntity == null ) {
+//                
+            propertyEntity = new PropertyEntity();
+            
+            propertyEntity.setMainImage(mainImageUrl);
+
+
+            AddressEntity addressEntity = new AddressEntity();
+            addressEntity.setUnit(unitNumber);
+            addressEntity.setStreet_number(streetNumber);
+            addressEntity.setStreet_name(streetName);
+            addressEntity.setSuburb(suburb);
+            addressEntity.setPostcode(postCode);
+            addressEntity.setState(state); 
+
+            addressEJB.addAddress(addressEntity);  
+    
+            
+            // Create a new PropertyEntity and set its attributes
+            propertyEntity.setRent(rent);
+            propertyEntity.setType(propertyType);
+            propertyEntity.setInspection(new Date());
+            propertyEntity.setListedDate(new Date());
+            propertyEntity.setHasAc(hasAc);
+            propertyEntity.setHasSecureParking(hasSecureParking);
+            propertyEntity.setHasDishWasher(hasDishwater);
+            propertyEntity.setHasBalcony(hasBalcony);
+            propertyEntity.setHasWardrobe(hasWardrobe);
+            propertyEntity.setNoOfParking(noOfParking);
+            propertyEntity.setNoOfBathroom(noOfBathroom);
+            propertyEntity.setNoOfBedroom(noOfBedroom);
+            propertyEntity.setMap(map);
+            propertyEntity.setPropertyDetails(propertyDetails);
+
+            // Associate the created AddressEntity with the PropertyEntity
+            propertyEntity.setAddress(addressEntity);
+
+            UserEntity existingAgent = em.find(UserEntity.class, agentId); // Use the correct agent ID here
+
+            propertyEntity.setAgent(existingAgent);
+
+            propertyEntity.setImages(additionalImagesE);
+
+            propertyEJB.addProperty(propertyEntity);
+            
+            for (PropertyImageEntity removedImage : removedImagesE) {
+                propertyImageEJB.removePropertyImage(removedImage);
+            }
+            propertyEJB.updateProperty(propertyEntity);
+
+//        }
+        } catch (Exception e) {
+           
+        }
+    }
+    
     public List<PropertyEntity> getPropertiesByAgent(Boolean isActive) {
         List<PropertyEntity> list = propertyEJB.getPropertiesByAgent(userBean.getId());
         return list;

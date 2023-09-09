@@ -53,11 +53,20 @@ public class UserController {
     private OzUserEJB userEJB;
 
     private UserEntity ozUser;
+    
+    private String formUserName;
+    private String formEmail;
+    private String formNumber;
+    private String formMessage;
+
 
     @PostConstruct
     public void init() {
         ozUser = new UserEntity();
-        registerAdmin();
+        registerUser("admin", "Deo", HashConvert("password"), "123456789", "200,Kent Street, NSW, Australia", UserType.ADMIN, "admin@gmail.com", true);
+        registerUser("test1", "User 1", HashConvert("password"), "123456789", "200,Kent Street, NSW, Australia", UserType.AGENT, "test1@gmail.com", true);
+        registerUser("test2", "User 2", HashConvert("password"), "123456789", "200,Kent Street, NSW, Australia", UserType.AGENT, "test2@gmail.com", true);
+        registerUser("test3", "User 3", HashConvert("password"), "123456789", "200,Kent Street, NSW, Australia", UserType.AGENT, "test3@gmail.com", false);
     }
 
     public String loginUser() {
@@ -157,27 +166,35 @@ public class UserController {
 
     public List<UserEntity> getActiveUsersByType(Boolean isActive) {
         List<UserEntity> list = userEJB.getActiveUsersByType(UserType.AGENT, isActive);
-        System.out.println("values of agent " + list.toString());
         return list;
     }
 
     public String suspendAgent(UserEntity user) {
+        Util.sendEmail(user.getEmail(), "admin@gmail.com", 
+                "Account Suspension", 
+                "Your account has been suspended. Please contact admin for further information.");
         if (userEJB.suspendAgent(user) != null) {
             return "/dashboard/admin/admin_dashboard.faces?faces-redirect=true";
         } else {
             return null;
         }
     }
-
-    public String activateAgent(UserEntity user) {
+    
+     public String activateAgent(UserEntity user) {
+          Util.sendEmail(user.getEmail(), "admin@gmail.com", 
+                "Account activation", 
+                "Congratulations!. Your account has been activated. Now, you can add properties to OZ Property Hub.");
         if (userEJB.activateAgent(user) != null) {
             return "/dashboard/admin/admin_pending_request_dashboard.faces?faces-redirect=true";
         } else {
             return null;
         }
     }
-
-    public String deleteAgent(UserEntity user) {
+    
+     public String deleteAgent(UserEntity user) {
+         Util.sendEmail(user.getEmail(), "admin@gmail.com", 
+                "Account deletion", 
+                "Your account has been deleted from Oz Property Hub. Please contact admin for further information.");
         if (userEJB.deleteAgent(user) != null) {
             return "/dashboard/admin/admin_dashboard.faces?faces-redirect=true";
         } else {
@@ -229,24 +246,33 @@ public class UserController {
         }
 
     }
-
-    public void registerAdmin() {
-        UserEntity user = userEJB.getUserbyEmail("admin@gmail.com");
+       
+   public String contactForm() {
+        if (formEmail.length() > 0 && formUserName.length() > 0 && formMessage.length() > 0  && formNumber.length() > 0) {
+            Util.sendEmail("admin@gmail.com", formEmail, "Feedback from "+formUserName, formMessage+"\n Contact Details: \n"+formNumber);
+            return "feedback_success.faces?faces-redirect=true";
+        }  else {
+            return null;
+        }
+    }
+   
+    public void registerUser(String firstName, String lastName, String password, String phone, String address, UserType type, String email, boolean isLive) {
+        UserEntity user = userEJB.getUserbyEmail(email);
         if (user == null) {
             user = new UserEntity();
-            user.setFirstName("admin");
-            user.setLastName("Deo");
-            user.setPassword(HashConvert("password"));
-            user.setPhone("123456789");
-            user.setAddress("200,Kent Street, NSW, Australia");
-            user.setType(UserType.ADMIN);
+            user.setFirstName(firstName);
+            user.setLastName(lastName);
+            user.setPassword(password);
+            user.setPhone(phone);
+            user.setAddress(address);
+            user.setType(type);
             user.setSince(new Date());
-            user.setIsLive(true);
-            user.setEmail("admin@gmail.com");
+            user.setIsLive(isLive);
+            user.setEmail(email);
             userEJB.addUser(user);
         }
     }
-
+     
     private void setUserData(UserEntity user) {
         email = user.getEmail();
         newEmail = user.getEmail();
@@ -424,6 +450,39 @@ public class UserController {
         this.lastName = lastName;
     }
 
+    public String getFormUserName() {
+        return formUserName;
+    }
+
+    public void setFormUserName(String formUserName) {
+        this.formUserName = formUserName;
+    }
+
+    public String getFormEmail() {
+        return formEmail;
+    }
+
+    public void setFormEmail(String formEmail) {
+        this.formEmail = formEmail;
+    }
+
+    public String getFormNumber() {
+        return formNumber;
+    }
+
+    public void setFormNumber(String formNumber) {
+        this.formNumber = formNumber;
+    }
+
+    public String getFormMessage() {
+        return formMessage;
+    }
+
+    public void setFormMessage(String formMessage) {
+        this.formMessage = formMessage;
+    }
+
+    
     @Override
     public String toString() {
         return "UserController{ id=" + id + ", firstName=" + firstName + ", password=" + password + ", confirmPassword=" + confirmPassword + ", lastName=" + lastName + ", email=" + email + ", bio=" + bio + ", phone=" + phone + ", since=" + since + ", isLive=" + isLive + ", type=" + type + ", userEJB=" + userEJB + ", ozUser=" + ozUser + '}';

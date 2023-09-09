@@ -111,6 +111,20 @@
                                         </div>
                                     </h:panelGroup>
                                     <div class="row">
+                                        <div class="col-lg-12">
+                                             <h:outputLabel value="Property Details"/>
+                                            <h:inputTextarea  class="form-control"  value="#{propertyBean.propertyDetails}" rows="10" cols="40"  required="true" requiredMessage="Required!" id="property_details" />
+                                            <h:messages errorStyle="color:red" for="property_details" layout="table"/>
+                                        </div>
+                                    </div>
+                                     <div class="row">
+                                        <div class="col-lg-12">
+                                             <h:outputLabel value="Map"/>
+                                            <h:inputText  class="form-control"  value="#{propertyBean.map}" required="true" requiredMessage="Required!" id="property_map" />
+                                            <h:messages errorStyle="color:red" for="property_map" layout="table"/>
+                                        </div>
+                                    </div>
+                                    <div class="row">
                                         <div class="col-lg-6">
                                             <h:outputLabel value="Property"/>
                                             <h:selectOneMenu value="#{propertyBean.propertyType}" required="true" requiredMessage="Required!" id="propertyType">
