@@ -56,12 +56,6 @@ public class UserController {
 
     @PostConstruct
     public void init() {
-        String fileLocation = System.getenv("DOZPROPERTYHUB_UPLOAD_LOCATION");
-        String directory = System.getProperty("DOZPROPERTYHUB_UPLOAD_LOCATION");
-        String directory2 = System.getProperty("OZPROPERTYHUB_UPLOAD_LOCATION");
-
-        System.out.println("======>");
-        System.out.println(fileLocation + directory + directory2 + "hello");
         ozUser = new UserEntity();
         registerAdmin();
     }
