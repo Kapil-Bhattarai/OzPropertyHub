@@ -1,0 +1,51 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+
+    <ui:composition template="../../layout.xhtml">
+
+        <ui:define name="title">Oz Property Hub</ui:define>
+
+        <ui:define name="content">
+            <div class="header-wrapper">
+                <h4>Newsletters</h4>
+                <a class="btn btn-success" href="#{request.contextPath}/dashboard/admin/newsletter_form.faces">Add Newsletter</a>
+            </div>
+            <table id="tableContent">
+                <thead>
+                    <tr>
+                        <th>S.N.</th>
+                        <th>Subject</th>
+                        <th style="width:600px;">Actions</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <h:form>
+                        <ui:repeat value="#{newsletterBean.getNewsletters()}" var="newsletter" varStatus="loop">   
+                            <tr>
+                                <td><h:outputText value="#{loop.index + 1}" /></td>
+                                <td>#{newsletter.subject}</td>
+                                <td>
+                                    <h:panelGroup rendered="#{newsletter.isSent}">
+                                            <h:commandButton value="Delete" action="#{newsletterBean.deleteNewsletter(newsletter)}" />
+                                    </h:panelGroup>
+                                    <h:panelGroup rendered="#{!newsletter.isSent}">
+
+                                        <h:commandButton value="Send" action="#{newsletterBean.sendToAll(newsletter)}" />
+                                        <h:commandButton value="Edit" action="#{newsletterBean.editNewsletter(newsletter)}" />
+                                        <h:commandButton value="Delete" action="#{newsletterBean.deleteNewsletter(newsletter)}" />
+
+                                    </h:panelGroup>
+                                </td>
+                            </tr>
+                        </ui:repeat>
+                    </h:form>
+                </tbody>
+            </table>
+        </ui:define>
+    </ui:composition> 
+</html>
