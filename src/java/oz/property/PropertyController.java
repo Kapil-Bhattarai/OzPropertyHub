@@ -69,6 +69,7 @@ public class PropertyController {
     private boolean hasWardrobe;
     private Date listedDate;
     private Date inspectionDate;
+    private UserEntity userAgent;
 
     private UploadedFiles additionalImages;
     private List<PropertyImageEntity> additionalImagesE = new ArrayList<>();
@@ -314,6 +315,14 @@ public class PropertyController {
         this.additionalImagesE = additionalImagesE;
     }
 
+    public UserEntity getUserAgent() {
+        return userAgent;
+    }
+
+    public void setUserAgent(UserEntity userAgent) {
+        this.userAgent = userAgent;
+    }
+
     @PostConstruct
     public void init() {
         FacesContext context = FacesContext.getCurrentInstance();
@@ -346,6 +355,8 @@ public class PropertyController {
             this.additionalImagesE = propertyEntity.getImages();
             this.map = propertyEntity.getMap();
             this.propertyDetails = propertyEntity.getPropertyDetails();
+            this.userAgent = propertyEntity.getAgent();
+            
         }
     }
 

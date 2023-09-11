@@ -10,7 +10,7 @@
         <ui:define name="title">Oz Property Hub</ui:define>
 
         <ui:define name="content">
-                        <h:outputText value="#{propertyBean}"></h:outputText>
+<!--                        <h:outputText value="#{propertyBean}"></h:outputText>-->
             <div class="container">
                 <div class="properties-listing spacer">
 
@@ -34,7 +34,6 @@
                                                 </l:forEach>
 
                                             </ol>
-
 
                                             <div class="carousel-inner">
                                                 <div class="item active">
@@ -73,11 +72,11 @@
                                             <p class="price">
                                             <h:outputText  value=" A$ #{propertyBean.rent} / week"/> </p>
                                             <p class="area"><span class="glyphicon glyphicon-map-marker"></span> 
-                                            <h:outputText  value="Unit #{propertyBean.unitNumber} / #{propertyBean.streetNumber}, #{propertyBean.streetName}, #{propertyBean.suburb} "/></p>
+                                            <h:outputText  value="U #{propertyBean.unitNumber} / #{propertyBean.streetNumber}, #{propertyBean.streetName}, #{propertyBean.suburb} "/></p>
 
                                             <div class="profile">
                                                 <span class="glyphicon glyphicon-user"></span> Agent Details
-                                                <p>John Parker<br/>009 229 2929</p>
+                                                <p><h:outputText  value="#{propertyBean.userAgent.firstName}  #{propertyBean.userAgent.lastName} "/><br/><h:outputText  value="#{propertyBean.userAgent.phone}"/></p>
                                             </div>
                                         </div>
 
@@ -92,7 +91,6 @@
                                             <button type="submit" class="btn btn-primary" name="Submit">Apply</button> <br/>
 
                                         </div>
-
 
                                     </div>
 
