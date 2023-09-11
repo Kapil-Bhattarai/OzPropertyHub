@@ -504,10 +504,7 @@ public class UserController {
         this.formMessage = formMessage;
     }
 
-    @Override
-    public String toString() {
-        return "UserController{ id=" + id + ", firstName=" + firstName + ", password=" + password + ", confirmPassword=" + confirmPassword + ", lastName=" + lastName + ", email=" + email + ", bio=" + bio + ", phone=" + phone + ", since=" + since + ", isLive=" + isLive + ", type=" + type + ", userEJB=" + userEJB + ", ozUser=" + ozUser + '}';
-    }
+  
 
     public String getConfirmPassword() {
         return confirmPassword;

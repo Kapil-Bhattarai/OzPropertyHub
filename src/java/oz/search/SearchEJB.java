@@ -94,7 +94,7 @@ public class SearchEJB extends OzEJB {
                 query.setParameter("noOfBathroom", null);
             }
 
-            if (noOfBathroom > 0) {
+            if (noOfBedroom > 0) {
                 query.setParameter("noOfBedroom", noOfBedroom);
             } else {
                 query.setParameter("noOfBedroom", null);

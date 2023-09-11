@@ -13,9 +13,9 @@ import oz.property.PropertyEntity;
 @SessionScoped
 public class SearchController {
 
-    private StateType state = StateType.NSW;
-    private PropertyType propertyType = PropertyType.APARTMENT;
-    private String rent = "0-300";
+    private StateType state =null;
+    private PropertyType propertyType = null;
+    private String rent = null;
     private Integer lowerBound;
     private Integer upperBound;
     private String searchText;
@@ -26,8 +26,8 @@ public class SearchController {
     private boolean hasSecureParking;
     private boolean hasWardrobe;
 
-    private String noOfBedroom = "1";
-    private String noOfBathroom = "1";
+    private String noOfBedroom = "0";
+    private String noOfBathroom = "0";
     private String noOfParking = "0";
 
     private List<PropertyEntity> properties = new ArrayList<>();
@@ -184,15 +184,14 @@ public class SearchController {
 //        this.hasSecureParking = false;
 //        this.hasWardrobe = false;
 //        
-//        this.noOfBathroom = 0;
-//        this.noOfParking = 0;
-//        this.noOfBedroom = 0;
+//        this.noOfBathroom = "1";
+//        this.noOfParking = "0";
+//        this.noOfBedroom = "1";
 //        
-//        this.price = null;
 //        this.propertyType = null;
 //        this.searchText = null;
 //        this.state = null;
-//        
+        
         return userId == null;
     }
 
@@ -224,12 +223,12 @@ public class SearchController {
     public boolean showListing() {
        return this.properties.size() > 0;
     }
-    
+
     @Override
     public String toString() {
-        return "SearchController{" + "state=" + state + ", propertyType=" + propertyType + ", rent=" + rent + ", lowerBound=" + lowerBound + ", upperBound=" + upperBound + ", searchText=" + searchText + ", hasBalcony=" + hasBalcony + ", hasDishwater=" + hasDishwater + ", hasAc=" + hasAc + ", hasSecureParking=" + hasSecureParking + ", hasWardrobe=" + hasWardrobe + ", noOfBedroom=" + noOfBedroom + ", noOfBathroom=" + noOfBathroom + ", noOfParking=" + noOfParking + ", properties=" + properties + ", searchEJB=" + searchEJB + '}';
+        return "SearchController{" + "state=" + state + ", propertyType=" + propertyType + ", rent=" + rent + ", lowerBound=" + lowerBound + ", upperBound=" + upperBound + ", searchText=" + searchText + ", hasBalcony=" + hasBalcony + ", hasDishwater=" + hasDishwater + ", hasAc=" + hasAc + ", hasSecureParking=" + hasSecureParking + ", hasWardrobe=" + hasWardrobe + ", noOfBedroom=" + noOfBedroom + ", noOfBathroom=" + noOfBathroom + ", noOfParking=" + noOfParking + '}';
     }
-
+    
 
     public List<PropertyEntity> getProperties() {
         return properties;
