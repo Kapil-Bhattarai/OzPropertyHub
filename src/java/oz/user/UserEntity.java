@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 import oz.UserType;
 import oz.property.PropertyEntity;
+import oz.property_image.PropertyImageEntity;
 
 @Entity
 @Table(name = "OZ_USER")
@@ -77,7 +78,7 @@ public class UserEntity implements Serializable {
     private List<PropertyEntity> properties = new ArrayList<>();
     
     public UserEntity() {}
-     
+
     public Integer getId() {
         return id;
     }
