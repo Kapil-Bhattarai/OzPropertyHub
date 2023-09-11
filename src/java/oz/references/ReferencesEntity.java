@@ -1,4 +1,4 @@
-package oz.property_image;
+package oz.references;
 
 import java.io.Serializable;
 import jakarta.persistence.Column;
