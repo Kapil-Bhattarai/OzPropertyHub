@@ -1,5 +1,6 @@
 package oz.user;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 import java.io.Serializable;
@@ -9,12 +10,18 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import static jakarta.persistence.GenerationType.IDENTITY;
 import jakarta.persistence.Id;
 import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import java.util.ArrayList;
+import java.util.List;
 import oz.UserType;
+import oz.property.PropertyEntity;
+import oz.property_image.PropertyImageEntity;
 
 @Entity
 @Table(name = "OZ_USER")
@@ -67,6 +74,9 @@ public class UserEntity implements Serializable {
     @Column(name = "mainImage", nullable = true)
     private String mainImage;
 
+    @OneToMany(mappedBy = "agent", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<PropertyEntity> properties = new ArrayList<>();
+    
     public UserEntity() {
     }
 

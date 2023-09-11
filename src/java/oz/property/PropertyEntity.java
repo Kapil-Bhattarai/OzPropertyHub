@@ -19,6 +19,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Lob;
+import jakarta.persistence.ManyToOne;
 import java.util.ArrayList;
 import java.util.List;
 import oz.PropertyType;
@@ -120,7 +121,7 @@ public class PropertyEntity implements Serializable {
     @JoinColumn(name = "addressId")
     private AddressEntity address;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "agentId")
     private UserEntity agent;
 
