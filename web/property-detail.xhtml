@@ -18,7 +18,8 @@
 
                         <div class="col-lg-12 col-sm-12 ">
 
-                            <h2>2 room and 1 kitchen apartment</h2>
+                            <h:outputText  value="#{propertyBean.noOfBedroom} Bedroom #{propertyBean.getApartmentTypeValue()} " styleClass="customHeading1"/>  <br/>
+                            <h:outputText  value="Unit #{propertyBean.unitNumber} / #{propertyBean.streetNumber}, #{propertyBean.streetName}, #{propertyBean.suburb} " styleClass="customHeading3"/> <br/>
                             <div class="row">
                                 <div class="col-lg-9">
                                     <div class="property-images">

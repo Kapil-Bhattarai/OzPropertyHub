@@ -493,7 +493,7 @@ public class PropertyController {
             propertyDetails,
              random.nextBoolean(), random.nextBoolean(), random.nextBoolean(), random.nextBoolean(), random.nextBoolean(), 
              random.nextInt(1,4),  random.nextInt(1,4),  random.nextInt(1,4),
-             random.nextInt(1, 20)+"", "street name","hawkesbury road", "Westmead", "2145", StateType.values()[random.nextInt(StateType.values().length)],
+             random.nextInt(1, 20)+"", "9-11","hawkesbury road", "Westmead", "2145", StateType.values()[random.nextInt(StateType.values().length)],
              agentId, new ArrayList()
             );
  
@@ -502,7 +502,7 @@ public class PropertyController {
             propertyDetails,
              random.nextBoolean(), random.nextBoolean(), random.nextBoolean(), random.nextBoolean(), random.nextBoolean(), 
              random.nextInt(1,4),  random.nextInt(1,4),  random.nextInt(1,4),
-             random.nextInt(1, 20)+"", "street name","hawkesbury road", "Strathfield", "2145", StateType.values()[random.nextInt(StateType.values().length)],
+             random.nextInt(1, 20)+"", "74","hawkesbury road", "Strathfield", "2145", StateType.values()[random.nextInt(StateType.values().length)],
              agentId, new ArrayList()
             );
              
@@ -511,7 +511,7 @@ public class PropertyController {
             propertyDetails,
              random.nextBoolean(), random.nextBoolean(), random.nextBoolean(), random.nextBoolean(), random.nextBoolean(), 
              random.nextInt(1,4),  random.nextInt(1,4),  random.nextInt(1,4),
-             random.nextInt(1, 20)+"", "street name","hawkesbury road", "Auburn", "2145", StateType.values()[random.nextInt(StateType.values().length)],
+             random.nextInt(1, 20)+"", "First Street","hawkesbury road", "Auburn", "2145", StateType.values()[random.nextInt(StateType.values().length)],
              agentId, new ArrayList()
             );
     }
@@ -585,6 +585,10 @@ public class PropertyController {
         return list;
     }
 
+     public PropertyEntity getPropertiesByPid(Integer pid) {
+      return propertyEJB.getProperty(pid);
+    }
+     
     public String editProperty(PropertyEntity property) {
         return "/dashboard/agent/property_form.faces?faces-redirect=true&id=" + property.getPid();
     }
@@ -614,6 +618,10 @@ public class PropertyController {
         return "";
     }
 
+    public String getApartmentTypeValue() {
+        return propertyType.name().toLowerCase();
+    }
+    
     @Override
     public String toString() {
         return "PropertyController{" + "em=" + em + ", pid=" + pid + ", aid=" + aid + ", unitNumber=" + unitNumber + ", streetName=" + streetName + ", streetNumber=" + streetNumber + ", suburb=" + suburb + ", state=" + state + ", propertyDetails=" + propertyDetails + ", map=" + map + ", postCode=" + postCode + ", mainImage=" + mainImage + ", mainImageUrl=" + mainImageUrl + ", propertyType=" + propertyType + ", rent=" + rent + ", noOfBedroom=" + noOfBedroom + ", noOfBathroom=" + noOfBathroom + ", noOfParking=" + noOfParking + ", hasBalcony=" + hasBalcony + ", hasDishwater=" + hasDishwater + ", hasAc=" + hasAc + ", hasSecureParking=" + hasSecureParking + ", hasWardrobe=" + hasWardrobe + ", listedDate=" + listedDate + ", inspectionDate=" + inspectionDate + ", additionalImages=" + additionalImages + ", additionalImagesE=" + additionalImagesE + ", removedImagesE=" + removedImagesE + ", propertyEJB=" + propertyEJB + ", addressEJB=" + addressEJB + ", propertyImageEJB=" + propertyImageEJB + ", userBean=" + userBean + ", propertyEntity=" + propertyEntity + ", addressEntity=" + addressEntity + '}';
