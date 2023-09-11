@@ -59,12 +59,12 @@ public class OzUserEJB extends OzEJB {
 
         try {
             //entityManager.remove(user);
-            UserEntity userToDelete = entityManager.find(UserEntity.class, user.getId());
-
-            if (userToDelete != null) {
-                UserEntity managedUser = entityManager.merge(userToDelete); // Re-attach the entity
-                entityManager.remove(managedUser); // Now remove the managed entity
-            }
+             UserEntity userToDelete = entityManager.find(UserEntity.class, user.getId());
+        
+        if (userToDelete != null) {
+            UserEntity managedUser = entityManager.merge(userToDelete); // Re-attach the entity
+            entityManager.remove(managedUser); // Now remove the managed entity
+        }
             return "success";
         } catch (Exception e) {
             System.out.println("exception value  " + e.getMessage());

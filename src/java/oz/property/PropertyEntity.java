@@ -30,9 +30,9 @@ import oz.user.UserEntity;
 @Table(name = "OZ_PROPERTY")
 @NamedQueries({
     @NamedQuery(name = "PropertyEntity.getPropertiesByAgent", query = "SELECT p FROM PropertyEntity p WHERE p.agent.id = :id"),
+    @NamedQuery(name = "PropertyEntity.getPropertiesByID", query = "SELECT p FROM PropertyEntity p WHERE p.pid = :pid"),
     @NamedQuery(name = "PropertyEntity.getProperty", query = "SELECT p FROM PropertyEntity p WHERE p.pid = :id"),
     @NamedQuery(name = "PropertyEntity.getPropertyByDate", query = "SELECT p FROM PropertyEntity p WHERE p.listedDate = :dateValue"),
-    @NamedQuery(name = "PropertyEntity.deletePropertyById", query = "DELETE FROM PropertyEntity p WHERE p.pid = :id"),
     @NamedQuery(name = "PropertyEntity.getAll", query = "SELECT p FROM PropertyEntity p"),
     @NamedQuery(
             name = "PropertyEntity.search",
@@ -116,7 +116,7 @@ public class PropertyEntity implements Serializable {
     @Column(name = "map", length = 65535)
     private String map = "";
     
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "addressId")
     private AddressEntity address;
 

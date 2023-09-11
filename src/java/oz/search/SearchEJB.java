@@ -3,7 +3,6 @@ package oz.search;
 import jakarta.ejb.Stateless;
 import jakarta.persistence.TypedQuery;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import oz.OzEJB;
 import oz.PropertyType;
@@ -95,7 +94,7 @@ public class SearchEJB extends OzEJB {
                 query.setParameter("noOfBathroom", null);
             }
 
-            if (noOfBathroom > 0) {
+            if (noOfBedroom > 0) {
                 query.setParameter("noOfBedroom", noOfBedroom);
             } else {
                 query.setParameter("noOfBedroom", null);

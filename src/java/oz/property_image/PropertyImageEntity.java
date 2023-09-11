@@ -54,4 +54,11 @@ public class PropertyImageEntity implements Serializable {
 
     public PropertyImageEntity() {
     }
+
+    @Override
+    public String toString() {
+        return "PropertyImageEntity{" + "id=" + id + ", image=" + image + '}';
+    }
+    
+    
 }

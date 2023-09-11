@@ -2,7 +2,6 @@ package oz.newsletter_subscriber;
 
 import oz.OzEJB;
 import jakarta.ejb.Stateless;
-import java.util.ArrayList;
 import java.util.List;
 
 @Stateless

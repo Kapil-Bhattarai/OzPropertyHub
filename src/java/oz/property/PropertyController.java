@@ -19,7 +19,6 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -70,6 +69,7 @@ public class PropertyController {
     private boolean hasWardrobe;
     private Date listedDate;
     private Date inspectionDate;
+    private UserEntity userAgent;
 
     private UploadedFiles additionalImages;
     private List<PropertyImageEntity> additionalImagesE = new ArrayList<>();
@@ -315,6 +315,14 @@ public class PropertyController {
         this.additionalImagesE = additionalImagesE;
     }
 
+    public UserEntity getUserAgent() {
+        return userAgent;
+    }
+
+    public void setUserAgent(UserEntity userAgent) {
+        this.userAgent = userAgent;
+    }
+
     @PostConstruct
     public void init() {
         FacesContext context = FacesContext.getCurrentInstance();
@@ -347,6 +355,8 @@ public class PropertyController {
             this.additionalImagesE = propertyEntity.getImages();
             this.map = propertyEntity.getMap();
             this.propertyDetails = propertyEntity.getPropertyDetails();
+            this.userAgent = propertyEntity.getAgent();
+            
         }
     }
 
@@ -474,7 +484,7 @@ public class PropertyController {
 
     }
 
-    public void executeDemoListing() {
+    public void executeDemoListing(Integer agentId) {
         //         registerDemoProperties(Integer propertyId, String mainImageUrl, Double rent, PropertyType propertyType, 
 //          String map, 
 //         String propertyDetails, 
@@ -494,8 +504,8 @@ public class PropertyController {
             propertyDetails,
              random.nextBoolean(), random.nextBoolean(), random.nextBoolean(), random.nextBoolean(), random.nextBoolean(), 
              random.nextInt(1,4),  random.nextInt(1,4),  random.nextInt(1,4),
-             random.nextInt(1, 20)+"", "street name","hawkesbury road", "Westmead", "2145", StateType.values()[random.nextInt(StateType.values().length)],
-             random.nextInt(2,5), new ArrayList()
+             random.nextInt(1, 20)+"", "9-11","hawkesbury road", "Westmead", "2145", StateType.values()[random.nextInt(StateType.values().length)],
+             agentId, new ArrayList()
             );
  
              registerDemoProperties("1.jpg", Double.parseDouble(decimalFormat.format(random.nextDouble(50.0, 750.0))), PropertyType.values()[random.nextInt(PropertyType.values().length)],
@@ -503,8 +513,8 @@ public class PropertyController {
             propertyDetails,
              random.nextBoolean(), random.nextBoolean(), random.nextBoolean(), random.nextBoolean(), random.nextBoolean(), 
              random.nextInt(1,4),  random.nextInt(1,4),  random.nextInt(1,4),
-             random.nextInt(1, 20)+"", "street name","hawkesbury road", "Strathfield", "2145", StateType.values()[random.nextInt(StateType.values().length)],
-             random.nextInt(2,5), new ArrayList()
+             random.nextInt(1, 20)+"", "74","hawkesbury road", "Strathfield", "2145", StateType.values()[random.nextInt(StateType.values().length)],
+             agentId, new ArrayList()
             );
              
               registerDemoProperties("1.jpg", Double.parseDouble(decimalFormat.format(random.nextDouble(50.0, 750.0))), PropertyType.values()[random.nextInt(PropertyType.values().length)],
@@ -512,8 +522,8 @@ public class PropertyController {
             propertyDetails,
              random.nextBoolean(), random.nextBoolean(), random.nextBoolean(), random.nextBoolean(), random.nextBoolean(), 
              random.nextInt(1,4),  random.nextInt(1,4),  random.nextInt(1,4),
-             random.nextInt(1, 20)+"", "street name","hawkesbury road", "Auburn", "2145", StateType.values()[random.nextInt(StateType.values().length)],
-             random.nextInt(2,5), new ArrayList()
+             random.nextInt(1, 20)+"", "First Street","hawkesbury road", "Auburn", "2145", StateType.values()[random.nextInt(StateType.values().length)],
+             agentId, new ArrayList()
             );
     }
     
@@ -541,8 +551,6 @@ public class PropertyController {
             addressEntity.setSuburb(suburb);
             addressEntity.setPostcode(postCode);
             addressEntity.setState(state); 
-
-            addressEJB.addAddress(addressEntity);  
     
             
             // Create a new PropertyEntity and set its attributes
@@ -588,6 +596,10 @@ public class PropertyController {
         return list;
     }
 
+     public PropertyEntity getPropertiesByPid(Integer pid) {
+      return propertyEJB.getProperty(pid);
+    }
+     
     public String editProperty(PropertyEntity property) {
         return "/dashboard/agent/property_form.faces?faces-redirect=true&id=" + property.getPid();
     }
@@ -616,4 +628,15 @@ public class PropertyController {
         }
         return "";
     }
+
+    public String getApartmentTypeValue() {
+        return propertyType.name().toLowerCase();
+    }
+    
+    @Override
+    public String toString() {
+        return "PropertyController{" + "em=" + em + ", pid=" + pid + ", aid=" + aid + ", unitNumber=" + unitNumber + ", streetName=" + streetName + ", streetNumber=" + streetNumber + ", suburb=" + suburb + ", state=" + state + ", propertyDetails=" + propertyDetails + ", map=" + map + ", postCode=" + postCode + ", mainImage=" + mainImage + ", mainImageUrl=" + mainImageUrl + ", propertyType=" + propertyType + ", rent=" + rent + ", noOfBedroom=" + noOfBedroom + ", noOfBathroom=" + noOfBathroom + ", noOfParking=" + noOfParking + ", hasBalcony=" + hasBalcony + ", hasDishwater=" + hasDishwater + ", hasAc=" + hasAc + ", hasSecureParking=" + hasSecureParking + ", hasWardrobe=" + hasWardrobe + ", listedDate=" + listedDate + ", inspectionDate=" + inspectionDate + ", additionalImages=" + additionalImages + ", additionalImagesE=" + additionalImagesE + ", removedImagesE=" + removedImagesE + ", propertyEJB=" + propertyEJB + ", addressEJB=" + addressEJB + ", propertyImageEJB=" + propertyImageEJB + ", userBean=" + userBean + ", propertyEntity=" + propertyEntity + ", addressEntity=" + addressEntity + '}';
+    }
+    
+    
 }

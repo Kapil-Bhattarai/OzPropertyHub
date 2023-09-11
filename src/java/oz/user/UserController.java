@@ -8,7 +8,6 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.faces.bean.SessionScoped;
 import jakarta.faces.context.FacesContext;
-import jakarta.servlet.http.Part;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -25,7 +24,6 @@ import static oz.UserType.AGENT;
 import oz.Util;
 import oz.newsletter_subscriber.NewsletterSubscriberEJB;
 import oz.newsletter_subscriber.NewsletterSubscriberEntity;
-import oz.property_image.PropertyImageEntity;
 
 @ManagedBean(name = "userBean")
 @SessionScoped
@@ -506,10 +504,7 @@ public class UserController {
         this.formMessage = formMessage;
     }
 
-    @Override
-    public String toString() {
-        return "UserController{ id=" + id + ", firstName=" + firstName + ", password=" + password + ", confirmPassword=" + confirmPassword + ", lastName=" + lastName + ", email=" + email + ", bio=" + bio + ", phone=" + phone + ", since=" + since + ", isLive=" + isLive + ", type=" + type + ", userEJB=" + userEJB + ", ozUser=" + ozUser + '}';
-    }
+  
 
     public String getConfirmPassword() {
         return confirmPassword;

@@ -26,11 +26,13 @@
                                     <div class="row">
                                         <div class="col-lg-6">
                                             <h:selectOneMenu class="form-control" value="#{ozglobalbean.state}">
-                                                <f:selectItems  value="#{ozglobalbean.states}" />
+                                            <f:selectItem  itemLabel ="Select state"/>
+                                               <f:selectItems  value="#{ozglobalbean.states}" />
                                             </h:selectOneMenu>
                                         </div>
                                         <div class="col-lg-6">
                                             <h:selectOneMenu class="form-control" value="#{ozglobalbean.rent}">
+                                                <f:selectItem itemValue="below-above"  itemLabel ="Rent"/>
                                                 <f:selectItem  itemValue="0-300" itemLabel ="below $300/w"/>
                                                 <f:selectItem  itemValue="300-400" itemLabel="$300 - $400/w"/>
                                                 <f:selectItem  itemValue="400-500" itemLabel="$400 - $500/w" />
@@ -43,13 +45,14 @@
 
                                         <div class="col-lg-6">
                                             <h:selectOneMenu class="form-control" value="#{ozglobalbean.propertyType}">
+                                                 <f:selectItem itemLabel ="Property"/>
                                                 <f:selectItems value="#{ozglobalbean.propertyTypes}" />
                                             </h:selectOneMenu>
                                         </div>
                                         <div class="col-lg-6">
 
                                             <h:selectOneMenu class="form-control" value="#{ozglobalbean.noOfBedroom}">
-
+                                                <f:selectItem itemValue = "0" itemLabel ="Rooms"/>
                                                 <f:selectItem itemValue = "1" itemLabel="1 Bedroom"/>
                                                 <f:selectItem itemValue = "2" itemLabel="2 Bedroom"/>
                                                 <f:selectItem itemValue = "3" itemLabel="3 Bedroom"/>                                                   
@@ -60,7 +63,7 @@
                                     <div class="row">
                                         <div class="col-lg-6">
                                             <h:selectOneMenu class="form-control" value="#{ozglobalbean.noOfBathroom}">
-
+                                                <f:selectItem itemValue = "0" itemLabel ="Washroom"/>
                                                 <f:selectItem itemValue = "1" itemLabel="1 Washroom"/>
                                                 <f:selectItem itemValue = "2" itemLabel="2 Washroom"/>
                                                 <f:selectItem itemValue = "3" itemLabel="3 Washroom"/>                                                   
@@ -118,10 +121,13 @@
 
                                 <div class="row">
 <!--                                    <h:outputText value="#{ozglobalbean.properties}"></h:outputText>-->
-                                 
-                                        <l:forEach items="#{ozglobalbean.properties}" var="property">       
-                                            <!-- properties -->
-                                               <l:if test="#{property != null}">
+                        <!--<h:outputText value="#{ozglobalbean.properties.size()}"></h:outputText> <br/><br/>-->
+                                    <l:forEach items="#{ozglobalbean.properties}" var="property" varStatus="loop">      
+<!--                             <h:outputText value="#{property}"></h:outputText> <br/><br/>-->
+                             
+                                        <!-- properties -->
+                                              <ui:fragment rendered="#{property.address.unit != null}">
+                                                   <!--<h:outputText value="#{property.address.unit}"></h:outputText> <br/><br/>-->
                                             <div class="col-lg-4 col-sm-6" rendered="#{ozglobalbean.showListing()}">
                                                 <!--<h:outputText value="#{property}"></h:outputText>-->
     <!--                                               <h:outputText value="#{ozglobalbean.properties}"></h:outputText>-->
@@ -133,7 +139,7 @@
                                                         <div class="status new">New</div>
                                                     </div>
 
-                                                    <h4><h:outputLink value="#{request.contextPath}/property-detail.faces?id=#{property.pid}">
+                                                    <h4><h:outputLink style="max-height: 2.4em; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;" value="#{request.contextPath}/property-detail.faces?id=#{property.pid}">
                                                             #{property.address.unit}, #{property.address.street_number}, #{property.address.street_name}, #{property.address.suburb}
                                                         </h:outputLink></h4>
                                                     <h:outputText value="#{property.rent} / week" styleClass="price" /> <br/>
@@ -141,6 +147,7 @@
                                                         <span data-toggle="tooltip" data-placement="bottom" data-original-title="Bed Room">#{property.noOfBedroom}</span> 
                                                         <span data-toggle="tooltip" data-placement="bottom" data-original-title="Parking">#{property.noOfParking}</span> 
                                                         <span data-toggle="tooltip" data-placement="bottom" data-original-title="Bathroom">#{property.noOfBathroom}</span>
+                                                   
                                                     </div>
                                                     <h:outputLink styleClass="btn btn-success" value="#{request.contextPath}/property-detail.faces?id=#{property.pid}">
                                                         View Details
@@ -148,9 +155,9 @@
                                                 </div>
                                             </div>
                                             <!-- properties -->
-                                                 </l:if>
-                                        </l:forEach>
-                               
+                                              </ui:fragment>
+                                    </l:forEach>
+
                                 </div>
                             </div>
                         </div>

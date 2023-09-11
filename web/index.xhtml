@@ -104,6 +104,7 @@
                                         <div class="col-lg-3">
 
                                             <h:selectOneMenu class="form-control" value="#{ozglobalbean.rent}">
+                                                 <f:selectItem itemValue="below-above"  itemLabel ="Rent"/>
                                                 <f:selectItem  itemValue="0-300" itemLabel ="below $300/w"/>
                                                 <f:selectItem  itemValue="300-400" itemLabel="$300 - $400/w"/>
                                                 <f:selectItem  itemValue="400-500" itemLabel="$400 - $500/w" />
@@ -113,11 +114,13 @@
                                         </div>
                                         <div class="col-lg-3">
                                             <h:selectOneMenu class="form-control" value="#{ozglobalbean.propertyType}">
+                                                  <f:selectItem  itemLabel ="Property"/>
                                                 <f:selectItems value="#{ozglobalbean.propertyTypes}" />
                                             </h:selectOneMenu>
                                         </div>
                                         <div class="col-lg-3">
                                             <h:selectOneMenu class="form-control" value="#{ozglobalbean.state}" >
+                                                <f:selectItem  itemLabel ="Select state"/>
                                                 <f:selectItems value="#{ozglobalbean.states}" />
                                             </h:selectOneMenu>
 
