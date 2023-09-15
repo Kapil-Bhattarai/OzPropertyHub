@@ -75,11 +75,12 @@ public class UserEntity implements Serializable {
 
     @Column(name = "mainImage", nullable = true)
     private String mainImage;
-    
+
     @OneToMany(mappedBy = "agent", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<PropertyEntity> properties = new ArrayList<>();
     
     public UserEntity() {}
+
 
     public Integer getId() {
         return id;
@@ -205,5 +206,5 @@ public class UserEntity implements Serializable {
     public String toString() {
         return "UserEntity{" + "id=" + id + ", firstName=" + firstName + ", password=" + password + ", lastName=" + lastName + ", email=" + email + ", bio=" + bio + ", phone=" + phone + ", address=" + address + ", since=" + since + ", isLive=" + isLive + ", type=" + type + ", mainImage=" + mainImage + '}';
     }
-    
+
 }

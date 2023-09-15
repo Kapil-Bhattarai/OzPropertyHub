@@ -8,26 +8,18 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
-import static jakarta.persistence.GenerationType.IDENTITY;
-import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.NamedQueries;
-import jakarta.persistence.NamedQuery;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
-import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.MapsId;
 import java.util.ArrayList;
 import java.util.List;
 import oz.ApplicationStatus;
-import oz.PropertyType;
 import oz.SalaryType;
-import oz.address.AddressEntity;
 import oz.property.PropertyEntity;
 import oz.property_image.PropertyApplicationImageEntity;
-import oz.property_image.PropertyImageEntity;
 import oz.user.UserEntity;
 
 @Entity

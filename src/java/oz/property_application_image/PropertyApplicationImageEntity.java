@@ -11,9 +11,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinColumns;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import oz.ApplicationStatus;
 import oz.DocumentType;
-import oz.property.PropertyEntity;
 import oz.property_application.PropertyApplicationEntity;
 
 @Entity
