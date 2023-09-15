@@ -35,7 +35,8 @@ public class ReferencesEntity implements Serializable {
     @ManyToOne
     @JoinColumns({
         @JoinColumn(name = "propertyId", referencedColumnName = "propertyId"),
-        @JoinColumn(name = "userId", referencedColumnName = "userId")
+        @JoinColumn(name = "userId", referencedColumnName = "userId"),
+        @JoinColumn(name = "agentId", referencedColumnName = "agentId"),
     })
     private PropertyApplicationEntity propertyApplication;
 

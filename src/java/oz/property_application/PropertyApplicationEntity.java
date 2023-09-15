@@ -19,7 +19,7 @@ import java.util.List;
 import oz.ApplicationStatus;
 import oz.SalaryType;
 import oz.property.PropertyEntity;
-import oz.property_image.PropertyApplicationImageEntity;
+import oz.property_application_image.PropertyApplicationImageEntity;
 import oz.user.UserEntity;
 
 @Entity
@@ -65,6 +65,12 @@ public class PropertyApplicationEntity implements Serializable {
     @JoinColumn(name = "userId")
     private UserEntity user;
 
+    @ManyToOne
+    @MapsId("agentId")
+    @JoinColumn(name = "agentId")
+    private UserEntity agent;
+
+        
     @OneToMany(mappedBy = "propertyApplication", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<PropertyApplicationImageEntity> images = new ArrayList<>();
 
@@ -156,7 +162,13 @@ public class PropertyApplicationEntity implements Serializable {
         this.images = images;
     }
 
-    
-    
+    public UserEntity getAgent() {
+        return agent;
+    }
 
+    public void setAgent(UserEntity agent) {
+        this.agent = agent;
+    }
+
+    
 }

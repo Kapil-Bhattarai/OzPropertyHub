@@ -14,6 +14,9 @@ class PropertyApplicationId implements Serializable {
 
     @Column(name = "userd")
     private Long userId;
+    
+    @Column(name = "agentId")
+    private Long agentId;
 
     // Constructors
 
@@ -33,17 +36,27 @@ class PropertyApplicationId implements Serializable {
         this.userId = userId;
     }
 
+    public Long getAgentId() {
+        return agentId;
+    }
+
+    public void setAgentId(Long agentId) {
+        this.agentId = agentId;
+    }
+
+    
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         PropertyApplicationId that = (PropertyApplicationId) o;
         return Objects.equals(propertyId, that.propertyId) &&
-               Objects.equals(userId, that.userId);
+               Objects.equals(userId, that.userId) &&
+                Objects.equals(agentId, that.agentId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(propertyId, userId);
+        return Objects.hash(propertyId, userId, agentId);
     }
 }

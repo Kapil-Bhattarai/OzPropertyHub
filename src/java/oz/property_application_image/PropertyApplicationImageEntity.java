@@ -1,4 +1,4 @@
-package oz.property_image;
+package oz.property_application_image;
 
 import java.io.Serializable;
 import jakarta.persistence.Column;
@@ -29,7 +29,8 @@ public class PropertyApplicationImageEntity implements Serializable {
     @ManyToOne
     @JoinColumns({
         @JoinColumn(name = "propertyId", referencedColumnName = "propertyId"),
-        @JoinColumn(name = "userId", referencedColumnName = "userId")
+        @JoinColumn(name = "userId", referencedColumnName = "userId"),
+        @JoinColumn(name = "agentId", referencedColumnName = "agentId")
     })
     private PropertyApplicationEntity propertyApplication;
     
