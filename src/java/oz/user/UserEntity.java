@@ -13,6 +13,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import static jakarta.persistence.GenerationType.IDENTITY;
 import jakarta.persistence.Id;
+import jakarta.persistence.Lob;
 import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
 import jakarta.persistence.OneToMany;
@@ -51,7 +52,8 @@ public class UserEntity implements Serializable {
     @Column(name = "email", nullable = false, length = 128)
     private String email;
 
-    @Column(name = "bio", nullable = true)
+    @Lob
+    @Column(name = "bio", nullable = true, length = 65535)
     private String bio;
 
     @Column(name = "phone", nullable = false, length = 12)
@@ -197,6 +199,11 @@ public class UserEntity implements Serializable {
 
     public void setProperties(List<PropertyEntity> properties) {
         this.properties = properties;
+    }
+
+    @Override
+    public String toString() {
+        return "UserEntity{" + "id=" + id + ", firstName=" + firstName + ", password=" + password + ", lastName=" + lastName + ", email=" + email + ", bio=" + bio + ", phone=" + phone + ", address=" + address + ", since=" + since + ", isLive=" + isLive + ", type=" + type + ", mainImage=" + mainImage + '}';
     }
     
 }

@@ -18,7 +18,7 @@
                             </div>
                         </div>-->
             <!-- banner -->
-
+                      
 
             <div class="container">
                 <div class="spacer agents">
@@ -26,13 +26,14 @@
                     <div class="row">
 
                         <div class="col-lg-10  col-lg-offset-1 col-sm-12">
-                            <f:forEach items="#{userBean.getActiveUsersByType(true)}" var="agent">       
+                         
+                            <f:forEach items="#{userBean.getActiveUsersByType(true)}" var="agent">  
                                 <div class="row agent">
                                     <div class="col-lg-2 col-sm-2 ">
                                         <h:graphicImage value="uploaded-images/#{agent.mainImage}" rendered="#{not empty agent.mainImage}" class="img-responsive"  alt="agent name" />
                                         <h:graphicImage value="resources/images/profile_picture.png" rendered="#{empty agent.mainImage}" />
                                     </div>
-                                    <div class="col-lg-7 col-sm-7 "><h4>#{agent.firstName}${agent.lastName}</h4><p>#{agent.bio}</p></div>
+                                    <div class="col-lg-7 col-sm-7 "><h4>#{agent.firstName} ${agent.lastName}</h4><p>#{agent.bio}</p></div>
                                     <div class="col-lg-3 col-sm-3 "><span class="glyphicon glyphicon-envelope"></span> <a href="mailto:abc@realestate.com">#{agent.email}</a><br/>
                                         <span class="glyphicon glyphicon-earphone"></span> #{agent.phone}</div>
                                 </div>

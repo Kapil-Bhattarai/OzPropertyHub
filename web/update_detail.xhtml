@@ -61,9 +61,6 @@
                                     <h:inputText  class="form-control"  value="#{userBean.newEmail}" required="true" requiredMessage="Please enter email" id="email" />
                                     <h:messages errorStyle="color:red" for="email" layout="table" />
 
-                                    <h:outputLabel value="Password"/>
-                                    <h:inputSecret  class="form-control"  value="#{userBean.password}" required="true" requiredMessage="Please enter Password" id="password" />
-                                    <h:messages errorStyle="color:red" for="password" layout="table" />
                                     <h:commandButton value="Update Profile"  class="btn btn-success" action="#{userBean.updateProfile}" />
                                 </div>
                             </h:form>

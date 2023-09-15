@@ -65,10 +65,11 @@ public class UserController {
     @PostConstruct
     public void init() {
         ozUser = new UserEntity();
-        registerUser("admin", "Deo", HashConvert("password"), "123456789", "200,Kent Street, NSW, Australia", UserType.ADMIN, "admin@gmail.com", true);
-        registerUser("test1", "User 1", HashConvert("password"), "123456789", "200,Kent Street, NSW, Australia", UserType.AGENT, "test1@gmail.com", true);
-        registerUser("test2", "User 2", HashConvert("password"), "123456789", "200,Kent Street, NSW, Australia", UserType.AGENT, "test2@gmail.com", true);
-        registerUser("test3", "User 3", HashConvert("password"), "123456789", "200,Kent Street, NSW, Australia", UserType.AGENT, "test3@gmail.com", false);
+        String bio = "The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from \"de Finibus Bonorum et Malorum\" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.";
+        registerUser("admin", "Deo", HashConvert("password"), "123456789", "200,Kent Street, NSW, Australia", UserType.ADMIN, "admin@gmail.com", true, bio);
+        registerUser("test1", "User 1", HashConvert("password"), "123456789", "200,Kent Street, NSW, Australia", UserType.AGENT, "test1@gmail.com", true, bio);
+        registerUser("test2", "User 2", HashConvert("password"), "123456789", "200,Kent Street, NSW, Australia", UserType.AGENT, "test2@gmail.com", true, bio);
+        registerUser("test3", "User 3", HashConvert("password"), "123456789", "200,Kent Street, NSW, Australia", UserType.AGENT, "test3@gmail.com", false, bio);
     }
 
     public String loginUser() {
@@ -110,10 +111,10 @@ public class UserController {
 
     public void updateProfile() {
         FacesContext context = FacesContext.getCurrentInstance();
-        UserEntity user = userEJB.getUserbyEmailAndPassword(email, HashConvert(password));
+        UserEntity user = userEJB.getUserbyEmail(email);
         if (user == null) {
             // not registered before.
-            Util.showMessage(context, FacesMessage.SEVERITY_ERROR, "You have entered a wrong password.", null);
+            Util.showMessage(context, FacesMessage.SEVERITY_ERROR, "Something went wrong getting your details.", null);
             //return "";
         } else {
             
@@ -262,7 +263,7 @@ public class UserController {
         }
     }
 
-    public void registerUser(String firstName, String lastName, String password, String phone, String address, UserType type, String email, boolean isLive) {
+    public void registerUser(String firstName, String lastName, String password, String phone, String address, UserType type, String email, boolean isLive, String bio) {
         UserEntity user = userEJB.getUserbyEmail(email);
         if (user == null) {
             user = new UserEntity();
@@ -271,6 +272,7 @@ public class UserController {
             user.setPassword(password);
             user.setPhone(phone);
             user.setAddress(address);
+            user.setBio(bio);
             user.setType(type);
             user.setSince(new Date());
             user.setIsLive(isLive);
