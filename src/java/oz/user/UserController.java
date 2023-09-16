@@ -67,9 +67,11 @@ public class UserController {
         ozUser = new UserEntity();
         String bio = "The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from \"de Finibus Bonorum et Malorum\" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.";
         registerUser("admin", "Deo", HashConvert("password"), "123456789", "200,Kent Street, NSW, Australia", UserType.ADMIN, "admin@gmail.com", true, bio);
-        registerUser("test1", "User 1", HashConvert("password"), "123456789", "200,Kent Street, NSW, Australia", UserType.AGENT, "test1@gmail.com", true, bio);
-        registerUser("test2", "User 2", HashConvert("password"), "123456789", "200,Kent Street, NSW, Australia", UserType.AGENT, "test2@gmail.com", true, bio);
-        registerUser("test3", "User 3", HashConvert("password"), "123456789", "200,Kent Street, NSW, Australia", UserType.AGENT, "test3@gmail.com", false, bio);
+        registerUser("Agent1", "Agent 1", HashConvert("password"), "123456789", "200,Kent Street, NSW, Australia", UserType.AGENT, "test1@gmail.com", true, bio);
+        registerUser("Agent2", "User 2", HashConvert("password"), "123456789", "200,Kent Street, NSW, Australia", UserType.AGENT, "test2@gmail.com", true, bio);
+        registerUser("Agent3", "User 3", HashConvert("password"), "123456789", "200,Kent Street, NSW, Australia", UserType.AGENT, "test3@gmail.com", false, bio);
+        registerUser("User1", "User 1", HashConvert("password"), "123456789", "200,Kent Street, NSW, Australia", UserType.USER, "user1@gmail.com", true, bio);
+        registerUser("User2", "User 2", HashConvert("password"), "123456789", "200,Kent Street, NSW, Australia", UserType.USER, "user2@gmail.com", true, bio);
     }
 
     public String loginUser() {

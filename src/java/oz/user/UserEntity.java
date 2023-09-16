@@ -22,7 +22,6 @@ import java.util.ArrayList;
 import java.util.List;
 import oz.UserType;
 import oz.property.PropertyEntity;
-import oz.property_image.PropertyImageEntity;
 
 @Entity
 @Table(name = "OZ_USER")

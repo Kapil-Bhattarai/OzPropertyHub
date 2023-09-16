@@ -600,7 +600,12 @@ public class PropertyController {
 
         }
     }
-
+    
+    public String applyProperty(Boolean isUserLoggedIn) {
+        
+        return "";
+    }
+    
     public List<PropertyEntity> getPropertiesByAgent(Boolean isActive) {
         List<PropertyEntity> list = propertyEJB.getPropertiesByAgent(userBean.getId());
         return list;
