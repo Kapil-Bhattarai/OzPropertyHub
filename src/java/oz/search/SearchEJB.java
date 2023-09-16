@@ -46,6 +46,7 @@ public class SearchEJB extends OzEJB {
             public List<PropertyEntity> load(int offset, int skip, Map<String, SortMeta> map, Map<String, FilterMeta> map1) {
                 try {
 
+                    System.out.println("Offset is: " + offset);
                     TypedQuery<PropertyEntity> query = entityManager.createNamedQuery(PropertyEntity.QUERY_SEARCH_QUERY, PropertyEntity.class);
 
                     if (searchText == null || searchText.length() == 0) {
@@ -113,9 +114,8 @@ public class SearchEJB extends OzEJB {
 
                     // Set the max results (limit)
                     query.setMaxResults(skip);
-                    System.out.println("offset here");
-                    System.out.println(offset);
 
+                    // get the total result count
                     if (offset == 0) {
                         TypedQuery<Long> countQuery = entityManager.createNamedQuery(PropertyEntity.QUERY_COUNT, Long.class);
                         if (searchText == null || searchText.length() == 0) {
@@ -179,8 +179,6 @@ public class SearchEJB extends OzEJB {
                         }
                         this.setRowCount(countQuery.getSingleResult().intValue());
                     }
-                    System.out.println("========> hellos");
-                    System.out.println(query.getMaxResults());
 
                     return query.getResultList();
                 } catch (Exception e) {
@@ -191,90 +189,4 @@ public class SearchEJB extends OzEJB {
 
         };
     }
-
-    public List<PropertyEntity> getPropertyWithFilters(
-            String searchText,
-            StateType state,
-            Integer lowerBound,
-            Integer upperBound,
-            PropertyType type,
-            Boolean hasAc,
-            Boolean hasSecureParking,
-            Boolean hasDishWasher,
-            Boolean hasBalcony,
-            Boolean hasWardrobe,
-            Integer noOfParking,
-            Integer noOfBathroom,
-            Integer noOfBedroom
-    ) {
-        try {
-            TypedQuery<PropertyEntity> query = entityManager.createNamedQuery(PropertyEntity.QUERY_SEARCH_QUERY, PropertyEntity.class);
-
-            if (searchText == null || searchText.length() == 0) {
-                query.setParameter("searchText", null);
-            } else {
-                query.setParameter("searchText", searchText);
-            }
-
-            query.setParameter("state", state);
-
-            query.setParameter("lowerRent", lowerBound);
-            query.setParameter("upperRent", upperBound);
-            query.setParameter("type", type);
-
-            if (hasAc) {
-                query.setParameter("hasAc", hasAc);
-            } else {
-                query.setParameter("hasAc", null);
-            }
-
-            if (hasSecureParking) {
-                query.setParameter("hasSecureParking", hasSecureParking);
-            } else {
-                query.setParameter("hasSecureParking", null);
-            }
-
-            if (hasDishWasher) {
-                query.setParameter("hasDishWasher", hasDishWasher);
-            } else {
-                query.setParameter("hasDishWasher", null);
-            }
-
-            if (hasBalcony) {
-                query.setParameter("hasBalcony", hasBalcony);
-            } else {
-                query.setParameter("hasBalcony", null);
-            }
-
-            if (hasBalcony) {
-                query.setParameter("hasWardrobe", hasWardrobe);
-            } else {
-                query.setParameter("hasWardrobe", null);
-            }
-
-            if (noOfParking > 0) {
-                query.setParameter("noOfParking", noOfParking);
-            } else {
-                query.setParameter("noOfParking", null);
-            }
-
-            if (noOfBathroom > 0) {
-                query.setParameter("noOfBathroom", noOfBathroom);
-            } else {
-                query.setParameter("noOfBathroom", null);
-            }
-
-            if (noOfBedroom > 0) {
-                query.setParameter("noOfBedroom", noOfBedroom);
-            } else {
-                query.setParameter("noOfBedroom", null);
-            }
-
-            return query.getResultList();
-        } catch (Exception e) {
-            System.out.println("exception value  " + e.getMessage());
-            return new ArrayList<>();
-        }
-    }
-
 }

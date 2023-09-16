@@ -4,8 +4,11 @@ import jakarta.annotation.PostConstruct;
 import jakarta.ejb.EJB;
 import jakarta.faces.bean.ManagedBean;
 import jakarta.faces.bean.SessionScoped;
+import jakarta.faces.context.FacesContext;
 import java.util.ArrayList;
 import java.util.List;
+import org.primefaces.component.datalist.DataList;
+import org.primefaces.component.datatable.DataTable;
 import org.primefaces.model.LazyDataModel;
 import oz.PropertyType;
 import oz.StateType;
@@ -138,8 +141,16 @@ public class SearchController {
     public void init() {
         this.searchProperty();
     }
-    
+
     public void searchProperty() {
+        if (lazyModel != null) {
+            try {
+                DataList datalist = (DataList) FacesContext.getCurrentInstance().getViewRoot().findComponent("search-form:search-list");
+                datalist.setFirst(0);
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+        }
         lazyModel = searchEJB.getPropertyLazyModel(searchText, state, lowerBound, upperBound,
                 propertyType, hasAc, hasSecureParking,
                 hasDishwater, hasBalcony, hasWardrobe, Integer.parseInt(noOfParking),
@@ -152,19 +163,10 @@ public class SearchController {
 //        this.properties.addAll(properties);
 //        System.out.println("search properties " + this.properties + " Size is " + this.properties.size());
 //    }
-    
     public LazyDataModel<PropertyEntity> getLazyModel() {
         return lazyModel;
     }
-    
-    public List<PropertyEntity> getArrayListModel() {
-        if(lazyModel.getWrappedData() != null) {
-            System.out.println(lazyModel.getWrappedData().size());
-        }
-        
-        return lazyModel.getWrappedData();
-    }
-    
+
     public String getRent() {
         return rent;
     }
