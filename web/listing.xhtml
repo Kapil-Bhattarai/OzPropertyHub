@@ -13,7 +13,7 @@
 
         <ui:define name="content">
 
-            <h:form>
+            <h:form id="search-form">
                 <div class="container">
                     <div class="properties-listing spacer">
 <!--                        <h:outputText value="#{ozglobalbean}"></h:outputText>-->
@@ -120,7 +120,7 @@
 
                             <div class="col-lg-9 col-sm-8">
                                 <div class="row">
-                                    <p:dataList var="property" value="#{ozglobalbean.lazyModel}"
+                                    <p:dataList id="search-list" var="property" value="#{ozglobalbean.lazyModel}"
                                                  paginator="true" paginatorPosition="bottom"
                                                  rows="15"
                                                  type="none"
