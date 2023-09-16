@@ -427,3 +427,18 @@ h2{font-size: 25px;}
     height: 100px;
     width: 100px;
 }
+
+.ui-datalist.ui-widget .ui-paginator-bottom {
+    font: icon;
+    margin: 0 25px;
+}
+
+.ui-datalist.ui-widget {
+    display:flex;
+    flex-direction: column;
+}
+
+.ui-datalist.ui-widget .ui-widget-content {
+    background: transparent;
+    border: none;
+}

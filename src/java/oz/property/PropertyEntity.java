@@ -19,6 +19,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Lob;
+import jakarta.persistence.QueryHint;
 import java.util.ArrayList;
 import java.util.List;
 import oz.PropertyType;
@@ -48,8 +49,27 @@ import oz.user.UserEntity;
             + " AND (:noOfParking IS NULL OR p.noOfParking >= :noOfParking)"
             + " AND (:noOfBathroom IS NULL OR p.noOfBathroom >= :noOfBathroom)"
             + " AND (:noOfBedroom IS NULL OR p.noOfBedroom >= :noOfBedroom)"
-            + " AND (:state IS NULL OR p.address.state = :state)" 
+            + " AND (:state IS NULL OR p.address.state = :state)"
             + " AND (:searchText IS NULL OR (p.address.suburb = :searchText OR p.address.postcode = :searchText))"
+            
+    ),
+    @NamedQuery(
+            name = "PropertyEntity.count",
+            query = "SELECT COUNT(p) FROM PropertyEntity p WHERE"
+            + "(:lowerRent IS NULL OR p.rent >= :lowerRent)"
+            + " AND (:upperRent IS NULL OR p.rent <= :upperRent)"
+            + " AND (:type IS NULL OR p.type = :type)"
+            + " AND (:hasAc IS NULL OR p.hasAc = :hasAc)"
+            + " AND (:hasSecureParking IS NULL OR p.hasSecureParking = :hasSecureParking)"
+            + " AND (:hasDishWasher IS NULL OR p.hasDishWasher = :hasDishWasher)"
+            + " AND (:hasBalcony IS NULL OR p.hasBalcony = :hasBalcony)"
+            + " AND (:hasWardrobe IS NULL OR p.hasWardrobe = :hasWardrobe)"
+            + " AND (:noOfParking IS NULL OR p.noOfParking >= :noOfParking)"
+            + " AND (:noOfBathroom IS NULL OR p.noOfBathroom >= :noOfBathroom)"
+            + " AND (:noOfBedroom IS NULL OR p.noOfBedroom >= :noOfBedroom)"
+            + " AND (:state IS NULL OR p.address.state = :state)"
+            + " AND (:searchText IS NULL OR (p.address.suburb = :searchText OR p.address.postcode = :searchText))"
+            
     )
 })
 public class PropertyEntity implements Serializable {
@@ -60,6 +80,7 @@ public class PropertyEntity implements Serializable {
     public static final String QUERY_GET_PROPERTY_BY_DATE = "PropertyEntity.getPropertyByDate";
     public static final String QUERY_DELETE_PROPERTY_BY_ID = "PropertyEntity.deletePropertyById";
     public static final String QUERY_GET_ALL = "PropertyEntity.getAll";
+    public static final String QUERY_COUNT = "PropertyEntity.count";
 
     @Id
     @jakarta.persistence.GeneratedValue(strategy = IDENTITY)
@@ -107,15 +128,15 @@ public class PropertyEntity implements Serializable {
 
     @Column(name = "noOfBedroom")
     private int noOfBedroom = 0;
-    
+
     @Lob
     @Column(name = "propertyDetails", length = 65535)
     private String propertyDetails = "";
-    
+
     @Lob
     @Column(name = "map", length = 65535)
     private String map = "";
-    
+
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "addressId")
     private AddressEntity address;
@@ -286,7 +307,6 @@ public class PropertyEntity implements Serializable {
         this.map = map;
     }
 
-    
     @Override
     public String toString() {
         return "PropertyEntity{" + "pid=" + pid + ", rent=" + rent + ", type=" + type + ", inspection=" + inspection + ", listedDate=" + listedDate + ", hasAc=" + hasAc + ", mainImage=" + mainImage + ", hasSecureParking=" + hasSecureParking + ", hasDishWasher=" + hasDishWasher + ", hasBalcony=" + hasBalcony + ", hasWardrobe=" + hasWardrobe + ", noOfParking=" + noOfParking + ", noOfBathroom=" + noOfBathroom + ", noOfBedroom=" + noOfBedroom + ", address=" + address + ", agent=" + agent + ", images=" + images + '}';
