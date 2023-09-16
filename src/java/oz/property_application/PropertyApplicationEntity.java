@@ -106,8 +106,7 @@ public class PropertyApplicationEntity implements Serializable {
     @MapsId("agentId")
     @JoinColumn(name = "agentId")
     private UserEntity agent;
-
-        
+   
     @OneToMany(mappedBy = "propertyApplication", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<PropertyApplicationImageEntity> images = new ArrayList<>();
 
@@ -151,6 +150,69 @@ public class PropertyApplicationEntity implements Serializable {
         this.status = status;
     }
 
+    public double getOfferedRent() {
+        return offeredRent;
+    }
+
+    public void setOfferedRent(double offeredRent) {
+        this.offeredRent = offeredRent;
+    }
+
+    public int getLeaseTermInMonths() {
+        return leaseTermInMonths;
+    }
+
+    public void setLeaseTermInMonths(int leaseTermInMonths) {
+        this.leaseTermInMonths = leaseTermInMonths;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getBio() {
+        return bio;
+    }
+
+    public void setBio(String bio) {
+        this.bio = bio;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
 
     public boolean isIsEmployed() {
         return isEmployed;
