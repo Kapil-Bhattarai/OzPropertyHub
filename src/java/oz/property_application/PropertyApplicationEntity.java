@@ -33,11 +33,16 @@ import oz.user.UserEntity;
     @NamedQuery(
         name = "PropertyApplicationEntity.findPropertyTypeByUserIdAndPropertyId",
         query = "SELECT pa FROM PropertyApplicationEntity pa WHERE pa.id.userId = :userId AND pa.id.propertyId = :propertyId"
+    ),
+     @NamedQuery(
+        name = "PropertyApplicationEntity.findAllAppliedProperties",
+        query = "SELECT pa FROM PropertyApplicationEntity pa WHERE pa.id.userId = :userId"
     )
 })
 public class PropertyApplicationEntity implements Serializable {
 
     public static final String QUERY_GET_APPLICATION_STATUS = "PropertyApplicationEntity.findPropertyTypeByUserIdAndPropertyId";
+    public static final String QUERY_GET_ALL_APPLICATIONS = "PropertyApplicationEntity.findAllAppliedProperties";
         
     @EmbeddedId
     private PropertyApplicationId id;

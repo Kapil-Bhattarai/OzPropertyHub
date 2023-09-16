@@ -1,8 +1,11 @@
 package oz.property_application;
 
 import jakarta.ejb.Stateless;
+import java.util.ArrayList;
+import java.util.List;
 import oz.ApplicationStatus;
 import oz.OzEJB;
+import oz.property.PropertyEntity;
 
 @Stateless
 public class PropertyApplicationEJB extends OzEJB {
@@ -25,6 +28,16 @@ public class PropertyApplicationEJB extends OzEJB {
         } catch (Exception e) {
             System.out.println("exception value  " + e.getMessage());
             return null;
+        }
+    }
+    
+      public List<PropertyApplicationEntity> getPropertiesByAgent(Integer userId) {
+        try {
+            return entityManager.createNamedQuery(PropertyApplicationEntity.QUERY_GET_ALL_APPLICATIONS, PropertyApplicationEntity.class)
+                    .setParameter("userId", userId).getResultList();
+        } catch (Exception e) {
+            System.out.println("exception value  " + e.getMessage());
+            return new ArrayList<>();
         }
     }
 }
