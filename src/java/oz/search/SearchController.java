@@ -38,9 +38,6 @@ public class SearchController {
     private List<PropertyEntity> properties = new ArrayList<>();
     private LazyDataModel<PropertyEntity> lazyModel;
 
-    public void initializeLazyModel() {
-    }
-
     public PropertyType getPropertyType() {
         return propertyType;
     }
@@ -139,16 +136,7 @@ public class SearchController {
 
     @PostConstruct
     public void init() {
-//        List<PropertyEntity> properties = new ArrayList();
-//        properties.addAll(searchEJB.getPropertyWithFilters(searchText, state, lowerBound, upperBound,
-//                propertyType, hasAc, hasSecureParking,
-//                hasDishwater, hasBalcony, hasWardrobe, Integer.parseInt(noOfParking),
-//                Integer.parseInt(noOfBathroom), Integer.parseInt(noOfBedroom)));
-//        this.properties.clear();
-//        this.properties.addAll(properties);
-//        System.out.println("search properties " + this.properties + " Size is " + this.properties.size());
         this.searchProperty();
-        
     }
     
     public void searchProperty() {
@@ -170,7 +158,6 @@ public class SearchController {
     }
     
     public List<PropertyEntity> getArrayListModel() {
-        System.out.println("whore");
         if(lazyModel.getWrappedData() != null) {
             System.out.println(lazyModel.getWrappedData().size());
         }
