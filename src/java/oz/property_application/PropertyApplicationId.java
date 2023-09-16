@@ -10,37 +10,37 @@ import java.util.Objects;
 class PropertyApplicationId implements Serializable {
 
     @Column(name = "propertyId")
-    private Long propertyId;
+    private Integer propertyId;
 
     @Column(name = "userd")
-    private Long userId;
+    private Integer userId;
     
     @Column(name = "agentId")
-    private Long agentId;
+    private Integer agentId;
 
     // Constructors
 
-    public Long getPropertyId() {
+    public Integer getPropertyId() {
         return propertyId;
     }
 
-    public void setPropertyId(Long propertyId) {
+    public void setPropertyId(Integer propertyId) {
         this.propertyId = propertyId;
     }
 
-    public Long getUserId() {
+    public Integer getUserId() {
         return userId;
     }
 
-    public void setUserId(Long userId) {
+    public void setUserId(Integer userId) {
         this.userId = userId;
     }
 
-    public Long getAgentId() {
+    public Integer getAgentId() {
         return agentId;
     }
 
-    public void setAgentId(Long agentId) {
+    public void setAgentId(Integer agentId) {
         this.agentId = agentId;
     }
 

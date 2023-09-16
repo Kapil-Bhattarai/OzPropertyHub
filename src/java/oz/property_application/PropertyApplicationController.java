@@ -1,13 +1,19 @@
 package oz.property_application;
 
+import jakarta.annotation.PostConstruct;
+import jakarta.ejb.EJB;
 import jakarta.faces.bean.ManagedBean;
 import jakarta.faces.bean.ViewScoped;
+import jakarta.faces.context.FacesContext;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import java.util.Date;
+import java.util.Map;
 import org.primefaces.model.file.UploadedFile;
 import oz.ApplicationStatus;
 import oz.SalaryType;
+import oz.property.PropertyEntity;
+import oz.user.UserEntity;
 
 @ManagedBean(name = "applyPropertyBean")
 @ViewScoped
@@ -32,9 +38,33 @@ public class PropertyApplicationController {
     private int noOfCats = 0;
     private int noOfDogs = 0;
     private int noOfOtherPets = 0;
+    private UserEntity agent, user;
+    private PropertyEntity property;
 
     private UploadedFile primaryDocument, secondaryDocument, incomeDocument, otherDocuement;
 
+    private PropertyApplicationEntity propertyEntity;
+
+    @EJB
+    private PropertyApplicationEJB propertyApplicationEJB;
+
+    @PostConstruct
+    public void init() {
+        FacesContext context = FacesContext.getCurrentInstance();
+
+        Map<String, String> params = context.getExternalContext().getRequestParameterMap();
+        
+        String uid = params.get("uid");
+        String pid = params.get("pid");
+        String aid = params.get("aid");
+
+        agent = em.find(UserEntity.class, Integer.parseInt(aid));
+        user = em.find(UserEntity.class, Integer.parseInt(uid));
+        property = em.find(PropertyEntity.class, Integer.parseInt(pid));
+
+    }
+
+   
     public Date getMoveInDate() {
         return moveInDate;
     }
@@ -195,11 +225,44 @@ public class PropertyApplicationController {
         this.otherDocuement = otherDocuement;
     }
 
-      public SalaryType[] getSalaryTypes() {
+    public SalaryType[] getSalaryTypes() {
         return SalaryType.values();
     }
-      
-    public void submit() {
+
+    public String submit() {
+
+        propertyEntity = new PropertyApplicationEntity();
+
+        propertyEntity.setFirstName(firstName);
+        propertyEntity.setLastName(lastName);
+        propertyEntity.setAddress(address);
+        propertyEntity.setMoveInDate(moveInDate);
+        propertyEntity.setBio(bio);
+
+        propertyEntity.setEmail(email);
+        propertyEntity.setIsEmployed(isEmployed);
+        propertyEntity.setPhone(phone);
+
+        propertyEntity.setLeaseTermInMonths(leaseTermInMonths);
+
+        propertyEntity.setIsEmployed(isEmployed);
+        propertyEntity.setSalary(salary);
+        propertyEntity.setSalaryType(salaryType);
+
+        propertyEntity.setNoOfDogs(noOfDogs);
+        propertyEntity.setNoOfCats(noOfCats);
+        propertyEntity.setNoOfOtherPets(noOfOtherPets);
+
+        propertyEntity.setStatus(ApplicationStatus.PENDING);
+        propertyEntity.setAgent(agent);
+        propertyEntity.setUser(user);
+        propertyEntity.setProperty(property);
+
+        if(propertyApplicationEJB.addApplyPropertyDetails(propertyEntity)) {
+            return "/dashboard/user/user_dashboard.faces?faces-redirect=true";
+        } else {
+            return "/property-detail.faces?id="+property.getPid();
+        }
         //System.out.println(this);
         
     }
@@ -209,6 +272,4 @@ public class PropertyApplicationController {
         return "PropertyApplicationController{" + "moveInDate=" + moveInDate + ", status=" + status + ", offeredRent=" + offeredRent + ", leaseTermInMonths=" + leaseTermInMonths + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email + ", bio=" + bio + ", phone=" + phone + ", address=" + address + ", isEmployed=" + isEmployed + ", salary=" + salary + ", salaryType=" + salaryType + ", noOfCats=" + noOfCats + ", noOfDogs=" + noOfDogs + ", noOfOtherPets=" + noOfOtherPets + ", secondaryDocument=" + secondaryDocument + ", incomeDocument=" + incomeDocument + '}';
     }
 
-   
-         
 }

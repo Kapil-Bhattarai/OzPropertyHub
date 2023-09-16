@@ -89,9 +89,11 @@
                                         </div>
                                         <div class="listing-detail">
                                             <h:form>
-                                                <!--<h:commandButton value="Sign Up"  class="btn btn-success" rendered ="#{userBean.id == null}" action="#{propertyBean.redirectToLogin()}" />-->
-                                                <!--<h:commandButton value="Apply"  class="btn btn-success" rendered ="#{userBean.id != null}" action="#{propertyBean.applyProperty(userBean.id, propertyBean.pid, propertyBean.aid)}" />-->
-                                                <h:commandButton value="Apply"  class="btn btn-success"  action="#{propertyBean.applyProperty(5, 2, 2)}" />
+                                                <h:commandButton value="Sign Up"  class="btn btn-success" rendered ="#{userBean.id == null}" action="#{propertyBean.redirectToLogin()}" />
+                                                <h:commandButton value="Apply"  class="btn btn-success" rendered ="#{userBean.id != null and  propertyBean.checkApplication(userBean.id, propertyBean.pid) == null}" action="#{propertyBean.applyProperty(userBean.id, propertyBean.pid, propertyBean.aid)}" />
+                                                <h:commandButton value="See Status"  class="btn btn-success" rendered ="#{userBean.id != null and  propertyBean.checkApplication(userBean.id, propertyBean.pid) != null}" action="#{propertyBean.redirectToUserDashboard()}" />
+                                               
+<!--                                                <h:commandButton value="Apply"  class="btn btn-success"  action="#{propertyBean.applyProperty(5, 2, 2)}" />-->
                                             </h:form>
                                            
                                         </div>

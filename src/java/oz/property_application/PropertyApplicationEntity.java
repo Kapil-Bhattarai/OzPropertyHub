@@ -15,6 +15,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.MapsId;
+import jakarta.persistence.NamedQuery;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 import java.util.ArrayList;
@@ -29,13 +30,18 @@ import oz.user.UserEntity;
 @Entity
 @Table(name = "OZ_PROPERTY_APPLICATION")
 @NamedQueries({
-    
+    @NamedQuery(
+        name = "PropertyApplicationEntity.findPropertyTypeByUserIdAndPropertyId",
+        query = "SELECT pa FROM PropertyApplicationEntity pa WHERE pa.id.userId = :userId AND pa.id.propertyId = :propertyId"
+    )
 })
 public class PropertyApplicationEntity implements Serializable {
 
+    public static final String QUERY_GET_APPLICATION_STATUS = "PropertyApplicationEntity.findPropertyTypeByUserIdAndPropertyId";
+        
     @EmbeddedId
     private PropertyApplicationId id;
-
+    
     @Column(name = "moveInDate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date moveInDate;
@@ -52,7 +58,7 @@ public class PropertyApplicationEntity implements Serializable {
     private double offeredRent;
      
     @Column(name = "leaseTermInMonths")
-    private int leaseTermInMonths = 6;
+    private String leaseTermInMonths = "6";
     
      @Column(name = "firstName", nullable = false)
     private String firstName;
@@ -77,7 +83,7 @@ public class PropertyApplicationEntity implements Serializable {
     private boolean isEmployed = true;
     
     @Column(name = "salary")
-    private Float salary;
+    private Double salary;
     
     @Column(name = "salaryType")
     @Enumerated(EnumType.STRING)
@@ -158,11 +164,11 @@ public class PropertyApplicationEntity implements Serializable {
         this.offeredRent = offeredRent;
     }
 
-    public int getLeaseTermInMonths() {
+    public String getLeaseTermInMonths() {
         return leaseTermInMonths;
     }
 
-    public void setLeaseTermInMonths(int leaseTermInMonths) {
+    public void setLeaseTermInMonths(String leaseTermInMonths) {
         this.leaseTermInMonths = leaseTermInMonths;
     }
 
@@ -222,11 +228,11 @@ public class PropertyApplicationEntity implements Serializable {
         this.isEmployed = isEmployed;
     }
 
-    public Float getSalary() {
+    public Double getSalary() {
         return salary;
     }
 
-    public void setSalary(Float salary) {
+    public void setSalary(Double salary) {
         this.salary = salary;
     }
 
@@ -293,6 +299,6 @@ public class PropertyApplicationEntity implements Serializable {
     public void setAgent(UserEntity agent) {
         this.agent = agent;
     }
-
     
+    public PropertyApplicationEntity(){}
 }

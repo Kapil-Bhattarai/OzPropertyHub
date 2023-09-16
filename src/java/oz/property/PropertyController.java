@@ -25,12 +25,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import org.primefaces.model.file.UploadedFiles;
+import oz.ApplicationStatus;
 import oz.PropertyStatus;
 import oz.PropertyType;
 import oz.StateType;
 import oz.Util;
 import oz.address.AddressEJB;
 import oz.address.AddressEntity;
+import oz.property_application.PropertyApplicationEJB;
+import oz.property_application.PropertyApplicationEntity;
 import oz.property_image.PropertyImageEntity;
 import oz.user.UserController;
 import oz.user.UserEntity;
@@ -85,6 +88,9 @@ public class PropertyController {
 
     @EJB
     private PropertyImageEJB propertyImageEJB;
+    
+    @EJB
+    private PropertyApplicationEJB propertyApplicationEJB;
 
     @ManagedProperty("#{userBean}")
     private UserController userBean; // Inject the UserController bean
@@ -599,6 +605,19 @@ public class PropertyController {
         } catch (Exception e) {
 
         }
+    }
+    
+     public ApplicationStatus checkApplication(Integer userId, Integer propertyId) {
+        PropertyApplicationEntity propertyApplicationEntity =  propertyApplicationEJB.checkApplication(userId, propertyId);
+        if (propertyApplicationEntity != null) {
+            return propertyApplicationEntity.getStatus();    
+        } else {
+            return null;
+        }      
+    }
+   
+    public String redirectToUserDashboard() {
+        return "/dashboard/user/user_dashboard.faces?faces-redirect=true";
     }
     
     public String applyProperty(Integer uid, Integer pid, Integer aid) {
