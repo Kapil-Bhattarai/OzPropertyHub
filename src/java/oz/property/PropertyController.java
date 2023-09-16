@@ -25,6 +25,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import org.primefaces.model.file.UploadedFiles;
+import oz.PropertyStatus;
 import oz.PropertyType;
 import oz.StateType;
 import oz.Util;
@@ -58,6 +59,7 @@ public class PropertyController {
     private Part mainImage;
     private String mainImageUrl;
     private PropertyType propertyType;
+    private PropertyStatus status = PropertyStatus.AVAILABLE;
     private double rent;
     private int noOfBedroom;
     private int noOfBathroom;
@@ -323,6 +325,15 @@ public class PropertyController {
         this.userAgent = userAgent;
     }
 
+    public PropertyStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(PropertyStatus status) {
+        this.status = status;
+    }
+
+    
     @PostConstruct
     public void init() {
         FacesContext context = FacesContext.getCurrentInstance();
@@ -356,6 +367,8 @@ public class PropertyController {
             this.map = propertyEntity.getMap();
             this.propertyDetails = propertyEntity.getPropertyDetails();
             this.userAgent = propertyEntity.getAgent();
+            this.status = propertyEntity.getStatus();
+            
         }
     }
 

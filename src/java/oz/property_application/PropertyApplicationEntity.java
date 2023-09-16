@@ -9,15 +9,19 @@ import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.Lob;
 import jakarta.persistence.NamedQueries;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.MapsId;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
-import oz.ApplicationStatus;
 import oz.SalaryType;
+import oz.ApplicationStatus;
 import oz.property.PropertyEntity;
 import oz.property_application_image.PropertyApplicationImageEntity;
 import oz.user.UserEntity;
@@ -32,10 +36,43 @@ public class PropertyApplicationEntity implements Serializable {
     @EmbeddedId
     private PropertyApplicationId id;
 
-    @Column(name = "applicationStatus")
+    @Column(name = "moveInDate")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date moveInDate;
+     
+    @Column(name = "applicationDate")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date applicationDate;
+        
+    @Column(name = "status")
     @Enumerated(EnumType.STRING)
-    private ApplicationStatus type;
+    private ApplicationStatus status;
 
+    @Column(name = "offeredRent")
+    private double offeredRent;
+     
+    @Column(name = "leaseTermInMonths")
+    private int leaseTermInMonths = 6;
+    
+     @Column(name = "firstName", nullable = false)
+    private String firstName;
+
+    @Column(name = "lastName", nullable = false)
+    private String lastName;
+
+    @Column(name = "email", nullable = false, length = 128)
+    private String email;
+
+    @Lob
+    @Column(name = "bio", nullable = true, length = 65535)
+    private String bio;
+
+    @Column(name = "phone", nullable = false, length = 12)
+    private String phone;
+
+    @Column(name = "address", nullable = false)
+    private String address;
+    
     @Column(name = "isEmployed")
     private boolean isEmployed = true;
     
@@ -82,13 +119,38 @@ public class PropertyApplicationEntity implements Serializable {
         this.id = id;
     }
 
-    public ApplicationStatus getType() {
-        return type;
+    public ApplicationStatus getUserStatus() {
+        return status;
     }
 
-    public void setType(ApplicationStatus type) {
-        this.type = type;
+    public void setUserStatus(ApplicationStatus status) {
+        this.status = status;
     }
+
+    public Date getMoveInDate() {
+        return moveInDate;
+    }
+
+    public void setMoveInDate(Date moveInDate) {
+        this.moveInDate = moveInDate;
+    }
+
+    public Date getApplicationDate() {
+        return applicationDate;
+    }
+
+    public void setApplicationDate(Date applicationDate) {
+        this.applicationDate = applicationDate;
+    }
+
+    public ApplicationStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(ApplicationStatus status) {
+        this.status = status;
+    }
+
 
     public boolean isIsEmployed() {
         return isEmployed;

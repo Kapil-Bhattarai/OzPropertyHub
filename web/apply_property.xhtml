@@ -1,0 +1,216 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      >
+
+    <ui:composition template="../../layout.xhtml">
+
+        <ui:define name="title">Oz Property Hub</ui:define>
+
+        <ui:define name="content">
+
+            <div class="container">
+
+                <div class="spacer">
+                    <div class="row register">
+                        <div class="col-lg-9 col-lg-offset-2 col-sm-9 col-sm-offset-2 col-xs-12 ">
+
+                            <h:messages globalOnly="true" showDetail="false"
+                                        errorClass="msg_error"
+                                        infoClass="msg_info"
+                                        fatalClass="msg_error"
+                                        warnClass="msg_warn"
+                                        layout="table"
+                                        errorStyle="color:red"
+                                        />
+                            <h:form enctype="multipart/form-data">
+                                <div class="section">
+                                    <h4><b>Address Details</b></h4>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <h:outputLabel value="Unit Number"/>
+                                            <h:inputText  class="form-control"  value="#{propertyBean.unitNumber}" required="true" requiredMessage="Required!" id="unitNumber" />
+                                            <h:messages errorStyle="color:red" for="unitNumber" layout="table"/>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <h:outputLabel value="Street Number"/>
+                                            <h:inputText  class="form-control"  value="#{propertyBean.streetNumber}" required="true" requiredMessage="Required!" id="streetNumber" />
+                                            <h:messages errorStyle="color:red" for="streetNumber" layout="table"/>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <h:outputLabel value="Street Name"/>
+                                            <h:inputText  class="form-control"  value="#{propertyBean.streetName}" required="true" requiredMessage="Required!" id="streetName" />
+                                            <h:messages errorStyle="color:red" for="streetName" layout="table"/>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <h:outputLabel value="Suburb"/>
+                                            <h:inputText  class="form-control"  value="#{propertyBean.suburb}" required="true" requiredMessage="Required!" id="suburb" />
+                                            <h:messages errorStyle="color:red" for="suburb" layout="table"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <h:outputLabel value="State"/>
+                                            <h:selectOneMenu value="#{propertyBean.state}" required="true" requiredMessage="Required!">
+                                                <f:selectItem itemLabel="Select state..." itemValue="" />
+                                                <f:selectItems value="#{propertyBean.states}" />
+                                            </h:selectOneMenu>
+                                            <h:messages errorStyle="color:red" for="state" layout="table"/>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <h:outputLabel value="Post Code"/>
+                                            <h:inputText  class="form-control"  value="#{propertyBean.postCode}" required="true" requiredMessage="Required!" id="postCode" />
+                                            <h:messages errorStyle="color:red" for="postCode" layout="table"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="section">
+                                    <h4><b>Property Details</b></h4>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <h:outputLabel value="Main Image"/>
+                                            <h:inputFile  class="form-control"  value="#{propertyBean.mainImage}" id="mainImage" />
+                                            <h:messages errorStyle="color:red" for="mainImage" layout="table"/>
+                                            <h:panelGroup rendered="#{not empty propertyBean.mainImageUrl}">
+                                                <img style="height: 50px;width:50px;margin-bottom: 20px;" src="#{request.contextPath}/uploaded-images/#{propertyBean.mainImageUrl}" alt="Property Image" />
+                                            </h:panelGroup>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <h:outputLabel value="Additional Images"/>
+                                            <p:fileUpload value="#{propertyBean.additionalImages}"  multiple="true" mode="simple" dragDropSupport="true" />
+                                        </div>
+
+                                    </div>
+                                    <h:panelGroup rendered="#{propertyBean.pid != 0}">
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <h:outputLabel value="Images" />
+                                                <p:dataList value="#{propertyBean.additionalImagesE}" var="image" id="foo_m">
+                                                    <div class="agent-prop-image-container">
+                                                        <img src="#{request.contextPath}/uploaded-images/#{image.image}" alt="Property Image" />
+
+
+
+                                                        <h:commandButton value="Remove"  action="#{propertyBean.removeImage(image)}">
+                                                            <f:ajax execute="@this" render="foo_m" />
+                                                        </h:commandButton>
+
+                                                    </div>
+                                                </p:dataList>
+                                            </div>
+                                        </div>
+                                    </h:panelGroup>
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                             <h:outputLabel value="Property Details"/>
+                                            <h:inputTextarea  class="form-control"  value="#{propertyBean.propertyDetails}" rows="10" cols="40"  required="true" requiredMessage="Required!" id="property_details" />
+                                            <h:messages errorStyle="color:red" for="property_details" layout="table"/>
+                                        </div>
+                                    </div>
+                                     <div class="row">
+                                        <div class="col-lg-12">
+                                             <h:outputLabel value="Map"/>
+                                            <h:inputText  class="form-control"  value="#{propertyBean.map}" required="true" requiredMessage="Required!" id="property_map" />
+                                            <h:messages errorStyle="color:red" for="property_map" layout="table"/>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <h:outputLabel value="Property"/>
+                                            <h:selectOneMenu value="#{propertyBean.propertyType}" required="true" requiredMessage="Required!" id="propertyType">
+                                                <f:selectItem itemLabel="Select property..." itemValue="" />
+                                                <f:selectItems value="#{propertyBean.propertyTypes}" />
+                                            </h:selectOneMenu>
+                                            <h:messages errorStyle="color:red" for="propertyType" layout="table"/>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <h:outputLabel value="Rent Price"/>
+                                            <h:inputText  class="form-control"  value="#{propertyBean.rent}" required="true" requiredMessage="Required!" id="rent">
+                                                <f:validateLongRange minimum="1" />
+                                            </h:inputText>
+                                            <h:messages errorStyle="color:red" for="rent" layout="table"/>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <h:outputLabel value="No of Beds"/>
+                                            <h:inputText  class="form-control"  value="#{propertyBean.noOfBedroom}" required="true" requiredMessage="Required!" id="noOfBedroom" />
+                                            <h:messages errorStyle="color:red" for="noOfBedroom" layout="table"/>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <h:outputLabel value="No of Baths"/>
+                                            <h:inputText  class="form-control"  value="#{propertyBean.noOfBathroom}" required="true" requiredMessage="Required!" id="noOfBathroom" />
+                                            <h:messages errorStyle="color:red" for="noOfBathroom" layout="table"/>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <h:outputLabel value="No of Parkings"/>
+                                            <h:inputText  class="form-control"  value="#{propertyBean.noOfParking}" required="true" requiredMessage="Required!" id="noOfParking" />
+                                            <h:messages errorStyle="color:red" for="noOfParking" layout="table"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="section">
+                                    <h4><b>Features</b></h4>
+                                    <div class="row features">
+                                        <div class="col-lg-4">
+                                            <h:selectBooleanCheckbox   value="#{propertyBean.hasBalcony}" id="hasBalcony"/>
+                                            <h:outputLabel value="Balcony"/>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <h:selectBooleanCheckbox   value="#{propertyBean.hasDishwater}" id="hasDishwater"/>
+                                            <h:outputLabel value="Dishwater"/>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <h:selectBooleanCheckbox   value="#{propertyBean.hasAc}" id="hasAc"/>
+                                            <h:outputLabel value="AC"/>
+                                        </div>
+                                    </div>
+                                    <div class="row features">
+                                        <div class="col-lg-4">
+                                            <h:selectBooleanCheckbox   value="#{propertyBean.hasSecureParking}" id="hasSecureParking"/>
+                                            <h:outputLabel value="Secure Parking"/>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <h:selectBooleanCheckbox   value="#{propertyBean.hasWardrobe}" id="hasWardrobe"/>
+                                            <h:outputLabel value="Wardrobe"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="section">
+                                    <h4><b>Dates</b></h4>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <h:outputLabel value="Inspection Date and Time"/>
+                                            <div>
+                                                <p:calendar id="dateTimePicker" value="#{propertyBean.inspectionDate}" showButtonPanel="true"  pattern="MM/dd/yyyy HH:mm:ss"/>
+                                                <h:messages errorStyle="color:red" for="inspectionDate" layout="table"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <h:commandButton value="Submit"  class="btn btn-success" action="#{propertyBean.submit}" />
+
+
+                            </h:form>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+        </ui:define>
+    </ui:composition> 
+</html>
