@@ -606,6 +606,10 @@ public class PropertyController {
         return "";
     }
     
+    public String redirectToLogin() {
+        return "signup.faces?faces-redirect=true";
+    }
+    
     public List<PropertyEntity> getPropertiesByAgent(Boolean isActive) {
         List<PropertyEntity> list = propertyEJB.getPropertiesByAgent(userBean.getId());
         return list;
