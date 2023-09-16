@@ -80,7 +80,7 @@
                                             </div>
                                         </div>
 
-                                        <h6><span class="glyphicon glyphicon-home"></span> Availabilty</h6>
+                                        <h6><span class="glyphicon glyphicon-home"></span> Availability</h6>
                                         <div class="listing-detail">
                                             <span data-toggle="tooltip" data-placement="bottom" data-original-title="Bed Room">#{propertyBean.noOfBedroom}</span> 
                                             <span data-toggle="tooltip" data-placement="bottom" data-original-title="Parking">#{propertyBean.noOfParking}</span> 
@@ -89,8 +89,9 @@
                                         </div>
                                         <div class="listing-detail">
                                             <h:form>
-                                                <h:commandButton value="Sign Up"  class="btn btn-success" rendered ="#{userBean.id == null}" action="#{propertyBean.redirectToLogin()}" />
-                                                <h:commandButton value="Apply"  class="btn btn-success" rendered ="#{userBean.id != null}" action="#{propertyBean.applyProperty(propertyBean.pid, propertyBean.aid)}" />
+                                                <!--<h:commandButton value="Sign Up"  class="btn btn-success" rendered ="#{userBean.id == null}" action="#{propertyBean.redirectToLogin()}" />-->
+                                                <!--<h:commandButton value="Apply"  class="btn btn-success" rendered ="#{userBean.id != null}" action="#{propertyBean.applyProperty(userBean.id, propertyBean.pid, propertyBean.aid)}" />-->
+                                                <h:commandButton value="Apply"  class="btn btn-success"  action="#{propertyBean.applyProperty(5, 2, 2)}" />
                                             </h:form>
                                            
                                         </div>

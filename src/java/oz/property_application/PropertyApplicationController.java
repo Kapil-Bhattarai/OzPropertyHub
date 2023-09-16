@@ -19,7 +19,7 @@ public class PropertyApplicationController {
     private Date moveInDate;
     private ApplicationStatus status = ApplicationStatus.PENDING;
     private double offeredRent;
-    private int leaseTermInMonths = 6;
+    private String leaseTermInMonths = "6";
     private String firstName;
     private String lastName;
     private String email;
@@ -27,7 +27,7 @@ public class PropertyApplicationController {
     private String phone;
     private String address;
     private boolean isEmployed = true;
-    private Float salary;
+    private Double salary;
     private SalaryType salaryType;
     private int noOfCats = 0;
     private int noOfDogs = 0;
@@ -59,11 +59,11 @@ public class PropertyApplicationController {
         this.offeredRent = offeredRent;
     }
 
-    public int getLeaseTermInMonths() {
+    public String getLeaseTermInMonths() {
         return leaseTermInMonths;
     }
 
-    public void setLeaseTermInMonths(int leaseTermInMonths) {
+    public void setLeaseTermInMonths(String leaseTermInMonths) {
         this.leaseTermInMonths = leaseTermInMonths;
     }
 
@@ -123,11 +123,11 @@ public class PropertyApplicationController {
         this.isEmployed = isEmployed;
     }
 
-    public Float getSalary() {
+    public Double getSalary() {
         return salary;
     }
 
-    public void setSalary(Float salary) {
+    public void setSalary(Double salary) {
         this.salary = salary;
     }
 
@@ -195,4 +195,20 @@ public class PropertyApplicationController {
         this.otherDocuement = otherDocuement;
     }
 
+      public SalaryType[] getSalaryTypes() {
+        return SalaryType.values();
+    }
+      
+    public void submit() {
+        //System.out.println(this);
+        
+    }
+
+    @Override
+    public String toString() {
+        return "PropertyApplicationController{" + "moveInDate=" + moveInDate + ", status=" + status + ", offeredRent=" + offeredRent + ", leaseTermInMonths=" + leaseTermInMonths + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email + ", bio=" + bio + ", phone=" + phone + ", address=" + address + ", isEmployed=" + isEmployed + ", salary=" + salary + ", salaryType=" + salaryType + ", noOfCats=" + noOfCats + ", noOfDogs=" + noOfDogs + ", noOfOtherPets=" + noOfOtherPets + ", secondaryDocument=" + secondaryDocument + ", incomeDocument=" + incomeDocument + '}';
+    }
+
+   
+         
 }
