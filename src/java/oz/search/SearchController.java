@@ -165,6 +165,11 @@ public class SearchController {
                 hasDishwater, hasBalcony, hasWardrobe, Integer.parseInt(noOfParking),
                 Integer.parseInt(noOfBathroom), Integer.parseInt(noOfBedroom));
     }
+    
+    public String showSearches() {
+        this.searchProperty();
+        return "listing.faces";
+    }
 
 //    public void getPropertyWithoutFilters() {
 //        List<PropertyEntity> properties = searchEJB.getPropertyWithoutFilters();
