@@ -4,6 +4,7 @@ import jakarta.annotation.PostConstruct;
 import jakarta.ejb.EJB;
 import jakarta.faces.bean.ManagedBean;
 import jakarta.faces.bean.SessionScoped;
+import jakarta.faces.component.UIComponent;
 import jakarta.faces.context.FacesContext;
 import java.util.ArrayList;
 import java.util.List;
@@ -145,8 +146,16 @@ public class SearchController {
     public void searchProperty() {
         if (lazyModel != null) {
             try {
-                DataList datalist = (DataList) FacesContext.getCurrentInstance().getViewRoot().findComponent("search-form:search-list");
-                datalist.setFirst(0);
+                UIComponent component = FacesContext.getCurrentInstance().getViewRoot().findComponent("search-form:search-list");
+
+                if (component instanceof DataList) {
+                    DataList datalist = (DataList) component;
+                    datalist.setFirst(0);
+                } // Check if the component is a DataTable
+                else if (component instanceof DataTable) {
+                    DataTable datatable = (DataTable) component;
+                    datatable.setFirst(0);
+                }
             } catch (Exception e) {
                 System.out.println(e);
             }

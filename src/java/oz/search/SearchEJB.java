@@ -25,6 +25,11 @@ public class SearchEJB extends OzEJB {
 //            return new ArrayList<>();
 //        }
 //    }
+    
+    public PropertyEntity updateProperty(PropertyEntity property) {
+        return entityManager.merge(property);
+    }
+    
     public LazyDataModel<PropertyEntity> getPropertyLazyModel(
             String searchText,
             StateType state,
