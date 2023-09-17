@@ -600,6 +600,11 @@ public class PropertyController {
         System.out.println(list.size());
         return list;
     }
+    
+    public List<PropertyEntity> getFeaturedProperties() {
+        List<PropertyEntity> list = propertyEJB.getFeaturedProperties();
+        return list;
+    }
 
     public PropertyEntity getPropertiesByPid(Integer pid) {
         return propertyEJB.getProperty(pid);

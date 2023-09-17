@@ -36,6 +36,7 @@ import oz.user.UserEntity;
     @NamedQuery(name = "PropertyEntity.getPropertyByDate", query = "SELECT p FROM PropertyEntity p WHERE p.listedDate = :dateValue"),
     @NamedQuery(name = "PropertyEntity.getAll", query = "SELECT p FROM PropertyEntity p"),
     @NamedQuery(name = "PropertyEntity.getPropertiesForGallery", query = "SELECT p FROM PropertyEntity p WHERE p.isInGallery = :isInGallery"),
+    @NamedQuery(name = "PropertyEntity.getFeaturedProperties", query = "SELECT p FROM PropertyEntity p WHERE p.isFeatured = :isInGallery"),
     @NamedQuery(
             name = "PropertyEntity.search",
             query = "SELECT p FROM PropertyEntity p WHERE"
@@ -83,6 +84,7 @@ public class PropertyEntity implements Serializable {
     public static final String QUERY_GET_ALL = "PropertyEntity.getAll";
     public static final String QUERY_COUNT = "PropertyEntity.count";
     public static final String QUERY_GET_PROPERTIES_FOR_GALLERY = "PropertyEntity.getPropertiesForGallery";
+    public static final String QUERY_GET_FEATURED_PROPERTIES = "PropertyEntity.getFeaturedProperties";
 
     @Id
     @jakarta.persistence.GeneratedValue(strategy = IDENTITY)

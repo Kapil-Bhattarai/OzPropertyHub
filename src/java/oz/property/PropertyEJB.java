@@ -28,11 +28,21 @@ public class PropertyEJB extends OzEJB {
             return new ArrayList<>();
         }
     }
-    
+
     public List<PropertyEntity> getPropertiesForGallery() {
         try {
             return entityManager.createNamedQuery(PropertyEntity.QUERY_GET_PROPERTIES_FOR_GALLERY, PropertyEntity.class)
                     .setParameter("isInGallery", true).getResultList();
+        } catch (Exception e) {
+            System.out.println("exception value  " + e.getMessage());
+            return new ArrayList<>();
+        }
+    }
+
+    public List<PropertyEntity> getFeaturedProperties() {
+        try {
+            return entityManager.createNamedQuery(PropertyEntity.QUERY_GET_FEATURED_PROPERTIES, PropertyEntity.class)
+                    .setParameter("isFeatured", true).getResultList();
         } catch (Exception e) {
             System.out.println("exception value  " + e.getMessage());
             return new ArrayList<>();
@@ -48,7 +58,7 @@ public class PropertyEJB extends OzEJB {
         }
     }
 
-      public PropertyEntity getPropertyByDate(Date date) {
+    public PropertyEntity getPropertyByDate(Date date) {
         try {
             return entityManager.createNamedQuery(PropertyEntity.QUERY_GET_PROPERTY_BY_DATE, PropertyEntity.class).setParameter("dateValue", date).getResultList().get(0);
         } catch (Exception e) {
