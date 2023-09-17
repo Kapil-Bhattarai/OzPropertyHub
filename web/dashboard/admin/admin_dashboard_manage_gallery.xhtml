@@ -2,44 +2,87 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:l="http://xmlns.jcp.org/jsp/jstl/core"
       xmlns:ui="http://java.sun.com/jsf/facelets">
 
     <ui:composition template="../../layout.xhtml">
 
         <ui:define name="title">Oz Property Hub</ui:define>
-   
+
         <ui:define name="content">
-              <h:outputText value="Welcome #{userBean.firstName}" styleClass="customHeading1"/>
-               <h:outputText value="Active Agents" styleClass="customHeading2"/>
-            <table id="tableContent">
-                
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Phone</th>
-                        <th>Address</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <f:forEach items="#{userBean.getActiveUsersByType(true)}" var="agent">       
-                        <tr>
-                            <td>#{agent.firstName} #{agent.lastName}</td>    
-                            <td>#{agent.email}</td>  
-                            <td>#{agent.phone}</td> 
-                             <td>#{agent.address}</td> 
-                            <td>
-                                <h:form>
-                                    <h:commandButton value="Suspend" action="#{userBean.suspendAgent(agent)}" />
-                                    <h:commandButton value="Delete" action="#{userBean.deleteAgent(agent)}" />
-                                </h:form>
-                            </td>
-                        </tr>
-                    </f:forEach>
-                </tbody>
-            </table>
+            <h:outputText value="Welcome #{userBean.firstName}" styleClass="customHeading1"/>
+            <h:outputText value="Manage Gallery" styleClass="customHeading2"/>
+            <h:form id="search-form">
+                <div class="properties-listing spacer">
+                    <div class="admin-search-form">
+                        <div class="admin-search-form-inner">
+                            <div class="row">
+
+                                <div class="col-lg-6 col-md-5">
+                                    <h:inputText class="form-control" value="#{ozglobalbean.searchText}" id="searchText"/>
+                                </div>
+                                <!--                                     <h:messages errorStyle="color:red" for="searchText" layout="table" />-->
+                                <div class="col-lg-2 col-md-2">
+                                    <h:selectOneMenu class="form-control" value="#{ozglobalbean.state}">
+                                        <f:selectItem  itemLabel ="Select state"/>
+                                        <f:selectItems  value="#{ozglobalbean.states}" />
+                                    </h:selectOneMenu>
+                                </div>
+                                <div class="col-lg-3 col-md-3">
+                                    <h:selectOneMenu class="form-control" value="#{ozglobalbean.rent}">
+                                        <f:selectItem itemValue="below-above"  itemLabel ="Rent"/>
+                                        <f:selectItem  itemValue="0-300" itemLabel ="below $300/w"/>
+                                        <f:selectItem  itemValue="300-400" itemLabel="$300 - $400/w"/>
+                                        <f:selectItem  itemValue="400-500" itemLabel="$400 - $500/w" />
+                                        <f:selectItem  itemValue="500-above" itemLabel="$500 - above/w" />
+                                    </h:selectOneMenu>
+
+                                </div>
+                                <div class="col-lg-1 col-md-2">
+                                    <h:commandButton value="Filter" class="btn btn-success" action="#{ozglobalbean.searchProperty}" />
+                                </div>
+                            </div>
+
+
+                            <div>
+                                <p:dataTable id="search-list" var="property" value="#{ozglobalbean.lazyModel}"
+                                             paginator="true" paginatorPosition="bottom"
+                                             rows="15"
+                                             tableStyleClass="search-table"
+                                             paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                             currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records" lazy="true">
+                                    <p:column headerText="Image">
+                                        <img style="height: 100px; width: 100px;" src="#{request.contextPath}/uploaded-images/#{property.mainImage}" />
+                                    </p:column>
+
+                                    <p:column headerText="Address">
+                                        <h:outputText value="#{property.address.unit}, #{property.address.street_name}, #{property.address.suburb}, #{property.address.state}, #{property.address.postcode}" />
+                                    </p:column>
+
+                                    <p:column headerText="Rent">
+                                        <h:outputText value="#{property.rent}" />
+                                    </p:column>
+
+                                    <p:column headerText="Agent">
+                                        <h:outputText value="#{property.agent.lastName} #{property.agent.firstName}" />
+                                    </p:column>
+
+                                    <p:column headerText="Action">
+                                        <div style="display: flex;">
+                                            <h:commandButton value="Set as Featured" class="btn btn-success" action="#{propertyBean.setFeatured(property)}" rendered="#{!property.isFeatured}" />
+                                            <h:commandButton value="Remove from Featured" class="btn btn-danger" action="#{propertyBean.removeFromFeatured(property)}" rendered="#{property.isFeatured}" />
+                                            <h:commandButton value="Add to Gallery" class="btn btn-success" action="#{propertyBean.addToGallery(property)}"  rendered="#{!property.isInGallery}"/>
+                                            <h:commandButton value="Remove from Gallery" class="btn btn-danger" action="#{propertyBean.removeFromGallery(property)}"  rendered="#{property.isInGallery}"/>
+                                        </div>
+                                    </p:column>
+                                </p:dataTable>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </h:form>
         </ui:define>
     </ui:composition> 
 </html>
