@@ -36,7 +36,7 @@ import oz.user.UserEntity;
     @NamedQuery(name = "PropertyEntity.getPropertyByDate", query = "SELECT p FROM PropertyEntity p WHERE p.listedDate = :dateValue"),
     @NamedQuery(name = "PropertyEntity.getAll", query = "SELECT p FROM PropertyEntity p"),
     @NamedQuery(name = "PropertyEntity.getPropertiesForGallery", query = "SELECT p FROM PropertyEntity p WHERE p.isInGallery = :isInGallery"),
-    @NamedQuery(name = "PropertyEntity.getFeaturedProperties", query = "SELECT p FROM PropertyEntity p WHERE p.isFeatured = :isInGallery"),
+    @NamedQuery(name = "PropertyEntity.getFeaturedProperties", query = "SELECT p FROM PropertyEntity p WHERE p.isFeatured = :isFeatured"),
     @NamedQuery(
             name = "PropertyEntity.search",
             query = "SELECT p FROM PropertyEntity p WHERE"

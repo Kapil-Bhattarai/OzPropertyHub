@@ -356,7 +356,6 @@ public class PropertyController {
             this.map = propertyEntity.getMap();
             this.propertyDetails = propertyEntity.getPropertyDetails();
             this.userAgent = propertyEntity.getAgent();
-
         }
     }
 
@@ -596,8 +595,6 @@ public class PropertyController {
     
     public List<PropertyEntity> getPropertiesForGallery() {
         List<PropertyEntity> list = propertyEJB.getPropertiesForGallery();
-        System.out.println("propertiesforgallery");
-        System.out.println(list.size());
         return list;
     }
     
@@ -632,8 +629,6 @@ public class PropertyController {
 
         try {
             property.setIsFeatured(true);
-            System.out.println("======> property");
-            System.out.println(property);
             propertyEJB.updateProperty(property);
             Util.showMessage(context, FacesMessage.SEVERITY_INFO, "Property is featured successfully.", null);
 
