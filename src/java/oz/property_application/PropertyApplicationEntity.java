@@ -306,4 +306,11 @@ public class PropertyApplicationEntity implements Serializable {
     }
     
     public PropertyApplicationEntity(){}
+
+    @Override
+    public String toString() {
+        return "PropertyApplicationEntity{" + "id=" + id + ", moveInDate=" + moveInDate + ", applicationDate=" + applicationDate + ", status=" + status + ", offeredRent=" + offeredRent + ", leaseTermInMonths=" + leaseTermInMonths + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email + ", bio=" + bio + ", phone=" + phone + ", address=" + address + ", isEmployed=" + isEmployed + ", salary=" + salary + ", salaryType=" + salaryType + ", noOfCats=" + noOfCats + ", noOfDogs=" + noOfDogs + ", noOfOtherPets=" + noOfOtherPets + ", property=" + property + ", user=" + user + ", agent=" + agent + ", images=" + images + '}';
+    }
+    
+    
 }

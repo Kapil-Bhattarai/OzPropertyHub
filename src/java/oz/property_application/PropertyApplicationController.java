@@ -8,6 +8,7 @@ import jakarta.faces.context.FacesContext;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 import org.primefaces.model.file.UploadedFile;
 import oz.ApplicationStatus;
@@ -50,18 +51,9 @@ public class PropertyApplicationController {
 
     @PostConstruct
     public void init() {
-        FacesContext context = FacesContext.getCurrentInstance();
 
-        Map<String, String> params = context.getExternalContext().getRequestParameterMap();
-        
-        String uid = params.get("uid");
-        String pid = params.get("pid");
-        String aid = params.get("aid");
 
-        agent = em.find(UserEntity.class, Integer.parseInt(aid));
-        user = em.find(UserEntity.class, Integer.parseInt(uid));
-        property = em.find(PropertyEntity.class, Integer.parseInt(pid));
-
+      
     }
 
    
@@ -231,6 +223,7 @@ public class PropertyApplicationController {
 
     public String submit() {
 
+        FacesContext context = FacesContext.getCurrentInstance();
         propertyEntity = new PropertyApplicationEntity();
 
         propertyEntity.setFirstName(firstName);
@@ -249,10 +242,21 @@ public class PropertyApplicationController {
         propertyEntity.setSalary(salary);
         propertyEntity.setSalaryType(salaryType);
 
+        propertyEntity.setApplicationDate(new Date());
         propertyEntity.setNoOfDogs(noOfDogs);
         propertyEntity.setNoOfCats(noOfCats);
         propertyEntity.setNoOfOtherPets(noOfOtherPets);
 
+         Map<String, String> params = context.getExternalContext().getRequestParameterMap();
+        
+        String uid = params.get("uid");
+        String pid = params.get("pid");
+        String aid = params.get("aid");
+
+        agent = em.find(UserEntity.class, Integer.parseInt(aid));
+        user = em.find(UserEntity.class, Integer.parseInt(uid));
+        property = em.find(PropertyEntity.class, Integer.parseInt(pid));
+        
         propertyEntity.setStatus(ApplicationStatus.PENDING);
         propertyEntity.setAgent(agent);
         propertyEntity.setUser(user);
@@ -265,6 +269,10 @@ public class PropertyApplicationController {
         }
         //System.out.println(this);
         
+    }
+    
+     public List<PropertyApplicationEntity> getPropertiesApplicationByUser(Integer userId) {
+       return  propertyApplicationEJB.getPropertiesApplicationByUser(userId);  
     }
 
     @Override

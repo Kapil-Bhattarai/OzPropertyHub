@@ -508,8 +508,6 @@ public class UserController {
         this.formMessage = formMessage;
     }
 
-  
-
     public String getConfirmPassword() {
         return confirmPassword;
     }
