@@ -28,6 +28,16 @@ public class PropertyEJB extends OzEJB {
             return new ArrayList<>();
         }
     }
+    
+    public List<PropertyEntity> getPropertiesForGallery() {
+        try {
+            return entityManager.createNamedQuery(PropertyEntity.QUERY_GET_PROPERTIES_FOR_GALLERY, PropertyEntity.class)
+                    .setParameter("isInGallery", true).getResultList();
+        } catch (Exception e) {
+            System.out.println("exception value  " + e.getMessage());
+            return new ArrayList<>();
+        }
+    }
 
     public PropertyEntity getProperty(int id) {
         try {
