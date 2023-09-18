@@ -7,6 +7,7 @@ import jakarta.faces.application.FacesMessage;
 import jakarta.faces.bean.ManagedBean;
 import jakarta.faces.bean.ManagedProperty;
 import jakarta.faces.bean.SessionScoped;
+import jakarta.faces.bean.ViewScoped;
 import jakarta.faces.context.FacesContext;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -43,7 +44,7 @@ import oz.user.UserEntity;
  * @author bishal
  */
 @ManagedBean(name = "propertyBean")
-@SessionScoped
+@ViewScoped
 public class PropertyController {
 
     @PersistenceContext
