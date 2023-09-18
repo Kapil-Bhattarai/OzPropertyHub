@@ -356,7 +356,6 @@ public class PropertyController {
             this.map = propertyEntity.getMap();
             this.propertyDetails = propertyEntity.getPropertyDetails();
             this.userAgent = propertyEntity.getAgent();
-            
         }
     }
 
@@ -493,46 +492,46 @@ public class PropertyController {
 //            String unitNumber, String streetNumber, String streetName,String suburb, String postCode, StateType state,
 //            Integer agentId, List<PropertyImageEntity> additionalImagesE )
 
-            Random random = new Random();
-            String propertyDetails = "The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from \"de Finibus Bonorum et Malorum\" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.";
-            String map = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3312.7081619008386!2d151.20256887642336!3d-33.87141127322549!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6b12ae38ac7b59c3%3A0xfe1a2414acd05bdb!2sCQUniversity%20Sydney!5e0!3m2!1sen!2sau!4v1691202775933!5m2!1sen!2sau";
-            
-              DecimalFormat decimalFormat = new DecimalFormat("#.##");
-        
-            registerDemoProperties("1.jpg", Double.parseDouble(decimalFormat.format(random.nextDouble(50.0, 750.0))), PropertyType.values()[random.nextInt(PropertyType.values().length)],
-            map,
-            propertyDetails,
-             random.nextBoolean(), random.nextBoolean(), random.nextBoolean(), random.nextBoolean(), random.nextBoolean(), 
-             random.nextInt(1,4),  random.nextInt(1,4),  random.nextInt(1,4),
-             random.nextInt(1, 20)+"", "9-11","hawkesbury road", "Westmead", "2145", StateType.values()[random.nextInt(StateType.values().length)],
-             agentId, new ArrayList()
-            );
- 
-             registerDemoProperties("1.jpg", Double.parseDouble(decimalFormat.format(random.nextDouble(50.0, 750.0))), PropertyType.values()[random.nextInt(PropertyType.values().length)],
-            map,
-            propertyDetails,
-             random.nextBoolean(), random.nextBoolean(), random.nextBoolean(), random.nextBoolean(), random.nextBoolean(), 
-             random.nextInt(1,4),  random.nextInt(1,4),  random.nextInt(1,4),
-             random.nextInt(1, 20)+"", "74","hawkesbury road", "Strathfield", "2145", StateType.values()[random.nextInt(StateType.values().length)],
-             agentId, new ArrayList()
-            );
-             
-              registerDemoProperties("1.jpg", Double.parseDouble(decimalFormat.format(random.nextDouble(50.0, 750.0))), PropertyType.values()[random.nextInt(PropertyType.values().length)],
-            map,
-            propertyDetails,
-             random.nextBoolean(), random.nextBoolean(), random.nextBoolean(), random.nextBoolean(), random.nextBoolean(), 
-             random.nextInt(1,4),  random.nextInt(1,4),  random.nextInt(1,4),
-             random.nextInt(1, 20)+"", "First Street","hawkesbury road", "Auburn", "2145", StateType.values()[random.nextInt(StateType.values().length)],
-             agentId, new ArrayList()
-            );
+        Random random = new Random();
+        String propertyDetails = "The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from \"de Finibus Bonorum et Malorum\" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.";
+        String map = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3312.7081619008386!2d151.20256887642336!3d-33.87141127322549!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6b12ae38ac7b59c3%3A0xfe1a2414acd05bdb!2sCQUniversity%20Sydney!5e0!3m2!1sen!2sau!4v1691202775933!5m2!1sen!2sau";
+
+        DecimalFormat decimalFormat = new DecimalFormat("#.##");
+
+        registerDemoProperties("1.jpg", Double.parseDouble(decimalFormat.format(random.nextDouble(50.0, 750.0))), PropertyType.values()[random.nextInt(PropertyType.values().length)],
+                map,
+                propertyDetails,
+                random.nextBoolean(), random.nextBoolean(), random.nextBoolean(), random.nextBoolean(), random.nextBoolean(),
+                random.nextInt(1, 4), random.nextInt(1, 4), random.nextInt(1, 4),
+                random.nextInt(1, 20) + "", "9-11", "hawkesbury road", "Westmead", "2145", StateType.values()[random.nextInt(StateType.values().length)],
+                agentId, new ArrayList()
+        );
+
+        registerDemoProperties("1.jpg", Double.parseDouble(decimalFormat.format(random.nextDouble(50.0, 750.0))), PropertyType.values()[random.nextInt(PropertyType.values().length)],
+                map,
+                propertyDetails,
+                random.nextBoolean(), random.nextBoolean(), random.nextBoolean(), random.nextBoolean(), random.nextBoolean(),
+                random.nextInt(1, 4), random.nextInt(1, 4), random.nextInt(1, 4),
+                random.nextInt(1, 20) + "", "74", "hawkesbury road", "Strathfield", "2145", StateType.values()[random.nextInt(StateType.values().length)],
+                agentId, new ArrayList()
+        );
+
+        registerDemoProperties("1.jpg", Double.parseDouble(decimalFormat.format(random.nextDouble(50.0, 750.0))), PropertyType.values()[random.nextInt(PropertyType.values().length)],
+                map,
+                propertyDetails,
+                random.nextBoolean(), random.nextBoolean(), random.nextBoolean(), random.nextBoolean(), random.nextBoolean(),
+                random.nextInt(1, 4), random.nextInt(1, 4), random.nextInt(1, 4),
+                random.nextInt(1, 20) + "", "First Street", "hawkesbury road", "Auburn", "2145", StateType.values()[random.nextInt(StateType.values().length)],
+                agentId, new ArrayList()
+        );
     }
-    
-    public void registerDemoProperties( String mainImageUrl, Double rent, PropertyType propertyType, String map, String propertyDetails, 
+
+    public void registerDemoProperties(String mainImageUrl, Double rent, PropertyType propertyType, String map, String propertyDetails,
             Boolean hasAc, Boolean hasSecureParking, Boolean hasDishwater, Boolean hasWardrobe, Boolean hasBalcony,
             Integer noOfParking, Integer noOfBathroom, Integer noOfBedroom,
-            String unitNumber, String streetNumber, String streetName,String suburb, String postCode, StateType state,
-            Integer agentId, List<PropertyImageEntity> additionalImagesE ) {
-        
+            String unitNumber, String streetNumber, String streetName, String suburb, String postCode, StateType state,
+            Integer agentId, List<PropertyImageEntity> additionalImagesE) {
+
         try {
 //             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 //             Date date = dateFormat.parse("2023-09-04 14:00:55");
@@ -540,9 +539,8 @@ public class PropertyController {
 //            if (propertyEntity == null ) {
 //                
             propertyEntity = new PropertyEntity();
-            
-            propertyEntity.setMainImage(mainImageUrl);
 
+            propertyEntity.setMainImage(mainImageUrl);
 
             AddressEntity addressEntity = new AddressEntity();
             addressEntity.setUnit(unitNumber);
@@ -550,9 +548,8 @@ public class PropertyController {
             addressEntity.setStreet_name(streetName);
             addressEntity.setSuburb(suburb);
             addressEntity.setPostcode(postCode);
-            addressEntity.setState(state); 
-    
-            
+            addressEntity.setState(state);
+
             // Create a new PropertyEntity and set its attributes
             propertyEntity.setRent(rent);
             propertyEntity.setType(propertyType);
@@ -579,7 +576,7 @@ public class PropertyController {
             propertyEntity.setImages(additionalImagesE);
 
             propertyEJB.addProperty(propertyEntity);
-            
+
             for (PropertyImageEntity removedImage : removedImagesE) {
                 propertyImageEJB.removePropertyImage(removedImage);
             }
@@ -587,19 +584,29 @@ public class PropertyController {
 
 //        }
         } catch (Exception e) {
-           
+
         }
     }
-    
+
     public List<PropertyEntity> getPropertiesByAgent(Boolean isActive) {
         List<PropertyEntity> list = propertyEJB.getPropertiesByAgent(userBean.getId());
         return list;
     }
-
-     public PropertyEntity getPropertiesByPid(Integer pid) {
-      return propertyEJB.getProperty(pid);
+    
+    public List<PropertyEntity> getPropertiesForGallery() {
+        List<PropertyEntity> list = propertyEJB.getPropertiesForGallery();
+        return list;
     }
-     
+    
+    public List<PropertyEntity> getFeaturedProperties() {
+        List<PropertyEntity> list = propertyEJB.getFeaturedProperties();
+        return list;
+    }
+
+    public PropertyEntity getPropertiesByPid(Integer pid) {
+        return propertyEJB.getProperty(pid);
+    }
+
     public String editProperty(PropertyEntity property) {
         return "/dashboard/agent/property_form.faces?faces-redirect=true&id=" + property.getPid();
     }
@@ -617,6 +624,66 @@ public class PropertyController {
         removedImagesE.add(image);
     }
 
+    public void setFeatured(PropertyEntity property) {
+        FacesContext context = FacesContext.getCurrentInstance();
+
+        try {
+            property.setIsFeatured(true);
+            propertyEJB.updateProperty(property);
+            Util.showMessage(context, FacesMessage.SEVERITY_INFO, "Property is featured successfully.", null);
+
+        } catch (Exception e) {
+            System.out.println(e);
+            Util.showMessage(context, FacesMessage.SEVERITY_ERROR, "There were some errors while featuring the property.", null);
+
+        }
+    }
+
+    public void removeFromFeatured(PropertyEntity property) {
+        FacesContext context = FacesContext.getCurrentInstance();
+
+        try {
+            property.setIsFeatured(false);
+            propertyEJB.updateProperty(property);
+            Util.showMessage(context, FacesMessage.SEVERITY_INFO, "Property is removed featured successfully.", null);
+
+        } catch (Exception e) {
+            System.out.println(e);
+            Util.showMessage(context, FacesMessage.SEVERITY_ERROR, "There were some errors while removing the property from featured list.", null);
+
+        }
+    }
+
+    public void addToGallery(PropertyEntity property) {
+        FacesContext context = FacesContext.getCurrentInstance();
+
+        try {
+            property.setIsInGallery(true);
+            propertyEJB.updateProperty(property);
+            Util.showMessage(context, FacesMessage.SEVERITY_INFO, "Property is added to gallery successfully.", null);
+
+        } catch (Exception e) {
+            System.out.println(e);
+            Util.showMessage(context, FacesMessage.SEVERITY_ERROR, "There were some errors while adding the property to gallery.", null);
+
+        }
+    }
+
+    public void removeFromGallery(PropertyEntity property) {
+        FacesContext context = FacesContext.getCurrentInstance();
+
+        try {
+            property.setIsInGallery(false);
+            propertyEJB.updateProperty(property);
+            Util.showMessage(context, FacesMessage.SEVERITY_INFO, "Property is removed from gallery successfully.", null);
+
+        } catch (Exception e) {
+            System.out.println(e);
+            Util.showMessage(context, FacesMessage.SEVERITY_ERROR, "There were some errors while removing the property from gallery.", null);
+
+        }
+    }
+
     private String getSubmittedFileName(Part part) {
         String contentDisposition = part.getHeader("content-disposition");
         String[] elements = contentDisposition.split(";");
@@ -632,11 +699,10 @@ public class PropertyController {
     public String getApartmentTypeValue() {
         return propertyType.name().toLowerCase();
     }
-    
+
     @Override
     public String toString() {
         return "PropertyController{" + "em=" + em + ", pid=" + pid + ", aid=" + aid + ", unitNumber=" + unitNumber + ", streetName=" + streetName + ", streetNumber=" + streetNumber + ", suburb=" + suburb + ", state=" + state + ", propertyDetails=" + propertyDetails + ", map=" + map + ", postCode=" + postCode + ", mainImage=" + mainImage + ", mainImageUrl=" + mainImageUrl + ", propertyType=" + propertyType + ", rent=" + rent + ", noOfBedroom=" + noOfBedroom + ", noOfBathroom=" + noOfBathroom + ", noOfParking=" + noOfParking + ", hasBalcony=" + hasBalcony + ", hasDishwater=" + hasDishwater + ", hasAc=" + hasAc + ", hasSecureParking=" + hasSecureParking + ", hasWardrobe=" + hasWardrobe + ", listedDate=" + listedDate + ", inspectionDate=" + inspectionDate + ", additionalImages=" + additionalImages + ", additionalImagesE=" + additionalImagesE + ", removedImagesE=" + removedImagesE + ", propertyEJB=" + propertyEJB + ", addressEJB=" + addressEJB + ", propertyImageEJB=" + propertyImageEJB + ", userBean=" + userBean + ", propertyEntity=" + propertyEntity + ", addressEntity=" + addressEntity + '}';
     }
-    
-    
+
 }

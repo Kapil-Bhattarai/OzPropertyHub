@@ -35,6 +35,8 @@ import oz.user.UserEntity;
     @NamedQuery(name = "PropertyEntity.getProperty", query = "SELECT p FROM PropertyEntity p WHERE p.pid = :id"),
     @NamedQuery(name = "PropertyEntity.getPropertyByDate", query = "SELECT p FROM PropertyEntity p WHERE p.listedDate = :dateValue"),
     @NamedQuery(name = "PropertyEntity.getAll", query = "SELECT p FROM PropertyEntity p"),
+    @NamedQuery(name = "PropertyEntity.getPropertiesForGallery", query = "SELECT p FROM PropertyEntity p WHERE p.isInGallery = :isInGallery"),
+    @NamedQuery(name = "PropertyEntity.getFeaturedProperties", query = "SELECT p FROM PropertyEntity p WHERE p.isFeatured = :isFeatured"),
     @NamedQuery(
             name = "PropertyEntity.search",
             query = "SELECT p FROM PropertyEntity p WHERE"
@@ -81,6 +83,8 @@ public class PropertyEntity implements Serializable {
     public static final String QUERY_DELETE_PROPERTY_BY_ID = "PropertyEntity.deletePropertyById";
     public static final String QUERY_GET_ALL = "PropertyEntity.getAll";
     public static final String QUERY_COUNT = "PropertyEntity.count";
+    public static final String QUERY_GET_PROPERTIES_FOR_GALLERY = "PropertyEntity.getPropertiesForGallery";
+    public static final String QUERY_GET_FEATURED_PROPERTIES = "PropertyEntity.getFeaturedProperties";
 
     @Id
     @jakarta.persistence.GeneratedValue(strategy = IDENTITY)
@@ -136,6 +140,12 @@ public class PropertyEntity implements Serializable {
     @Lob
     @Column(name = "map", length = 65535)
     private String map = "";
+
+    @Column(name = "isFeatured")
+    private Boolean isFeatured = false;
+    
+    @Column(name = "isInGallery")
+    private Boolean isInGallery = false;
 
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "addressId")
@@ -305,6 +315,22 @@ public class PropertyEntity implements Serializable {
 
     public void setMap(String map) {
         this.map = map;
+    }
+
+    public Boolean getIsFeatured() {
+        return isFeatured;
+    }
+
+    public void setIsFeatured(Boolean isFeatured) {
+        this.isFeatured = isFeatured;
+    }
+
+    public Boolean getIsInGallery() {
+        return isInGallery;
+    }
+
+    public void setIsInGallery(Boolean isInGallery) {
+        this.isInGallery = isInGallery;
     }
 
     @Override

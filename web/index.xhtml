@@ -3,6 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:l="http://xmlns.jcp.org/jsp/jstl/core"
       xmlns:ui="http://java.sun.com/jsf/facelets">
 
     <ui:composition template="layout.xhtml">
@@ -11,79 +12,38 @@
 
         <ui:define name="content">
 
+
             <div class="">
 
                 <div id="slider" class="sl-slider-wrapper">
 
                     <div class="sl-slider">
 
-                        <div class="sl-slide" data-orientation="horizontal" data-slice1-rotation="-25" data-slice2-rotation="-25" data-slice1-scale="2" data-slice2-scale="2">
-                            <div class="sl-slide-inner">
-                                <div class="bg-img bg-img-1"></div>
-                                <h2><a href="#">2 Bed Rooms and 1 Dinning Room Apartment on Rent</a></h2>
-                                <blockquote>              
-                                    <p class="location"><span class="glyphicon glyphicon-map-marker"></span> 1890 Syndey, Australia</p>
-                                    <p>Until he extends the circle of his compassion to all living things, man will not himself find peace.</p>
-                                    <cite>$300</cite>
-                                </blockquote>
-                            </div>
-                        </div>
 
-                        <div class="sl-slide" data-orientation="vertical" data-slice1-rotation="10" data-slice2-rotation="-15" data-slice1-scale="1.5" data-slice2-scale="1.5">
-                            <div class="sl-slide-inner">
-                                <div class="bg-img bg-img-2"></div>
-                                <h2><a href="#">2 Bed Rooms and 1 Dinning Room Apartment on Rent</a></h2>
-                                <blockquote>              
-                                    <p class="location"><span class="glyphicon glyphicon-map-marker"></span> 1890 Syndey, Australia</p>
-                                    <p>Until he extends the circle of his compassion to all living things, man will not himself find peace.</p>
-                                    <cite>$400</cite>
-                                </blockquote>
-                            </div>
-                        </div>
+                        <l:forEach items="#{propertyBean.getPropertiesForGallery()}" var="property">
 
-                        <div class="sl-slide" data-orientation="horizontal" data-slice1-rotation="3" data-slice2-rotation="3" data-slice1-scale="2" data-slice2-scale="1">
-                            <div class="sl-slide-inner">
-                                <div class="bg-img bg-img-3"></div>
-                                <h2><a href="#">2 Bed Rooms and 1 Dinning Room Apartment on Rent</a></h2>
-                                <blockquote>              
-                                    <p class="location"><span class="glyphicon glyphicon-map-marker"></span> 1890 Syndey, Australia</p>
-                                    <p>Until he extends the circle of his compassion to all living things, man will not himself find peace.</p>
-                                    <cite>$450</cite>
-                                </blockquote>
-                            </div>
-                        </div>
+                            <div class="sl-slide" data-orientation="horizontal" data-slice1-rotation="-25" data-slice2-rotation="-25" data-slice1-scale="2" data-slice2-scale="2">
+                                <a href="#{request.contextPath}/property-detail.faces?id=#{property.pid}">
+                                    <div class="sl-slide-inner">
+                                        <div class="bg-img" style="background-image: url('#{request.contextPath}/uploaded-images/#{property.mainImage}');"></div>
+                                        <h2>#{property.noOfBedroom} Bed Rooms and #{property.noOfBathroom} Bathroom <span style="text-transform: lowercase;">#{property.type}</span> on Rent</h2>
+                                        <blockquote>              
+                                            <p class="location"><span class="glyphicon glyphicon-map-marker"></span> Unit #{property.address.unit}, #{property.address.street_number}, #{property.address.street_name}, #{property.address.suburb}</p>
+                                            <p>#{property.propertyDetails}</p>
+                                            <cite>$#{property.rent} p/w</cite>
+                                        </blockquote>
+                                    </div>
+                                </a>
 
-                        <div class="sl-slide" data-orientation="vertical" data-slice1-rotation="-5" data-slice2-rotation="25" data-slice1-scale="2" data-slice2-scale="1">
-                            <div class="sl-slide-inner">
-                                <div class="bg-img bg-img-4"></div>
-                                <h2><a href="#">2 Bed Rooms and 1 Dinning Room Apartment on Rent</a></h2>
-                                <blockquote>              
-                                    <p class="location"><span class="glyphicon glyphicon-map-marker"></span> 1890 Syndey, Australia</p>
-                                    <p>Until he extends the circle of his compassion to all living things, man will not himself find peace.</p>
-                                    <cite>$350</cite>
-                                </blockquote>
                             </div>
-                        </div>
-
-                        <div class="sl-slide" data-orientation="horizontal" data-slice1-rotation="-5" data-slice2-rotation="10" data-slice1-scale="2" data-slice2-scale="1">
-                            <div class="sl-slide-inner">
-                                <div class="bg-img bg-img-5"></div>
-                                <h2><a href="#">2 Bed Rooms and 1 Dinning Room Apartment on Rent</a></h2>
-                                <blockquote>              
-                                    <p class="location"><span class="glyphicon glyphicon-map-marker"></span> 1890 Syndey, Australia</p>
-                                    <p>Until he extends the circle of his compassion to all living things, man will not himself find peace.</p>
-                                    <cite>$500</cite>
-                                </blockquote>
-                            </div>
-                        </div>
+                        </l:forEach>                        
                     </div><!-- /sl-slider -->
 
                     <nav id="nav-dots" class="nav-dots">
-                        <span class="nav-dot-current"></span>
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                        <span></span>
+                        <l:forEach items="#{propertyBean.getPropertiesForGallery()}" var="property"  varStatus="loop">
+                            <span class="#{loop.index == 0 ? 'nav-dot-current' : ''}"></span>
+                        </l:forEach>
+
                     </nav>
 
                 </div><!-- /slider-wrapper -->
@@ -104,7 +64,7 @@
                                         <div class="col-lg-3">
 
                                             <h:selectOneMenu class="form-control" value="#{ozglobalbean.rent}">
-                                                 <f:selectItem itemValue="below-above"  itemLabel ="Rent"/>
+                                                <f:selectItem itemValue="below-above"  itemLabel ="Rent"/>
                                                 <f:selectItem  itemValue="0-300" itemLabel ="below $300/w"/>
                                                 <f:selectItem  itemValue="300-400" itemLabel="$300 - $400/w"/>
                                                 <f:selectItem  itemValue="400-500" itemLabel="$400 - $500/w" />
@@ -114,7 +74,7 @@
                                         </div>
                                         <div class="col-lg-3">
                                             <h:selectOneMenu class="form-control" value="#{ozglobalbean.propertyType}">
-                                                  <f:selectItem  itemLabel ="Property"/>
+                                                <f:selectItem  itemLabel ="Property"/>
                                                 <f:selectItems value="#{ozglobalbean.propertyTypes}" />
                                             </h:selectOneMenu>
                                         </div>
@@ -126,7 +86,7 @@
 
                                         </div>
                                         <div class="col-lg-3">
-                                          <h:commandButton styleClass="btn btn-success" value="Find Now" action="listing.faces?faces-redirect=true" />                      
+                                            <h:commandButton styleClass="btn btn-success" value="Find Now" action="#{ozglobalbean.showSearches}" />                      
                                         </div>
                                     </div>
 
@@ -148,104 +108,17 @@
 
                     <h2>Featured Properties</h2>
                     <div id="owl-example" class="owl-carousel">
-                        <div class="properties">
-                            <div class="image-holder"><img src="resources/images/properties/1.jpg" class="img-responsive" alt="properties"/>
-                                <div class="status sold">leased</div>
+                        <l:forEach items="#{propertyBean.getPropertiesForGallery()}" var="property">
+                            <div class="properties">
+                                <div class="image-holder"><img src="#{request.contextPath}/uploaded-images/#{property.mainImage}" class="img-responsive" alt="properties"/>
+                                    <div class="status new">Available</div>
+                                </div>
+                                <h4><a href="property-detail.faces?id=#{property.pid}">#{property.address.suburb}</a></h4>
+                                <p class="price">Price: $#{property.rent}</p>
+                                <div class="listing-detail"><span data-toggle="tooltip" data-placement="bottom" data-original-title="Bed Room">#{property.noOfBedroom}</span> <span data-toggle="tooltip" data-placement="bottom" data-original-title="Parking">#{property.noOfParking}</span> <span data-toggle="tooltip" data-placement="bottom" data-original-title="Bathroom">#{property.noOfBathroom}</span> </div>
+                                <a class="btn btn-primary" href="property-detail.faces?id=#{property.pid}">View Details</a>
                             </div>
-                            <h4><a href="property-detail.faces">Royal Inn</a></h4>
-                            <p class="price">Price: $665</p>
-                            <div class="listing-detail"><span data-toggle="tooltip" data-placement="bottom" data-original-title="Bed Room">5</span> <span data-toggle="tooltip" data-placement="bottom" data-original-title="Living Room">2</span> <span data-toggle="tooltip" data-placement="bottom" data-original-title="Parking">2</span> <span data-toggle="tooltip" data-placement="bottom" data-original-title="Kitchen">1</span> </div>
-                            <a class="btn btn-primary" href="property-detail.faces">View Details</a>
-                        </div>
-                        <div class="properties">
-                            <div class="image-holder"><img src="resources/images/properties/2.jpg" class="img-responsive" alt="properties"/>
-                                <div class="status new">New</div>
-                            </div>
-                            <h4><a href="property-detail.faces">Royal Inn</a></h4>
-                            <p class="price">Price: $700</p>
-                            <div class="listing-detail"><span data-toggle="tooltip" data-placement="bottom" data-original-title="Bed Room">5</span> <span data-toggle="tooltip" data-placement="bottom" data-original-title="Living Room">2</span> <span data-toggle="tooltip" data-placement="bottom" data-original-title="Parking">2</span> <span data-toggle="tooltip" data-placement="bottom" data-original-title="Kitchen">1</span> </div>
-                            <a class="btn btn-primary" href="property-detail.faces">View Details</a>
-                        </div>
-                        <div class="properties">
-                            <div class="image-holder"><img src="resources/images/properties/3.jpg" class="img-responsive" alt="properties"/>
-                                <div class="status sold">leased</div>
-                            </div>
-                            <h4><a href="property-detail.faces">Royal Inn</a></h4>
-                            <p class="price">Price: $670</p>
-                            <div class="listing-detail"><span data-toggle="tooltip" data-placement="bottom" data-original-title="Bed Room">5</span> <span data-toggle="tooltip" data-placement="bottom" data-original-title="Living Room">2</span> <span data-toggle="tooltip" data-placement="bottom" data-original-title="Parking">2</span> <span data-toggle="tooltip" data-placement="bottom" data-original-title="Kitchen">1</span> </div>
-                            <a class="btn btn-primary" href="property-detail.faces">View Details</a>
-                        </div>
-                        <div class="properties">
-                            <div class="image-holder"><img src="resources/images/properties/4.jpg" class="img-responsive" alt="properties"/>
-                                <div class="status sold">Sold</div>
-                            </div>
-                            <h4><a href="property-detail.faces">Royal Inn</a></h4>
-                            <p class="price">Price: $250</p>
-                            <div class="listing-detail"><span data-toggle="tooltip" data-placement="bottom" data-original-title="Bed Room">5</span> <span data-toggle="tooltip" data-placement="bottom" data-original-title="Living Room">2</span> <span data-toggle="tooltip" data-placement="bottom" data-original-title="Parking">2</span> <span data-toggle="tooltip" data-placement="bottom" data-original-title="Kitchen">1</span> </div>
-                            <a class="btn btn-primary" href="property-detail.faces">View Details</a>
-                        </div>
-                        <div class="properties">
-                            <div class="image-holder"><img src="resources/images/properties/1.jpg" class="img-responsive" alt="properties"/>
-                                <div class="status sold">leased</div>
-                            </div>
-                            <h4><a href="property-detail.faces">Royal Inn</a></h4>
-                            <p class="price">Price: $500</p>
-                            <div class="listing-detail"><span data-toggle="tooltip" data-placement="bottom" data-original-title="Bed Room">5</span> <span data-toggle="tooltip" data-placement="bottom" data-original-title="Living Room">2</span> <span data-toggle="tooltip" data-placement="bottom" data-original-title="Parking">2</span> <span data-toggle="tooltip" data-placement="bottom" data-original-title="Kitchen">1</span> </div>
-                            <a class="btn btn-primary" href="property-detail.faces">View Details</a>
-                        </div>
-                        <div class="properties">
-                            <div class="image-holder"><img src="resources/images/properties/2.jpg" class="img-responsive" alt="properties"/>
-                                <div class="status sold">leased</div>
-                            </div>
-                            <h4><a href="property-detail.faces">Royal Inn</a></h4>
-                            <p class="price">Price: $600</p>
-                            <div class="listing-detail"><span data-toggle="tooltip" data-placement="bottom" data-original-title="Bed Room">5</span> <span data-toggle="tooltip" data-placement="bottom" data-original-title="Living Room">2</span> <span data-toggle="tooltip" data-placement="bottom" data-original-title="Parking">2</span> <span data-toggle="tooltip" data-placement="bottom" data-original-title="Kitchen">1</span> </div>
-                            <a class="btn btn-primary" href="property-detail.faces">View Details</a>
-                        </div>
-                        <div class="properties">
-                            <div class="image-holder"><img src="resources/images/properties/3.jpg" class="img-responsive" alt="properties"/>
-                                <div class="status new">New</div>
-                            </div>
-                            <h4><a href="property-detail.faces">Royal Inn</a></h4>
-                            <p class="price">Price: $700</p>
-                            <div class="listing-detail"><span data-toggle="tooltip" data-placement="bottom" data-original-title="Bed Room">5</span> <span data-toggle="tooltip" data-placement="bottom" data-original-title="Living Room">2</span> <span data-toggle="tooltip" data-placement="bottom" data-original-title="Parking">2</span> <span data-toggle="tooltip" data-placement="bottom" data-original-title="Kitchen">1</span> </div>
-                            <a class="btn btn-primary" href="property-detail.faces">View Details</a>
-                        </div>
-                        <div class="properties">
-                            <div class="image-holder"><img src="resources/images/properties/4.jpg" class="img-responsive" alt="properties"/>
-                                <div class="status new">New</div>
-                            </div>
-                            <h4><a href="property-detail.faces">Royal Inn</a></h4>
-                            <p class="price">Price: $300</p>
-                            <div class="listing-detail"><span data-toggle="tooltip" data-placement="bottom" data-original-title="Bed Room">5</span> <span data-toggle="tooltip" data-placement="bottom" data-original-title="Living Room">2</span> <span data-toggle="tooltip" data-placement="bottom" data-original-title="Parking">2</span> <span data-toggle="tooltip" data-placement="bottom" data-original-title="Kitchen">1</span> </div>
-                            <a class="btn btn-primary" href="property-detail.faces">View Details</a>
-                        </div>
-                        <div class="properties">
-                            <div class="image-holder"><img src="resources/images/properties/1.jpg" class="img-responsive" alt="properties"/>
-                                <div class="status new">New</div>
-                            </div>
-                            <h4><a href="property-detail.faces">Royal Inn</a></h4>
-                            <p class="price">Price: $560</p>
-                            <div class="listing-detail"><span data-toggle="tooltip" data-placement="bottom" data-original-title="Bed Room">5</span> <span data-toggle="tooltip" data-placement="bottom" data-original-title="Living Room">2</span> <span data-toggle="tooltip" data-placement="bottom" data-original-title="Parking">2</span> <span data-toggle="tooltip" data-placement="bottom" data-original-title="Kitchen">1</span> </div>
-                            <a class="btn btn-primary" href="property-detail.faces">View Details</a>
-                        </div>
-                        <div class="properties">
-                            <div class="image-holder"><img src="resources/images/properties/2.jpg" class="img-responsive" alt="properties"/>
-                                <div class="status sold">leased</div>
-                            </div>
-                            <h4><a href="property-detail.faces">Royal Inn</a></h4>
-                            <p class="price">Price: $490</p>
-                            <div class="listing-detail"><span data-toggle="tooltip" data-placement="bottom" data-original-title="Bed Room">5</span> <span data-toggle="tooltip" data-placement="bottom" data-original-title="Living Room">2</span> <span data-toggle="tooltip" data-placement="bottom" data-original-title="Parking">2</span> <span data-toggle="tooltip" data-placement="bottom" data-original-title="Kitchen">1</span> </div>
-                            <a class="btn btn-primary" href="property-detail.faces">View Details</a>
-                        </div>
-                        <div class="properties">
-                            <div class="image-holder"><img src="resources/images/properties/3.jpg" class="img-responsive" alt="properties"/></div>
-                            <h4><a href="property-detail.faces">Royal Inn</a></h4>
-                            <p class="price">Price: $600</p>
-                            <div class="listing-detail"><span data-toggle="tooltip" data-placement="bottom" data-original-title="Bed Room">5</span> <span data-toggle="tooltip" data-placement="bottom" data-original-title="Living Room">2</span> <span data-toggle="tooltip" data-placement="bottom" data-original-title="Parking">2</span> <span data-toggle="tooltip" data-placement="bottom" data-original-title="Kitchen">1</span> </div>
-                            <a class="btn btn-primary" href="property-detail.faces">View Details</a>
-                        </div>
-
+                        </l:forEach>
                     </div>
                 </div>
                 <div class="spacer">
