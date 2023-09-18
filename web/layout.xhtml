@@ -43,7 +43,7 @@
             <div class="navbar-wrapper">
 
                 <div class="navbar-inverse" role="navigation">
-                    <div class="container">
+                    <div class="container custom-navbar">
                         <div class="navbar-header">
 
 
@@ -73,6 +73,7 @@
                                     <li><h:outputLink value="#{request.contextPath}/join.faces" rendered="#{userBean.id == null}" >Login</h:outputLink><br/></li>
                                     <li><h:outputLink value="#{request.contextPath}/signup.faces" rendered="#{userBean.id == null}">Sign up</h:outputLink><br/></li>
                                     <li><h:outputLink value="#{request.contextPath}/dashboard/agent/agent_dashboard.faces" rendered="#{userBean.showAgentDashboard()}">Manage Property</h:outputLink><br/></li>
+                                     <li><h:outputLink value="#{request.contextPath}/dashboard/agent/application_dashboard.faces" rendered="#{userBean.showAgentDashboard()}">Manage Application</h:outputLink><br/></li>
                                     <li><h:outputLink value="#{request.contextPath}/update_detail.faces" rendered="#{userBean.id != null}">Manage Profile</h:outputLink><br/></li>
 <!--                                    <li><h:outputLink value="#{request.contextPath}/signup.faces" rendered="#{userBean.showAdminDashboard()}">Add Agents</h:outputLink><br/></li>-->
                                     <li><h:outputLink value="#{request.contextPath}/dashboard/admin/admin_dashboard.faces" rendered="#{userBean.showAdminDashboard()}">Manage Agents</h:outputLink><br/></li>
