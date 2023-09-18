@@ -18,7 +18,7 @@ import oz.property.PropertyEntity;
 import oz.user.UserEntity;
 
 @ManagedBean(name = "applyPropertyBean")
-@SessionScoped
+@ViewScoped
 public class PropertyApplicationController {
 
     @PersistenceContext

@@ -611,6 +611,7 @@ public class PropertyController {
     }
     
     public String applyProperty(Integer uid, Integer pid, Integer aid) {
+        
         return "apply_property.faces?faces-redirect=true&uid="+uid+"&pid="+pid+"&aid="+userAgent.getId();
     }
     
