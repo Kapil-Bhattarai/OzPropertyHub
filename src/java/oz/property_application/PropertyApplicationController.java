@@ -3,6 +3,7 @@ package oz.property_application;
 import jakarta.annotation.PostConstruct;
 import jakarta.ejb.EJB;
 import jakarta.faces.bean.ManagedBean;
+import jakarta.faces.bean.SessionScoped;
 import jakarta.faces.bean.ViewScoped;
 import jakarta.faces.context.FacesContext;
 import jakarta.persistence.EntityManager;
@@ -17,7 +18,7 @@ import oz.property.PropertyEntity;
 import oz.user.UserEntity;
 
 @ManagedBean(name = "applyPropertyBean")
-@ViewScoped
+@SessionScoped
 public class PropertyApplicationController {
 
     @PersistenceContext
@@ -51,8 +52,16 @@ public class PropertyApplicationController {
 
     @PostConstruct
     public void init() {
+        FacesContext context = FacesContext.getCurrentInstance();
+    Map<String, String> params = context.getExternalContext().getRequestParameterMap();
 
-
+        String uid = params.get("uid");
+        String pid = params.get("pid");
+        String aid = params.get("aid");
+        
+        agent = em.find(UserEntity.class, Integer.parseInt(aid));
+        user = em.find(UserEntity.class, Integer.parseInt(uid));
+        property = em.find(PropertyEntity.class, Integer.parseInt(pid));
       
     }
 
@@ -223,7 +232,7 @@ public class PropertyApplicationController {
 
     public String submit() {
 
-        FacesContext context = FacesContext.getCurrentInstance();
+
         propertyEntity = new PropertyApplicationEntity();
 
         propertyEntity.setFirstName(firstName);
@@ -247,17 +256,10 @@ public class PropertyApplicationController {
         propertyEntity.setNoOfCats(noOfCats);
         propertyEntity.setNoOfOtherPets(noOfOtherPets);
 
-         Map<String, String> params = context.getExternalContext().getRequestParameterMap();
-        
-        String uid = params.get("uid");
-        String pid = params.get("pid");
-        String aid = params.get("aid");
-
-        agent = em.find(UserEntity.class, Integer.parseInt(aid));
-        user = em.find(UserEntity.class, Integer.parseInt(uid));
-        property = em.find(PropertyEntity.class, Integer.parseInt(pid));
+     
         
         propertyEntity.setStatus(ApplicationStatus.PENDING);
+        
         propertyEntity.setAgent(agent);
         propertyEntity.setUser(user);
         propertyEntity.setProperty(property);
@@ -271,9 +273,6 @@ public class PropertyApplicationController {
         
     }
     
-     public List<PropertyApplicationEntity> getPropertiesApplicationByUser(Integer userId) {
-       return  propertyApplicationEJB.getPropertiesApplicationByUser(userId);  
-    }
 
     @Override
     public String toString() {

@@ -24,6 +24,7 @@ import static oz.UserType.AGENT;
 import oz.Util;
 import oz.newsletter_subscriber.NewsletterSubscriberEJB;
 import oz.newsletter_subscriber.NewsletterSubscriberEntity;
+import oz.property_application.PropertyApplicationEntity;
 
 @ManagedBean(name = "userBean")
 @SessionScoped
@@ -341,6 +342,14 @@ public class UserController {
         }
     }
 
+  public List<PropertyApplicationEntity> getPropertiesApplicationByUser(Integer userId) {
+       return  userEJB.getPropertiesApplicationByUser(userId);  
+    }
+         
+    public List<PropertyApplicationEntity> getPropertiesApplicationByAgent(Integer userId) {
+       return userEJB.getPropertiesApplicationByAgent(userId);  
+    }
+      
     public void subscribeToNewsletter() {
         if (email == null || email.isEmpty()) {
             return;
@@ -555,4 +564,11 @@ public class UserController {
     public void setNewEmail(String newEmail) {
         this.newEmail = newEmail;
     }
+
+    @Override
+    public String toString() {
+        return "UserController{" + "id=" + id + ", firstName=" + firstName + ", password=" + password + ", confirmPassword=" + confirmPassword + ", lastName=" + lastName + ", email=" + email + ", bio=" + bio + ", phone=" + phone + ", address=" + address + ", since=" + since + ", isLive=" + isLive + ", mainImage=" + mainImage + ", mainImageUrl=" + mainImageUrl + ", newEmail=" + newEmail + ", type=" + type + ", userEJB=" + userEJB + ", newsletterEJB=" + newsletterEJB + ", ozUser=" + ozUser + ", formUserName=" + formUserName + ", formEmail=" + formEmail + ", formNumber=" + formNumber + ", formMessage=" + formMessage + '}';
+    }
+    
+    
 }

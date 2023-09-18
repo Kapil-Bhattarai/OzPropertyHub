@@ -29,8 +29,8 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <!--<h:outputText value="#{applyPropertyBean.getPropertiesApplicationByUser(userBean.getId())}"></h:outputText>-->
-                    <f:forEach items="#{applyPropertyBean.getPropertiesApplicationByUser(userBean.getId())}" var="application">       
+                    <!--<h:outputText value="#{userBean.getPropertiesApplicationByUser(userBean.getId())}"></h:outputText>-->
+                    <f:forEach items="#{userBean.getPropertiesApplicationByUser(userBean.getId())}" var="application">       
                         <tr>
                             <td>#{application.property.address.unit}, #{application.property.address.street_name}, #{application.property.address.suburb}, #{application.property.address.state}, #{application.property.address.postcode}</td>
                             <td>#{application.applicationDate} </td> 
