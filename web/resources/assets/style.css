@@ -474,3 +474,7 @@ h2{font-size: 25px;}
 .admin-search-form .admin-search-form-inner {
     width: 96%;
 }
+
+.custom-navbar {
+    width: 80%;
+}

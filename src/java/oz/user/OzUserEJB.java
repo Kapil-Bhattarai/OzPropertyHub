@@ -5,6 +5,7 @@ import jakarta.ejb.Stateless;
 import java.util.ArrayList;
 import java.util.List;
 import oz.UserType;
+import oz.property_application.PropertyApplicationEntity;
 
 @Stateless
 public class OzUserEJB extends OzEJB {
@@ -55,6 +56,25 @@ public class OzUserEJB extends OzEJB {
         }
     }
 
+  public List<PropertyApplicationEntity> getPropertiesApplicationByUser(Integer userId) {
+        try {
+            return entityManager.createNamedQuery(PropertyApplicationEntity.QUERY_GET_ALL_APPLICATIONS, PropertyApplicationEntity.class)
+                    .setParameter("userId", userId).getResultList();
+        } catch (Exception e) {
+            System.out.println("exception value  " + e.getMessage());
+            return new ArrayList<>();
+        }
+    }    
+
+      public List<PropertyApplicationEntity> getPropertiesApplicationByAgent(Integer agentId) {
+        try {
+            return entityManager.createNamedQuery(PropertyApplicationEntity.QUERY_GET_ALL_APPLICATIONS, PropertyApplicationEntity.class)
+                    .setParameter("agentId", agentId).getResultList();
+        } catch (Exception e) {
+            System.out.println("exception value  " + e.getMessage());
+            return new ArrayList<>();
+        }
+    }
     public String deleteAgent(UserEntity user) {
 
         try {
