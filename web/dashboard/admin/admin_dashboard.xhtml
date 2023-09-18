@@ -10,8 +10,10 @@
         <ui:define name="title">Oz Property Hub</ui:define>
    
         <ui:define name="content">
-              <h:outputText value="Welcome #{userBean.firstName}" styleClass="customHeading1"/>
-               <h:outputText value="Active Agents" styleClass="customHeading2"/>
+            <div class="welcome">
+                <h3><h:outputText value="Welcome #{userBean.firstName}"/> </h3>
+               <h6><h:outputText value="Active Agents"/></h6>
+            </div>
             <table id="tableContent">
           
                 <thead>

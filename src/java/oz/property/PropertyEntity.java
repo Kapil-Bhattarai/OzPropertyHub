@@ -20,8 +20,10 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Lob;
 import jakarta.persistence.QueryHint;
+import jakarta.persistence.ManyToOne;
 import java.util.ArrayList;
 import java.util.List;
+import oz.PropertyStatus;
 import oz.PropertyType;
 import oz.address.AddressEntity;
 import oz.property_image.PropertyImageEntity;
@@ -98,6 +100,10 @@ public class PropertyEntity implements Serializable {
     @Enumerated(EnumType.STRING)
     private PropertyType type;
 
+    @Column(name = "status")
+    @Enumerated(EnumType.STRING)
+    private PropertyStatus status = PropertyStatus.AVAILABLE;
+
     @Column(name = "inspection")
     @Temporal(TemporalType.TIMESTAMP)
     private Date inspection;
@@ -151,7 +157,7 @@ public class PropertyEntity implements Serializable {
     @JoinColumn(name = "addressId")
     private AddressEntity address;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "agentId")
     private UserEntity agent;
 
@@ -315,6 +321,14 @@ public class PropertyEntity implements Serializable {
 
     public void setMap(String map) {
         this.map = map;
+    }
+
+    public PropertyStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(PropertyStatus status) {
+        this.status = status;
     }
 
     public Boolean getIsFeatured() {

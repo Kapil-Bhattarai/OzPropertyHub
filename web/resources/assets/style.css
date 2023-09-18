@@ -251,6 +251,11 @@ textarea {
     height: 100px;
 }
 
+.welcome {
+    padding-left: 35px;
+    padding-top: 10px;
+}
+
 input[type=button], input[type=submit], input[type=reset] {
     appearance: none;
     background-color: #428bca;
@@ -468,4 +473,8 @@ h2{font-size: 25px;}
 
 .admin-search-form .admin-search-form-inner {
     width: 96%;
+}
+
+.custom-navbar {
+    width: 80%;
 }

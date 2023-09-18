@@ -13,7 +13,9 @@ import org.primefaces.component.datatable.DataTable;
 import org.primefaces.model.LazyDataModel;
 import oz.PropertyType;
 import oz.StateType;
+import oz.UserType;
 import oz.property.PropertyEntity;
+import oz.user.UserController;
 
 @ManagedBean(name = "ozglobalbean")
 @SessionScoped
@@ -205,8 +207,9 @@ public class SearchController {
     public void setUpperBound(Integer upperBound) {
         this.upperBound = upperBound;
     }
+    
 
-    public boolean clearGlobalConfigAndReturn(Integer userId) {
+    public boolean clearGlobalConfigAndReturn(UserController userController) {
 
 //        this.hasAc = false;
 //        this.hasBalcony = false;
@@ -221,7 +224,8 @@ public class SearchController {
 //        this.propertyType = null;
 //        this.searchText = null;
 //        this.state = null;
-        return userId == null;
+        
+        return userController.getId() == null || userController.getType() == UserType.USER;
     }
 
     public String clearFilter(String path) {

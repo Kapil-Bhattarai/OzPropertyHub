@@ -99,8 +99,6 @@
                                                     <div class="agent-prop-image-container">
                                                         <img src="#{request.contextPath}/uploaded-images/#{image.image}" alt="Property Image" />
 
-
-
                                                         <h:commandButton value="Remove"  action="#{propertyBean.removeImage(image)}">
                                                             <f:ajax execute="@this" render="foo_m" />
                                                         </h:commandButton>
@@ -201,8 +199,7 @@
                                     </div>
                                 </div>
 
-                                <h:commandButton value="Submit"  class="btn btn-success" action="#{propertyBean.submit}" />
-
+                                <h:commandButton value="Submit"  class="btn btn-success" action="#{propertyBean.submit(userBean.getId())}" />
 
                             </h:form>
                         </div>
@@ -210,7 +207,6 @@
                     </div>
                 </div>
             </div>
-
 
         </ui:define>
     </ui:composition> 

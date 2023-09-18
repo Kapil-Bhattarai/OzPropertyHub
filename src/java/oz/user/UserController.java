@@ -18,12 +18,15 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Date;
 import java.util.List;
 import org.primefaces.model.file.UploadedFile;
+import oz.ApplicationStatus;
+import oz.PropertyType;
 import oz.UserType;
 import static oz.UserType.ADMIN;
 import static oz.UserType.AGENT;
 import oz.Util;
 import oz.newsletter_subscriber.NewsletterSubscriberEJB;
 import oz.newsletter_subscriber.NewsletterSubscriberEntity;
+import oz.property_application.PropertyApplicationEntity;
 
 @ManagedBean(name = "userBean")
 @SessionScoped
@@ -62,13 +65,18 @@ public class UserController {
     private String formNumber;
     private String formMessage;
 
+    private ApplicationStatus applicationStatus;
+    
     @PostConstruct
     public void init() {
         ozUser = new UserEntity();
-        registerUser("admin", "Deo", HashConvert("password"), "123456789", "200,Kent Street, NSW, Australia", UserType.ADMIN, "admin@gmail.com", true);
-        registerUser("test1", "User 1", HashConvert("password"), "123456789", "200,Kent Street, NSW, Australia", UserType.AGENT, "test1@gmail.com", true);
-        registerUser("test2", "User 2", HashConvert("password"), "123456789", "200,Kent Street, NSW, Australia", UserType.AGENT, "test2@gmail.com", true);
-        registerUser("test3", "User 3", HashConvert("password"), "123456789", "200,Kent Street, NSW, Australia", UserType.AGENT, "test3@gmail.com", false);
+        String bio = "The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from \"de Finibus Bonorum et Malorum\" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.";
+        registerUser("admin", "Deo", HashConvert("password"), "123456789", "200,Kent Street, NSW, Australia", UserType.ADMIN, "admin@gmail.com", true, bio);
+        registerUser("Agent1", "Agent 1", HashConvert("password"), "123456789", "200,Kent Street, NSW, Australia", UserType.AGENT, "test1@gmail.com", true, bio);
+        registerUser("Agent2", "User 2", HashConvert("password"), "123456789", "200,Kent Street, NSW, Australia", UserType.AGENT, "test2@gmail.com", true, bio);
+        registerUser("Agent3", "User 3", HashConvert("password"), "123456789", "200,Kent Street, NSW, Australia", UserType.AGENT, "test3@gmail.com", false, bio);
+        registerUser("User1", "User 1", HashConvert("password"), "123456789", "200,Kent Street, NSW, Australia", UserType.USER, "user1@gmail.com", true, bio);
+        registerUser("User2", "User 2", HashConvert("password"), "123456789", "200,Kent Street, NSW, Australia", UserType.USER, "user2@gmail.com", true, bio);
     }
 
     public String loginUser() {
@@ -110,10 +118,10 @@ public class UserController {
 
     public void updateProfile() {
         FacesContext context = FacesContext.getCurrentInstance();
-        UserEntity user = userEJB.getUserbyEmailAndPassword(email, HashConvert(password));
+        UserEntity user = userEJB.getUserbyEmail(email);
         if (user == null) {
             // not registered before.
-            Util.showMessage(context, FacesMessage.SEVERITY_ERROR, "You have entered a wrong password.", null);
+            Util.showMessage(context, FacesMessage.SEVERITY_ERROR, "Something went wrong getting your details.", null);
             //return "";
         } else {
             
@@ -262,7 +270,7 @@ public class UserController {
         }
     }
 
-    public void registerUser(String firstName, String lastName, String password, String phone, String address, UserType type, String email, boolean isLive) {
+    public void registerUser(String firstName, String lastName, String password, String phone, String address, UserType type, String email, boolean isLive, String bio) {
         UserEntity user = userEJB.getUserbyEmail(email);
         if (user == null) {
             user = new UserEntity();
@@ -271,6 +279,7 @@ public class UserController {
             user.setPassword(password);
             user.setPhone(phone);
             user.setAddress(address);
+            user.setBio(bio);
             user.setType(type);
             user.setSince(new Date());
             user.setIsLive(isLive);
@@ -336,7 +345,33 @@ public class UserController {
             throw new UnsupportedOperationException(e);
         }
     }
+    
+    
+    public ApplicationStatus[] getStatus() {
+        return ApplicationStatus.values();
+    }
+     
+    public String updateApplicationStatus(PropertyApplicationEntity application) {
+       application.setStatus(applicationStatus);
+         if (userEJB.updateApplicationStatus(application) != null) {
+            return "/dashboard/user/application_dashboard.faces?faces-redirect=true";
+        } else {
+            return null;
+        }
+    }
+    
+    public String viewApplicationDetails(PropertyApplicationEntity application) {
+        return "apply_property.faces?faces-redirect=true";
+    }
 
+  public List<PropertyApplicationEntity> getPropertiesApplicationByUser(Integer userId) {
+       return  userEJB.getPropertiesApplicationByUser(userId);  
+    }
+         
+    public List<PropertyApplicationEntity> getPropertiesApplicationByAgent(Integer userId) {
+       return userEJB.getPropertiesApplicationByAgent(userId);  
+    }
+      
     public void subscribeToNewsletter() {
         if (email == null || email.isEmpty()) {
             return;
@@ -504,8 +539,6 @@ public class UserController {
         this.formMessage = formMessage;
     }
 
-  
-
     public String getConfirmPassword() {
         return confirmPassword;
     }
@@ -553,4 +586,19 @@ public class UserController {
     public void setNewEmail(String newEmail) {
         this.newEmail = newEmail;
     }
+
+    public ApplicationStatus getApplicationStatus() {
+        return applicationStatus;
+    }
+
+    public void setApplicationStatus(ApplicationStatus applicationStatus) {
+        this.applicationStatus = applicationStatus;
+    }
+
+    @Override
+    public String toString() {
+        return "UserController{" + "id=" + id + ", firstName=" + firstName + ", password=" + password + ", confirmPassword=" + confirmPassword + ", lastName=" + lastName + ", email=" + email + ", bio=" + bio + ", phone=" + phone + ", address=" + address + ", since=" + since + ", isLive=" + isLive + ", mainImage=" + mainImage + ", mainImageUrl=" + mainImageUrl + ", newEmail=" + newEmail + ", type=" + type + ", userEJB=" + userEJB + ", newsletterEJB=" + newsletterEJB + ", ozUser=" + ozUser + ", formUserName=" + formUserName + ", formEmail=" + formEmail + ", formNumber=" + formNumber + ", formMessage=" + formMessage + '}';
+    }
+    
+    
 }

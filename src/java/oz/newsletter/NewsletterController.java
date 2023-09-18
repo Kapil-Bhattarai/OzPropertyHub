@@ -5,6 +5,7 @@ import jakarta.ejb.EJB;
 import jakarta.faces.application.FacesMessage;
 import jakarta.faces.bean.ManagedBean;
 import jakarta.faces.bean.ManagedProperty;
+import jakarta.faces.bean.SessionScoped;
 import jakarta.faces.bean.ViewScoped;
 import jakarta.faces.context.FacesContext;
 import jakarta.persistence.EntityManager;
@@ -21,7 +22,7 @@ import oz.user.UserController;
  * @author bishal
  */
 @ManagedBean(name = "newsletterBean")
-@ViewScoped
+@SessionScoped
 public class NewsletterController {
 
     @PersistenceContext

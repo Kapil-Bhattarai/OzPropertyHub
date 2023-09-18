@@ -49,8 +49,6 @@ public class PropertyImageEntity implements Serializable {
     public void setId(Integer id) {
         this.id = id;
     }
-    
-    
 
     public PropertyImageEntity() {
     }

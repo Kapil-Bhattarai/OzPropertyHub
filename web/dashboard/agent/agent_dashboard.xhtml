@@ -28,7 +28,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <f:forEach items="#{propertyBean.getPropertiesByAgent(true)}" var="property">       
+                    <f:forEach items="#{propertyBean.getPropertiesByAgent(userBean.getId())}" var="property">       
                         <tr>
                             <td><img style="height: 100px; width: 100px;" src="#{request.contextPath}/uploaded-images/#{property.mainImage}" /></td>
                             <td>#{property.address.unit}, #{property.address.street_name}, #{property.address.suburb}, #{property.address.state}, #{property.address.postcode}</td>
