@@ -2,7 +2,6 @@ package oz.property_application_image;
 
 import java.io.Serializable;
 import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import static jakarta.persistence.GenerationType.IDENTITY;
@@ -10,12 +9,10 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinColumns;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
 import oz.DocumentType;
 import oz.property_application.PropertyApplicationEntity;
 
-@Entity
-@Table(name = "OZ_PROPERTY_APPLICATION_IMAGE")
+
 public class PropertyApplicationImageEntity implements Serializable {
 
     @Id

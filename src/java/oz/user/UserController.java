@@ -18,6 +18,8 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Date;
 import java.util.List;
 import org.primefaces.model.file.UploadedFile;
+import oz.ApplicationStatus;
+import oz.PropertyType;
 import oz.UserType;
 import static oz.UserType.ADMIN;
 import static oz.UserType.AGENT;
@@ -63,6 +65,8 @@ public class UserController {
     private String formNumber;
     private String formMessage;
 
+    private ApplicationStatus applicationStatus;
+    
     @PostConstruct
     public void init() {
         ozUser = new UserEntity();
@@ -341,6 +345,24 @@ public class UserController {
             throw new UnsupportedOperationException(e);
         }
     }
+    
+    
+    public ApplicationStatus[] getStatus() {
+        return ApplicationStatus.values();
+    }
+     
+    public String updateApplicationStatus(PropertyApplicationEntity application) {
+       application.setStatus(applicationStatus);
+         if (userEJB.updateApplicationStatus(application) != null) {
+            return "/dashboard/user/application_dashboard.faces?faces-redirect=true";
+        } else {
+            return null;
+        }
+    }
+    
+    public String viewApplicationDetails(PropertyApplicationEntity application) {
+        return "apply_property.faces?faces-redirect=true";
+    }
 
   public List<PropertyApplicationEntity> getPropertiesApplicationByUser(Integer userId) {
        return  userEJB.getPropertiesApplicationByUser(userId);  
@@ -563,6 +585,14 @@ public class UserController {
 
     public void setNewEmail(String newEmail) {
         this.newEmail = newEmail;
+    }
+
+    public ApplicationStatus getApplicationStatus() {
+        return applicationStatus;
+    }
+
+    public void setApplicationStatus(ApplicationStatus applicationStatus) {
+        this.applicationStatus = applicationStatus;
     }
 
     @Override

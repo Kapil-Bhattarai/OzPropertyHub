@@ -28,5 +28,18 @@ public class PropertyApplicationEJB extends OzEJB {
             return null;
         }
     }
+    
+      public PropertyApplicationEntity checkApplicationForUpdate(Integer userId, Integer propertyId, Integer agentId) {
+        try {
+            return entityManager.createNamedQuery(PropertyApplicationEntity.QUERY_GET_APPLICATION_TO_UPDATE, PropertyApplicationEntity.class)
+                    .setParameter("userId", userId)
+                    .setParameter("propertyId", propertyId)
+                     .setParameter("agentId", agentId)
+                    .getResultList().get(0);
+        } catch (Exception e) {
+            System.out.println("exception value  " + e.getMessage());
+            return null;
+        }
+    }
   
 }

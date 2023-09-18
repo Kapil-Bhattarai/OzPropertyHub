@@ -56,6 +56,16 @@ public class OzUserEJB extends OzEJB {
         }
     }
 
+    public String updateApplicationStatus(PropertyApplicationEntity application) {
+        try {
+            entityManager.merge(application);
+            return "success";
+        } catch (Exception e) {
+            System.out.println("exception value  " + e.getMessage());
+            return null;
+        }
+    }
+    
   public List<PropertyApplicationEntity> getPropertiesApplicationByUser(Integer userId) {
         try {
             return entityManager.createNamedQuery(PropertyApplicationEntity.QUERY_GET_ALL_APPLICATIONS, PropertyApplicationEntity.class)
@@ -68,7 +78,7 @@ public class OzUserEJB extends OzEJB {
 
       public List<PropertyApplicationEntity> getPropertiesApplicationByAgent(Integer agentId) {
         try {
-            return entityManager.createNamedQuery(PropertyApplicationEntity.QUERY_GET_ALL_APPLICATIONS, PropertyApplicationEntity.class)
+            return entityManager.createNamedQuery(PropertyApplicationEntity.QUERY_GET_ALL_APPLICATIONS_TO_AGENT, PropertyApplicationEntity.class)
                     .setParameter("agentId", agentId).getResultList();
         } catch (Exception e) {
             System.out.println("exception value  " + e.getMessage());

@@ -232,7 +232,7 @@ public class PropertyController {
     public PropertyType[] getPropertyTypes() {
         return PropertyType.values();
     }
-
+ 
     public int getPid() {
         return pid;
     }
@@ -616,7 +616,7 @@ public class PropertyController {
     }
     
     public String redirectToLogin() {
-        return "signup.faces?faces-redirect=true";
+        return "join.faces?faces-redirect=true";
     }
     
     public List<PropertyEntity> getPropertiesByAgent(int agentId) {

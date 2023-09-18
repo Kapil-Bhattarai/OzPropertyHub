@@ -90,7 +90,7 @@
                                         </div>
                                         <div class="listing-detail">
                                             <h:form>
-                                                <h:commandButton value="Sign Up"  class="btn btn-success" rendered ="#{userBean.id == null}" action="#{propertyBean.redirectToLogin()}" />
+                                                <h:commandButton value="Login"  class="btn btn-success" rendered ="#{userBean.id == null}" action="#{propertyBean.redirectToLogin()}" />
                                                 <h:commandButton value="Apply"  class="btn btn-success" rendered ="#{userBean.id != null and  propertyBean.checkApplication(userBean.id, propertyBean.pid) == null}" action="#{propertyBean.applyProperty(userBean.id, propertyBean.pid, propertyBean.aid)}" />
                                                 <h:commandButton value="See Status"  class="btn btn-success" rendered ="#{userBean.id != null and  propertyBean.checkApplication(userBean.id, propertyBean.pid) != null}" action="#{propertyBean.redirectToUserDashboard()}" />
                                                
