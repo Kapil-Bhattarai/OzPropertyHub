@@ -7,7 +7,6 @@ import jakarta.faces.application.FacesMessage;
 import jakarta.faces.bean.ManagedBean;
 import jakarta.faces.bean.ManagedProperty;
 import jakarta.faces.bean.SessionScoped;
-import jakarta.faces.bean.ViewScoped;
 import jakarta.faces.context.FacesContext;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -92,9 +91,6 @@ public class PropertyController {
     
     @EJB
     private PropertyApplicationEJB propertyApplicationEJB;
-
-    @ManagedProperty("#{userBean}")
-    private UserController userBean; // Inject the UserController bean
 
     private PropertyEntity propertyEntity;
 
@@ -236,14 +232,6 @@ public class PropertyController {
         return PropertyType.values();
     }
 
-    public UserController getUserBean() {
-        return userBean;
-    }
-
-    public void setUserBean(UserController userBean) {
-        this.userBean = userBean;
-    }
-
     public int getPid() {
         return pid;
     }
@@ -379,7 +367,7 @@ public class PropertyController {
         }
     }
 
-    public String submit() {
+    public String submit(int agentId) {
         FacesContext context = FacesContext.getCurrentInstance();
 
         try {
@@ -444,7 +432,7 @@ public class PropertyController {
             // Associate the created AddressEntity with the PropertyEntity
             propertyEntity.setAddress(addressEntity);
 
-            UserEntity existingAgent = em.find(UserEntity.class, userBean.getId()); // Use the correct agent ID here
+            UserEntity existingAgent = em.find(UserEntity.class, agentId); // Use the correct agent ID here
 
             propertyEntity.setAgent(existingAgent);
 
@@ -629,8 +617,8 @@ public class PropertyController {
         return "signup.faces?faces-redirect=true";
     }
     
-    public List<PropertyEntity> getPropertiesByAgent(Boolean isActive) {
-        List<PropertyEntity> list = propertyEJB.getPropertiesByAgent(userBean.getId());
+    public List<PropertyEntity> getPropertiesByAgent(int agentId) {
+        List<PropertyEntity> list = propertyEJB.getPropertiesByAgent(agentId);
         return list;
     }
     
@@ -743,7 +731,7 @@ public class PropertyController {
 
     @Override
     public String toString() {
-        return "PropertyController{" + "em=" + em + ", pid=" + pid + ", aid=" + aid + ", unitNumber=" + unitNumber + ", streetName=" + streetName + ", streetNumber=" + streetNumber + ", suburb=" + suburb + ", state=" + state + ", propertyDetails=" + propertyDetails + ", map=" + map + ", postCode=" + postCode + ", mainImage=" + mainImage + ", mainImageUrl=" + mainImageUrl + ", propertyType=" + propertyType + ", rent=" + rent + ", noOfBedroom=" + noOfBedroom + ", noOfBathroom=" + noOfBathroom + ", noOfParking=" + noOfParking + ", hasBalcony=" + hasBalcony + ", hasDishwater=" + hasDishwater + ", hasAc=" + hasAc + ", hasSecureParking=" + hasSecureParking + ", hasWardrobe=" + hasWardrobe + ", listedDate=" + listedDate + ", inspectionDate=" + inspectionDate + ", additionalImages=" + additionalImages + ", additionalImagesE=" + additionalImagesE + ", removedImagesE=" + removedImagesE + ", propertyEJB=" + propertyEJB + ", addressEJB=" + addressEJB + ", propertyImageEJB=" + propertyImageEJB + ", userBean=" + userBean + ", propertyEntity=" + propertyEntity + ", addressEntity=" + addressEntity + ", userAgent=" + userAgent +'}';
+        return "PropertyController{" + "em=" + em + ", pid=" + pid + ", aid=" + aid + ", unitNumber=" + unitNumber + ", streetName=" + streetName + ", streetNumber=" + streetNumber + ", suburb=" + suburb + ", state=" + state + ", propertyDetails=" + propertyDetails + ", map=" + map + ", postCode=" + postCode + ", mainImage=" + mainImage + ", mainImageUrl=" + mainImageUrl + ", propertyType=" + propertyType + ", rent=" + rent + ", noOfBedroom=" + noOfBedroom + ", noOfBathroom=" + noOfBathroom + ", noOfParking=" + noOfParking + ", hasBalcony=" + hasBalcony + ", hasDishwater=" + hasDishwater + ", hasAc=" + hasAc + ", hasSecureParking=" + hasSecureParking + ", hasWardrobe=" + hasWardrobe + ", listedDate=" + listedDate + ", inspectionDate=" + inspectionDate + ", additionalImages=" + additionalImages + ", additionalImagesE=" + additionalImagesE + ", removedImagesE=" + removedImagesE + ", propertyEJB=" + propertyEJB + ", addressEJB=" + addressEJB + ", propertyImageEJB=" + propertyImageEJB + ", propertyEntity=" + propertyEntity + ", addressEntity=" + addressEntity + ", userAgent=" + userAgent +'}';
     }
     
 }
