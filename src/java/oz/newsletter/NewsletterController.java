@@ -144,7 +144,7 @@ public class NewsletterController {
         try {
             List<NewsletterSubscriberEntity> nse = newsletterSubscriberEJB.getAllSubscribers();
             for (NewsletterSubscriberEntity subscriber : nse) {
-                Util.sendEmail(subscriber.getEmail(), userBean.getEmail(), ne.getSubject(), ne.getBody());
+                   Util.sendEmail(subscriber.getEmail(), "admin@gmail.com", ne.getSubject(), ne.getBody()); 
             }
             ne.setIsSent(true);
             Util.showMessage(context, FacesMessage.SEVERITY_INFO, "Emails sent successfully.", null);
