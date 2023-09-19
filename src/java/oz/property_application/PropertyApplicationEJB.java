@@ -4,6 +4,7 @@ import jakarta.ejb.Stateless;
 import java.util.ArrayList;
 import java.util.List;
 import oz.OzEJB;
+import oz.user.UserEntity;
 
 @Stateless
 public class PropertyApplicationEJB extends OzEJB {
@@ -27,6 +28,10 @@ public class PropertyApplicationEJB extends OzEJB {
             System.out.println("exception value  " + e.getMessage());
             return null;
         }
+    }
+    
+    public PropertyApplicationEntity updateApplicationStatus(PropertyApplicationEntity propertyApplication) {
+        return entityManager.merge(propertyApplication);
     }
     
       public PropertyApplicationEntity checkApplicationForUpdate(Integer userId, Integer propertyId, Integer agentId) {

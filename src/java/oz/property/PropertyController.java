@@ -80,7 +80,7 @@ public class PropertyController {
     private UploadedFiles additionalImages;
     private List<PropertyImageEntity> additionalImagesE = new ArrayList<>();
     private List<PropertyImageEntity> removedImagesE = new ArrayList<>();
-
+    
     @EJB
     private PropertyEJB propertyEJB;
 

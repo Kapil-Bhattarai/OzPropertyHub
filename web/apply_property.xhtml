@@ -33,13 +33,13 @@
                                     <div class="row">
                                         <div class="col-lg-6">
                                             <h:outputLabel value="First Name"/>
-                                            <h:inputText  class="form-control"  value="#{applyPropertyBean.firstName}" required="true" requiredMessage="Required!" id="firstName" />
+                                            <h:inputText  class="form-control"  disabled="#{applyPropertyBean.shouldDisableUI}" value="#{applyPropertyBean.firstName}" required="true" requiredMessage="Required!" id="firstName" />
                                             <h:messages errorStyle="color:red" for="firstName" layout="table"/>
                                         </div>
 
                                         <div class="col-lg-6">
                                             <h:outputLabel value="Last Name"/>
-                                            <h:inputText  class="form-control"  value="#{applyPropertyBean.lastName}" required="true" requiredMessage="Required!" id="lastName" />
+                                            <h:inputText  class="form-control" disabled="#{applyPropertyBean.shouldDisableUI}"  value="#{applyPropertyBean.lastName}" required="true" requiredMessage="Required!" id="lastName" />
                                             <h:messages errorStyle="color:red" for="lastName" layout="table"/>
                                         </div>
 
@@ -47,13 +47,13 @@
                                     <div class="row">
                                         <div class="col-lg-6">
                                             <h:outputLabel value="Email"/>
-                                            <h:inputText  class="form-control"  value="#{applyPropertyBean.email}" required="true" requiredMessage="Required!" id="email" />
+                                            <h:inputText  class="form-control" disabled="#{applyPropertyBean.shouldDisableUI}"  value="#{applyPropertyBean.email}" required="true" requiredMessage="Required!" id="email" />
                                             <h:messages errorStyle="color:red" for="email" layout="table"/>
                                         </div>
 
                                         <div class="col-lg-6">
                                             <h:outputLabel value="Phone"/>
-                                            <h:inputText  class="form-control"  value="#{applyPropertyBean.phone}" required="true" requiredMessage="Required!" id="phone" />
+                                            <h:inputText  class="form-control" disabled="#{applyPropertyBean.shouldDisableUI}" value="#{applyPropertyBean.phone}" required="true" requiredMessage="Required!" id="phone" />
                                             <h:messages errorStyle="color:red" for="phone" layout="table"/>
                                         </div>
                                     </div>
@@ -62,13 +62,13 @@
 
                                         <div class="col-lg-6">
                                             <h:outputLabel value="Address"/>
-                                            <h:inputText  class="form-control"  value="#{applyPropertyBean.address}" required="true" requiredMessage="Required!" id="address" />
+                                            <h:inputText  class="form-control"  disabled="#{applyPropertyBean.shouldDisableUI}" value="#{applyPropertyBean.address}" required="true" requiredMessage="Required!" id="address" />
                                             <h:messages errorStyle="color:red" for="address" layout="table"/>
                                         </div>
 
                                         <div class="col-lg-6">
                                             <h:outputLabel value="Preferred lease term" />
-                                            <h:selectOneMenu value="#{applyPropertyBean.leaseTermInMonths}" required="true" requiredMessage="Required!">
+                                            <h:selectOneMenu disabled="#{applyPropertyBean.shouldDisableUI}" value="#{applyPropertyBean.leaseTermInMonths}" required="true" requiredMessage="Required!">
                                                 <f:selectItem itemLabel="3 months" itemValue="3" />
                                                 <f:selectItem itemLabel="6 months" itemValue="6" />
                                                 <f:selectItem itemLabel="9 months" itemValue="9" />
@@ -80,7 +80,7 @@
 
                                     <div class="row features">
                                         <div class="col-lg-6">
-                                            <h:selectBooleanCheckbox  value="#{applyPropertyBean.isEmployed}" id="isEmployed"/>
+                                            <h:selectBooleanCheckbox disabled="#{applyPropertyBean.shouldDisableUI}"  value="#{applyPropertyBean.isEmployed}" id="isEmployed"/>
                                             <h:outputLabel value="Has Job?"/>
                                         </div>
 
@@ -88,13 +88,13 @@
                                     <div class="row">
                                         <div class="col-lg-6">
                                             <h:outputLabel value="Income"/>
-                                            <h:inputText  class="form-control"  value="#{applyPropertyBean.salary}" required="true" requiredMessage="Required!" id="salary" />
+                                            <h:inputText  class="form-control" disabled="#{applyPropertyBean.shouldDisableUI}" value="#{applyPropertyBean.salary}" required="true" requiredMessage="Required!" id="salary" />
                                             <h:messages errorStyle="color:red" for="salary" layout="table"/>
                                         </div>
 
                                         <div class="col-lg-6">
                                             <h:outputLabel value="Income duration"/>
-                                            <h:selectOneMenu value="#{applyPropertyBean.salaryType}" required="true" requiredMessage="Required!">
+                                            <h:selectOneMenu disabled="#{applyPropertyBean.shouldDisableUI}" value="#{applyPropertyBean.salaryType}" required="true" requiredMessage="Required!">
                                                 <f:selectItems value="#{applyPropertyBean.salaryTypes}" />
                                             </h:selectOneMenu>
                                             <h:messages errorStyle="color:red" for="state" layout="table"/>
@@ -104,19 +104,19 @@
                                     <div class="row">
                                         <div class="col-lg-6">
                                             <h:outputLabel value="No of Dogs"/>
-                                            <h:inputText  class="form-control"  value="#{applyPropertyBean.noOfDogs}" required="true" requiredMessage="Required!" id="noOfDogs" />
+                                            <h:inputText disabled="#{applyPropertyBean.shouldDisableUI}" class="form-control"  value="#{applyPropertyBean.noOfDogs}" required="true" requiredMessage="Required!" id="noOfDogs" />
                                             <h:messages errorStyle="color:red" for="noOfDogs" layout="table"/>
                                         </div>
                                         <div class="col-lg-6">
                                             <h:outputLabel value="No of Cats"/>
-                                            <h:inputText  class="form-control"  value="#{applyPropertyBean.noOfCats}" required="true" requiredMessage="Required!" id="noOfCats" />
+                                            <h:inputText  disabled="#{applyPropertyBean.shouldDisableUI}" class="form-control"  value="#{applyPropertyBean.noOfCats}" required="true" requiredMessage="Required!" id="noOfCats" />
                                             <h:messages errorStyle="color:red" for="noOfCats" layout="table"/>
                                         </div>
                                     </div> 
                                     <div class="row">
                                         <div class="col-lg-6">
                                             <h:outputLabel value="Offered Rent"/>
-                                            <h:inputText  class="form-control"  value="#{applyPropertyBean.offeredRent}" required="true" requiredMessage="Required!" id="applyPropertyBean">
+                                            <h:inputText disabled="#{applyPropertyBean.shouldDisableUI}" class="form-control"  value="#{applyPropertyBean.offeredRent}" required="true" requiredMessage="Required!" id="applyPropertyBean">
                                                 <f:validateLongRange minimum="1" />
                                             </h:inputText>
                                             <h:messages errorStyle="color:red" for="applyPropertyBean" layout="table"/>
@@ -124,14 +124,14 @@
 
                                         <div class="col-lg-6">
                                             <h:outputLabel value="No of Other pets"/>
-                                            <h:inputText  class="form-control"  value="#{applyPropertyBean.noOfOtherPets}" required="true" requiredMessage="Required!" id="noOfOtherPets" />
+                                            <h:inputText disabled="#{applyPropertyBean.shouldDisableUI}" class="form-control"  value="#{applyPropertyBean.noOfOtherPets}" required="true" requiredMessage="Required!" id="noOfOtherPets" />
                                             <h:messages errorStyle="color:red" for="noOfOtherPets" layout="table"/>
                                         </div> 
                                     </div>
                                     <div class="row">
                                         <div class="col-lg-12">
                                             <h:outputLabel value="Bio"/>
-                                            <h:inputTextarea  class="form-control"  value="#{applyPropertyBean.bio}" rows="10" cols="40"  required="true" requiredMessage="Required!" id="property_details" />
+                                            <h:inputTextarea  disabled="#{applyPropertyBean.shouldDisableUI}" class="form-control"  value="#{applyPropertyBean.bio}" rows="10" cols="40"  required="true" requiredMessage="Required!" id="property_details" />
                                             <h:messages errorStyle="color:red" for="property_details" layout="table"/>
                                         </div>
                                     </div>
@@ -142,7 +142,7 @@
                                         <div class="col-lg-6">
                                 
                                             <h:outputLabel value="Primary Document"/>
-                                            <p:fileUpload value="#{applyPropertyBean.primaryDocument}"  multiple="false" mode="simple" dragDropSupport="true" />
+                                            <p:fileUpload disabled="#{applyPropertyBean.shouldDisableUI}" value="#{applyPropertyBean.primaryDocument}"  multiple="false" mode="simple" dragDropSupport="true" />
                                             <h:messages errorStyle="color:red" for="primaryDocument" layout="table"/>
                                            <h:graphicImage value="uploaded-images/#{applyPropertyBean.primaryImageUrl}" class="img-responsive" rendered="#{not empty applyPropertyBean.primaryImageUrl}" />
                                             
@@ -150,7 +150,7 @@
                                         
                                         <div class="col-lg-6">
                                             <h:outputLabel value="Secondary Document"/>
-                                            <p:fileUpload value="#{applyPropertyBean.secondaryDocument}"  multiple="false" mode="simple" dragDropSupport="true" />
+                                            <p:fileUpload disabled="#{applyPropertyBean.shouldDisableUI}" value="#{applyPropertyBean.secondaryDocument}"  multiple="false" mode="simple" dragDropSupport="true" />
                                              <h:messages errorStyle="color:red" for="secondaryDocument" layout="table"/>
                                              <h:graphicImage value="uploaded-images/#{applyPropertyBean.secondaryImageUrl}" class="img-responsive" rendered="#{not empty applyPropertyBean.secondaryImageUrl}" />
                                         </div>
@@ -166,7 +166,7 @@
                                         </div>
                                         <div class="col-lg-6">
                                             <h:outputLabel value="Other Document"/>
-                                            <p:fileUpload value="#{applyPropertyBean.otherDocuement}"  multiple="false" mode="simple" dragDropSupport="true" />
+                                            <p:fileUpload disabled="#{applyPropertyBean.shouldDisableUI}" value="#{applyPropertyBean.otherDocuement}"  multiple="false" mode="simple" dragDropSupport="true" />
 <!--                                            <h:inputFile  class="form-control"  value="#{applyPropertyBean.otherDocuement}" id="otherDocuement" />-->
                                             <h:messages errorStyle="color:red" for="otherDocuement" layout="table"/>
                                               <h:graphicImage value="uploaded-images/#{applyPropertyBean.otherImageUrl}" class="img-responsive" rendered="#{not empty applyPropertyBean.otherImageUrl}" />
@@ -177,14 +177,25 @@
                                         <div class="col-lg-6">
                                             <h:outputLabel value="Preferred move in Date and Time"/>
                                             <div>
-                                                <p:calendar id="dateTimePicker" value="#{applyPropertyBean.moveInDate}" showButtonPanel="true"  pattern="MM/dd/yyyy HH:mm:ss"/>
+                                                <p:calendar disabled="#{applyPropertyBean.shouldDisableUI}" id="dateTimePicker" value="#{applyPropertyBean.moveInDate}" showButtonPanel="true"  pattern="MM/dd/yyyy HH:mm:ss"/>
                                                 <h:messages errorStyle="color:red" for="inspectionDate" layout="table"/>
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="row" >
+                                        <div class="col-lg-6" >
+                                            <h:outputLabel value="Action" rendered="#{applyPropertyBean.shouldDisableUI}" />
+                                            <h:selectOneMenu  rendered="#{applyPropertyBean.shouldDisableUI}"  value="#{applyPropertyBean.status}" required="true" id="state" requiredMessage="Required!">
+                                                <f:selectItems value="#{applyPropertyBean.applicationStatus}" />
+                                            </h:selectOneMenu>
+                                            <h:messages errorStyle="color:red" for="state" layout="table"/>
+                                        </div>
+                                        
+                                    </div>
                                 </div>
                                     <!--int aid, int uid, int pid-->
-                                <h:commandButton value="Submit"  class="btn btn-success" action="#{applyPropertyBean.submit()}" />
+                                <h:commandButton value="Submit" rendered="#{not applyPropertyBean.shouldDisableUI}"  class="btn btn-success" action="#{applyPropertyBean.submit()}" />
+                                <h:commandButton value="Update"  rendered="#{applyPropertyBean.shouldDisableUI}" class="btn btn-success" action="#{applyPropertyBean.updateApplication()}" />
 
 
                             </h:form>

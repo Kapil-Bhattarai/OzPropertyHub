@@ -8,8 +8,6 @@ import jakarta.faces.context.FacesContext;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.servlet.http.Part;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -56,47 +54,51 @@ public class PropertyApplicationController {
     @EJB
     private PropertyApplicationEJB propertyApplicationEJB;
 
+    private boolean shouldDisableUI = false;
+
+    int uid, pid, aid;
+
     @PostConstruct
     public void init() {
         FacesContext context = FacesContext.getCurrentInstance();
         Map<String, String> params = context.getExternalContext().getRequestParameterMap();
 
-        int uid = Integer.parseInt(params.get("uid"));
-        int pid = Integer.parseInt(params.get("pid"));
-        int aid = Integer.parseInt(params.get("aid"));
+        uid = Integer.parseInt(params.get("uid"));
+        pid = Integer.parseInt(params.get("pid"));
+        aid = Integer.parseInt(params.get("aid"));
 
         agent = em.find(UserEntity.class, aid);
         user = em.find(UserEntity.class, uid);
         property = em.find(PropertyEntity.class, pid);
-        
-    
+
         PropertyApplicationEntity propertyApplicationEntity = propertyApplicationEJB.checkApplicationForUpdate(uid, pid, aid);
-        if (propertyApplicationEntity != null && "true".equals(params.get("reload")) ) {
+        if (propertyApplicationEntity != null && "true".equals(params.get("reload"))) {
+            shouldDisableUI = true;
             firstName = propertyApplicationEntity.getFirstName();
             lastName = propertyApplicationEntity.getLastName();
             moveInDate = propertyApplicationEntity.getMoveInDate();
             status = propertyApplicationEntity.getStatus();
             offeredRent = propertyApplicationEntity.getOfferedRent();
             leaseTermInMonths = propertyApplicationEntity.getLeaseTermInMonths();
-            email =propertyApplicationEntity.getEmail();
+            email = propertyApplicationEntity.getEmail();
             bio = propertyApplicationEntity.getBio();
             phone = propertyApplicationEntity.getPhone();
             address = propertyApplicationEntity.getAddress();
             isEmployed = propertyApplicationEntity.isIsEmployed();
             salary = propertyApplicationEntity.getSalary();
             salaryType = propertyApplicationEntity.getSalaryType();
-            
-            noOfCats=propertyApplicationEntity.getNoOfCats();
+
+            noOfCats = propertyApplicationEntity.getNoOfCats();
             noOfDogs = propertyApplicationEntity.getNoOfDogs();
-            noOfOtherPets= propertyApplicationEntity.getNoOfOtherPets();
-            
+            noOfOtherPets = propertyApplicationEntity.getNoOfOtherPets();
+
             property = propertyApplicationEntity.getProperty();
-            
+
             primaryImageUrl = propertyApplicationEntity.getPrimaryImageUrl();
             secondaryImageUrl = propertyApplicationEntity.getSecondaryImageUrl();
             incomeImageUrl = propertyApplicationEntity.getIncomeImageUrl();
             otherImageUrl = propertyApplicationEntity.getOtherImageUrl();
-        } 
+        }
 
     }
 
@@ -264,6 +266,34 @@ public class PropertyApplicationController {
         return SalaryType.values();
     }
 
+    public boolean isShouldDisableUI() {
+        return shouldDisableUI;
+    }
+
+    public void setShouldDisableUI(boolean shouldDisableUI) {
+        this.shouldDisableUI = shouldDisableUI;
+    }
+
+    public ApplicationStatus[] getApplicationStatus() {
+        return ApplicationStatus.values();
+    }
+
+    public String updateApplication() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        Map<String, String> params = context.getExternalContext().getRequestParameterMap();
+
+        agent = em.find(UserEntity.class, aid);
+        user = em.find(UserEntity.class, uid);
+        property = em.find(PropertyEntity.class, pid);
+
+        PropertyApplicationEntity propertyApplicationEntity = propertyApplicationEJB.checkApplicationForUpdate(uid, pid, aid);
+        if (propertyApplicationEntity != null) {
+            propertyApplicationEntity.setStatus(status);
+            propertyApplicationEJB.updateApplicationStatus(propertyApplicationEntity);
+            return "apply_property.faces?faces-redirect=true&uid=" + uid + "&pid=" + pid + "&aid=" + aid + "&reload=true";
+        }
+        return null;
+    }
 
     public String submit() {
 
