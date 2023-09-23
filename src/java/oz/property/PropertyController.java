@@ -80,7 +80,12 @@ public class PropertyController {
     private UploadedFiles additionalImages;
     private List<PropertyImageEntity> additionalImagesE = new ArrayList<>();
     private List<PropertyImageEntity> removedImagesE = new ArrayList<>();
-    
+
+    private String enquiryFullName;
+    private String enquiryEmail;
+    private String enquiryMessage;
+    private String enquiryPhone;
+
     @EJB
     private PropertyEJB propertyEJB;
 
@@ -89,7 +94,7 @@ public class PropertyController {
 
     @EJB
     private PropertyImageEJB propertyImageEJB;
-    
+
     @EJB
     private PropertyApplicationEJB propertyApplicationEJB;
 
@@ -232,7 +237,7 @@ public class PropertyController {
     public PropertyType[] getPropertyTypes() {
         return PropertyType.values();
     }
- 
+
     public int getPid() {
         return pid;
     }
@@ -329,7 +334,6 @@ public class PropertyController {
         this.status = status;
     }
 
-    
     @PostConstruct
     public void init() {
         FacesContext context = FacesContext.getCurrentInstance();
@@ -364,7 +368,7 @@ public class PropertyController {
             this.propertyDetails = propertyEntity.getPropertyDetails();
             this.userAgent = propertyEntity.getAgent();
             this.status = propertyEntity.getStatus();
-            
+
         }
     }
 
@@ -374,12 +378,12 @@ public class PropertyController {
         try {
             propertyEntity = new PropertyEntity();
             if (mainImage != null) {
-                try (InputStream input = mainImage.getInputStream()) {
+                try ( InputStream input = mainImage.getInputStream()) {
                     String fileName = getSubmittedFileName(mainImage);
                     String fileLocation = System.getProperty("OZPROPERTYHUB_UPLOAD_LOCATION") + "/" + fileName;
                     File outputFile = new File(fileLocation);
 
-                    try (FileOutputStream output = new FileOutputStream(outputFile)) {
+                    try ( FileOutputStream output = new FileOutputStream(outputFile)) {
                         byte[] buffer = new byte[1024];
                         int bytesRead;
                         while ((bytesRead = input.read(buffer)) != -1) {
@@ -453,7 +457,7 @@ public class PropertyController {
                     try {
                         String fileName = uploadedFile.getFileName();
                         String fileLocation = System.getProperty("OZPROPERTYHUB_UPLOAD_LOCATION") + "/" + fileName;
-                        try (InputStream inputStream = uploadedFile.getInputStream()) {
+                        try ( InputStream inputStream = uploadedFile.getInputStream()) {
                             Files.copy(inputStream, Paths.get(fileLocation), StandardCopyOption.REPLACE_EXISTING);
                             PropertyImageEntity pie = new PropertyImageEntity();
                             pie.setProperty(propertyEntity);
@@ -596,39 +600,39 @@ public class PropertyController {
 
         }
     }
-    
-     public ApplicationStatus checkApplication(Integer userId, Integer propertyId) {
-        PropertyApplicationEntity propertyApplicationEntity =  propertyApplicationEJB.checkApplication(userId, propertyId);
+
+    public ApplicationStatus checkApplication(Integer userId, Integer propertyId) {
+        PropertyApplicationEntity propertyApplicationEntity = propertyApplicationEJB.checkApplication(userId, propertyId);
         if (propertyApplicationEntity != null) {
-            return propertyApplicationEntity.getStatus();    
+            return propertyApplicationEntity.getStatus();
         } else {
             return null;
-        }      
+        }
     }
-   
+
     public String redirectToUserDashboard() {
         return "/dashboard/user/user_dashboard.faces?faces-redirect=true";
     }
-    
+
     public String applyProperty(Integer uid, Integer pid, Integer aid) {
-        
-        return "apply_property.faces?faces-redirect=true&uid="+uid+"&pid="+pid+"&aid="+userAgent.getId();
+
+        return "apply_property.faces?faces-redirect=true&uid=" + uid + "&pid=" + pid + "&aid=" + userAgent.getId();
     }
-    
+
     public String redirectToLogin() {
         return "join.faces?faces-redirect=true";
     }
-    
+
     public List<PropertyEntity> getPropertiesByAgent(int agentId) {
         List<PropertyEntity> list = propertyEJB.getPropertiesByAgent(agentId);
         return list;
     }
-    
+
     public List<PropertyEntity> getPropertiesForGallery() {
         List<PropertyEntity> list = propertyEJB.getPropertiesForGallery();
         return list;
     }
-    
+
     public List<PropertyEntity> getFeaturedProperties() {
         List<PropertyEntity> list = propertyEJB.getFeaturedProperties();
         return list;
@@ -731,9 +735,47 @@ public class PropertyController {
         return propertyType.name().toLowerCase();
     }
 
+    public String getEnquiryFullName() {
+        return enquiryFullName;
+    }
+
+    public void setEnquiryFullName(String enquiryFullName) {
+        this.enquiryFullName = enquiryFullName;
+    }
+
+    public String getEnquiryEmail() {
+        return enquiryEmail;
+    }
+
+    public void setEnquiryEmail(String enquiryEmail) {
+        this.enquiryEmail = enquiryEmail;
+    }
+
+    public String getEnquiryMessage() {
+        return enquiryMessage;
+    }
+
+    public void setEnquiryMessage(String enquiryMessage) {
+        this.enquiryMessage = enquiryMessage;
+    }
+
+    public String getEnquiryPhone() {
+        return enquiryPhone;
+    }
+
+    public void setEnquiryPhone(String enquiryPhone) {
+        this.enquiryPhone = enquiryPhone;
+    }
+
+    public String submitEnquiry() {
+        Util.sendEmail("amdin@gmail.com", enquiryEmail, "Enquiry for " +unitNumber+" "+streetName+" "+streetNumber+" "+ suburb, enquiryMessage);
+        return "property-detail.faces?faces-redirect=true&id=" + pid;
+    }
+
+    
     @Override
     public String toString() {
-        return "PropertyController{" + "em=" + em + ", pid=" + pid + ", aid=" + aid + ", unitNumber=" + unitNumber + ", streetName=" + streetName + ", streetNumber=" + streetNumber + ", suburb=" + suburb + ", state=" + state + ", propertyDetails=" + propertyDetails + ", map=" + map + ", postCode=" + postCode + ", mainImage=" + mainImage + ", mainImageUrl=" + mainImageUrl + ", propertyType=" + propertyType + ", rent=" + rent + ", noOfBedroom=" + noOfBedroom + ", noOfBathroom=" + noOfBathroom + ", noOfParking=" + noOfParking + ", hasBalcony=" + hasBalcony + ", hasDishwater=" + hasDishwater + ", hasAc=" + hasAc + ", hasSecureParking=" + hasSecureParking + ", hasWardrobe=" + hasWardrobe + ", listedDate=" + listedDate + ", inspectionDate=" + inspectionDate + ", additionalImages=" + additionalImages + ", additionalImagesE=" + additionalImagesE + ", removedImagesE=" + removedImagesE + ", propertyEJB=" + propertyEJB + ", addressEJB=" + addressEJB + ", propertyImageEJB=" + propertyImageEJB + ", propertyEntity=" + propertyEntity + ", addressEntity=" + addressEntity + ", userAgent=" + userAgent +'}';
+        return "PropertyController{" + "em=" + em + ", pid=" + pid + ", aid=" + aid + ", unitNumber=" + unitNumber + ", streetName=" + streetName + ", streetNumber=" + streetNumber + ", suburb=" + suburb + ", state=" + state + ", propertyDetails=" + propertyDetails + ", map=" + map + ", postCode=" + postCode + ", mainImage=" + mainImage + ", mainImageUrl=" + mainImageUrl + ", propertyType=" + propertyType + ", rent=" + rent + ", noOfBedroom=" + noOfBedroom + ", noOfBathroom=" + noOfBathroom + ", noOfParking=" + noOfParking + ", hasBalcony=" + hasBalcony + ", hasDishwater=" + hasDishwater + ", hasAc=" + hasAc + ", hasSecureParking=" + hasSecureParking + ", hasWardrobe=" + hasWardrobe + ", listedDate=" + listedDate + ", inspectionDate=" + inspectionDate + ", additionalImages=" + additionalImages + ", additionalImagesE=" + additionalImagesE + ", removedImagesE=" + removedImagesE + ", propertyEJB=" + propertyEJB + ", addressEJB=" + addressEJB + ", propertyImageEJB=" + propertyImageEJB + ", propertyEntity=" + propertyEntity + ", addressEntity=" + addressEntity + ", userAgent=" + userAgent + '}';
     }
-    
+
 }

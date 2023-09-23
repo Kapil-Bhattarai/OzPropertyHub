@@ -66,7 +66,7 @@ public class UserController {
     private String formMessage;
 
     private ApplicationStatus applicationStatus;
-    
+
     @PostConstruct
     public void init() {
         ozUser = new UserEntity();
@@ -124,7 +124,7 @@ public class UserController {
             Util.showMessage(context, FacesMessage.SEVERITY_ERROR, "Something went wrong getting your details.", null);
             //return "";
         } else {
-            
+
             if (mainImage != null || mainImage.getSize() == 0) {
                 try {
                     String fileName = mainImage.getFileName();
@@ -345,33 +345,33 @@ public class UserController {
             throw new UnsupportedOperationException(e);
         }
     }
-    
+
     
     public ApplicationStatus[] getStatus() {
         return ApplicationStatus.values();
     }
-     
+
     public String updateApplicationStatus(PropertyApplicationEntity application) {
-       application.setStatus(applicationStatus);
-         if (userEJB.updateApplicationStatus(application) != null) {
+        application.setStatus(applicationStatus);
+        if (userEJB.updateApplicationStatus(application) != null) {
             return "/dashboard/user/application_dashboard.faces?faces-redirect=true";
         } else {
             return null;
         }
     }
-    
+
     public String viewApplicationDetails(PropertyApplicationEntity application) {
         return "apply_property.faces?faces-redirect=true";
     }
 
-  public List<PropertyApplicationEntity> getPropertiesApplicationByUser(Integer userId) {
+    public List<PropertyApplicationEntity> getPropertiesApplicationByUser(Integer userId) {
        return  userEJB.getPropertiesApplicationByUser(userId);  
     }
-         
+
     public List<PropertyApplicationEntity> getPropertiesApplicationByAgent(Integer userId) {
-       return userEJB.getPropertiesApplicationByAgent(userId);  
+        return userEJB.getPropertiesApplicationByAgent(userId);
     }
-      
+
     public void subscribeToNewsletter() {
         if (email == null || email.isEmpty()) {
             return;
@@ -599,6 +599,6 @@ public class UserController {
     public String toString() {
         return "UserController{" + "id=" + id + ", firstName=" + firstName + ", password=" + password + ", confirmPassword=" + confirmPassword + ", lastName=" + lastName + ", email=" + email + ", bio=" + bio + ", phone=" + phone + ", address=" + address + ", since=" + since + ", isLive=" + isLive + ", mainImage=" + mainImage + ", mainImageUrl=" + mainImageUrl + ", newEmail=" + newEmail + ", type=" + type + ", userEJB=" + userEJB + ", newsletterEJB=" + newsletterEJB + ", ozUser=" + ozUser + ", formUserName=" + formUserName + ", formEmail=" + formEmail + ", formNumber=" + formNumber + ", formMessage=" + formMessage + '}';
     }
-    
+
     
 }

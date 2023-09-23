@@ -93,26 +93,40 @@
                                                 <h:commandButton value="Login"  class="btn btn-success" rendered ="#{userBean.id == null}" action="#{propertyBean.redirectToLogin()}" />
                                                 <h:commandButton value="Apply"  class="btn btn-success" rendered ="#{userBean.id != null and  propertyBean.checkApplication(userBean.id, propertyBean.pid) == null}" action="#{propertyBean.applyProperty(userBean.id, propertyBean.pid, propertyBean.aid)}" />
                                                 <h:commandButton value="See Status"  class="btn btn-success" rendered ="#{userBean.id != null and  propertyBean.checkApplication(userBean.id, propertyBean.pid) != null}" action="#{propertyBean.redirectToUserDashboard()}" />
-                                               
+
 <!--                                                <h:commandButton value="Apply"  class="btn btn-success"  action="#{propertyBean.applyProperty(5, 2, 2)}" />-->
                                             </h:form>
-                                           
+
                                         </div>
 
                                     </div>
 
-                                    <!--                                    <div class="col-lg-12 col-sm-6 ">
-                                                                            <div class="enquiry">
-                                                                                <h6><span class="glyphicon glyphicon-envelope"></span> Post Enquiry</h6>
-                                                                                <form role="form">
-                                                                                    <input type="text" class="form-control" placeholder="Full Name"/>
-                                                                                    <input type="text" class="form-control" placeholder="you@yourdomain.com"/>
-                                                                                    <input type="text" class="form-control" placeholder="your number"/>
-                                                                                    <textarea rows="6" class="form-control" placeholder="Whats on your mind?"></textarea>
-                                                                                    <button type="submit" class="btn btn-primary" name="Submit">Send Message</button>
-                                                                                </form>
-                                                                            </div>         
-                                                                        </div>-->
+
+                                    <div class="col-lg-12 col-sm-6 ">
+                                        <div class="enquiry">
+                                            <h:form>
+                                                <h6><span class="glyphicon glyphicon-envelope"></span> Post Enquiry</h6>  
+                                                <h:outputLabel value="Full Name"/>
+                                                <h:inputText  value="#{propertyBean.enquiryFullName}"  required="true" requiredMessage="Required!" class="form-control" id="enquiryFullName" />
+                                                <h:messages errorStyle="color:red" for="enquiryFullName" layout="table" />
+
+                                                <h:outputLabel value="Email"/>
+                                                <h:inputText value="#{propertyBean.enquiryEmail}" required="true" requiredMessage="Required!" class="form-control" id="enquiryPassword"/>                  
+                                                <h:messages errorStyle="color:red" for="enquiryPassword" layout="table" />
+
+                                                <h:outputLabel value="Phone"/>
+                                                <h:inputText value="#{propertyBean.enquiryPhone}" required="true" requiredMessage="Required!" class="form-control" id="enquiryPhone"/>                  
+                                                <h:messages errorStyle="color:red" for="enquiryPhone" layout="table" />
+
+                                                <h:outputLabel value="Message"/>
+                                                <h:inputTextarea rows="6" value="#{propertyBean.enquiryMessage}" required="true" requiredMessage="Required!" class="form-control" id="enquiryMessage"/>                  
+                                                <h:messages errorStyle="color:red" for="enquiryMessage" layout="table" />
+
+                                                <h:commandButton value="Submit Enquiry" class="btn btn-success" action="#{propertyBean.submitEnquiry()}" />                              
+                                            </h:form>
+                                        </div>         
+                                    </div>
+
                                 </div>
                             </div>
                         </div>
