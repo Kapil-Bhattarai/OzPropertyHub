@@ -77,4 +77,9 @@ public class ConfigEntity implements Serializable {
         this.value = value;
     }
 
+    @Override
+    public String toString() {
+        return "ConfigEntity{" + "id=" + id + ", config_key=" + config_key + ", display=" + display + ", value=" + value + '}';
+    }
+
 }

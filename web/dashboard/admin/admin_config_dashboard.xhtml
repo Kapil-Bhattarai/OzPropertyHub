@@ -1,0 +1,62 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:c="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+
+    <ui:composition template="../../layout.xhtml">
+
+        <ui:define name="title">Oz Property Hub</ui:define>
+
+        <ui:define name="content">
+            <div class="container">
+                <div class="spacer">
+                    <div class="row register">
+                        <div class="col-lg-12">
+
+                            <h:messages globalOnly="true" showDetail="false"
+                                        errorClass="msg_error"
+                                        infoClass="msg_info"
+                                        fatalClass="msg_error"
+                                        warnClass="msg_warn"
+                                        layout="table"
+                                        errorStyle="color:red"
+                                        />
+
+                            <f:forEach items="#{configBean.getAllConfigs()}" var="config">  
+                                       <!--<h:outputText value="#{config}"></h:outputText>-->
+                                <h:form>
+                                    <table id="tableContent">
+                                        <tr>
+                                            <td style="width: 100%;">
+
+                                                <h:outputLabel value="#{config.display}"/>
+
+<!--<h:inputText disabled="#{true}" value="Current Value: #{config.value}" required="true" requiredMessage="Required!" class="form-control"  />-->
+                                                <h:inputText value="#{config.value}" 
+                                                             required="true" 
+                                                             requiredMessage="Required!"
+                                                             class="form-control" 
+                                                             id="#{config.key}"
+                                                             valueChangeListener="#{configBean.inputValueChanged}">
+
+                                                    <c:ajax event="change" execute="@this" render="@this" />                                                                                            
+                                                </h:inputText>
+                                                <h:messages errorStyle="color:red" for="#{config.key}" layout="table" />
+                                            </td>
+                                            <td>
+                                                <h:commandButton value="Update" class="btn btn-success" style="width: fit-content;" action="#{configBean.updateConfig(config)}" />
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </h:form>
+                            </f:forEach>
+                        </div>
+                    </div>
+                </div>
+            </div>   
+        </ui:define>
+    </ui:composition> 
+</html>
