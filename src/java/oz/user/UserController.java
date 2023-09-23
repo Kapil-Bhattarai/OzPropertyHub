@@ -63,8 +63,7 @@ public class UserController {
 
     @EJB
     private ConfigEJB configEJB;
-    
-    
+
     private UserEntity ozUser;
 
     private String formUserName;
@@ -91,10 +90,14 @@ public class UserController {
         addConfig(MessageType.MESSAGE_PENDING_REQUEST, "User details not found!. Your request is still pending.");
         addConfig(MessageType.ERROR_PROFILE_FETCH_ERROR, "Something went wrong getting your details.");
         addConfig(MessageType.MESSAGE_ACCOUNT_SUSPENSION, "Your account has been suspended. Please contact admin for further information.");
-        addConfig(MessageType.MESSAGE_ACCOUNT_DELETION, "Your account has been deleted from Oz Property Hub. Please contact admin for further information."); 
-        addConfig(MessageType.MESSAGE_ACCOUNT_ACTIVATION, "Congratulations!. Your account has been activated. Now, you can add properties to OZ Property Hub."); 
-        addConfig(MessageType.ERROR_WHILE_SENDING_EMAIL, "There were some errors while sending emails.");     
-        
+        addConfig(MessageType.MESSAGE_ACCOUNT_DELETION, "Your account has been deleted from Oz Property Hub. Please contact admin for further information.");
+        addConfig(MessageType.MESSAGE_ACCOUNT_ACTIVATION, "Congratulations!. Your account has been activated. Now, you can add properties to OZ Property Hub.");
+        addConfig(MessageType.ERROR_WHILE_SENDING_EMAIL, "There were some errors while sending emails.");
+
+        addConfig(MessageType.MESSAGE_APPLICATION_APPROVED, "Congratulation! Your application has been approved.");
+        addConfig(MessageType.MESSAGE_APPLICATION_REJECTED, "Your application has been rejected.");
+        addConfig(MessageType.MESSAGE_APPLICATION_PENDING, "Your application has been moved to pending state.");
+
     }
 
     public String loginUser() {
@@ -139,7 +142,7 @@ public class UserController {
         UserEntity user = userEJB.getUserbyEmail(email);
         if (user == null) {
             // not registered before.
-            Util.showMessage(context, FacesMessage.SEVERITY_ERROR, "Something went wrong getting your details.", null);
+            Util.showMessage(context, FacesMessage.SEVERITY_ERROR, configEJB.getConfigByKey(MessageType.ERROR_PROFILE_FETCH_ERROR.name()).getValue(), null);
             //return "";
         } else {
 
@@ -204,7 +207,7 @@ public class UserController {
     public String suspendAgent(UserEntity user) {
         Util.sendEmail(user.getEmail(), "admin@gmail.com",
                 "Account Suspension",
-                "Your account has been suspended. Please contact admin for further information.");
+                configEJB.getConfigByKey(MessageType.MESSAGE_ACCOUNT_SUSPENSION.name()).getValue());
         if (userEJB.suspendAgent(user) != null) {
             return "/dashboard/admin/admin_dashboard.faces?faces-redirect=true";
         } else {
@@ -215,7 +218,7 @@ public class UserController {
     public String activateAgent(UserEntity user) {
         Util.sendEmail(user.getEmail(), "admin@gmail.com",
                 "Account activation",
-                "Congratulations!. Your account has been activated. Now, you can add properties to OZ Property Hub.");
+                configEJB.getConfigByKey(MessageType.MESSAGE_ACCOUNT_ACTIVATION.name()).getValue());
         if (userEJB.activateAgent(user) != null) {
             return "/dashboard/admin/admin_pending_request_dashboard.faces?faces-redirect=true";
         } else {
@@ -226,7 +229,7 @@ public class UserController {
     public String deleteAgent(UserEntity user) {
         Util.sendEmail(user.getEmail(), "admin@gmail.com",
                 "Account deletion",
-                "Your account has been deleted from Oz Property Hub. Please contact admin for further information.");
+                configEJB.getConfigByKey(MessageType.MESSAGE_ACCOUNT_DELETION.name()).getValue());
         if (userEJB.deleteAgent(user) != null) {
             return "/dashboard/admin/admin_dashboard.faces?faces-redirect=true";
         } else {

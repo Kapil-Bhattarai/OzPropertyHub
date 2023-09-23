@@ -5,8 +5,6 @@ import jakarta.annotation.PostConstruct;
 import jakarta.ejb.EJB;
 import jakarta.faces.application.FacesMessage;
 import jakarta.faces.bean.ManagedBean;
-import jakarta.faces.bean.ManagedProperty;
-import jakarta.faces.bean.SessionScoped;
 import jakarta.faces.bean.ViewScoped;
 import jakarta.faces.context.FacesContext;
 import jakarta.persistence.EntityManager;
@@ -36,7 +34,6 @@ import oz.address.AddressEntity;
 import oz.property_application.PropertyApplicationEJB;
 import oz.property_application.PropertyApplicationEntity;
 import oz.property_image.PropertyImageEntity;
-import oz.user.UserController;
 import oz.user.UserEntity;
 
 /**

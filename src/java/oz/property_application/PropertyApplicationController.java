@@ -1,5 +1,6 @@
 package oz.property_application;
 
+import config.ConfigEJB;
 import jakarta.annotation.PostConstruct;
 import jakarta.ejb.EJB;
 import jakarta.faces.bean.ManagedBean;
@@ -17,6 +18,7 @@ import java.util.Date;
 import java.util.Map;
 import org.primefaces.model.file.UploadedFile;
 import oz.ApplicationStatus;
+import oz.MessageType;
 import oz.SalaryType;
 import oz.Util;
 import oz.property.PropertyEntity;
@@ -55,6 +57,9 @@ public class PropertyApplicationController {
     @EJB
     private PropertyApplicationEJB propertyApplicationEJB;
 
+    @EJB
+    private ConfigEJB configEJB;
+        
     private boolean shouldDisableUI = false;
 
     int uid, pid, aid;
@@ -293,7 +298,7 @@ public class PropertyApplicationController {
             propertyApplicationEJB.updateApplicationStatus(propertyApplicationEntity);
             if (null != status) switch (status) {
             case ACCEPTED -> // send lease agreement
-                Util.sendEmail(user.getEmail(), agent.getEmail(), "Congratulation! Your application has been approved",
+                Util.sendEmail(user.getEmail(), agent.getEmail(), configEJB.getConfigByKey(MessageType.MESSAGE_APPLICATION_APPROVED.name()).getValue(),
                         "Congratulation your application has been approved for "
                                 +property.getAddress().getUnit()+" "+
                                 property.getAddress().getStreet_name()+" "+
@@ -306,7 +311,7 @@ public class PropertyApplicationController {
                                 "Regards\nOZPropertyHub"
                 );
             case REJECTED -> // send rejection message
-                Util.sendEmail(user.getEmail(), agent.getEmail(), "Your application has been rejected",
+                Util.sendEmail(user.getEmail(), agent.getEmail(), configEJB.getConfigByKey(MessageType.MESSAGE_APPLICATION_REJECTED.name()).getValue(),
                         "Your application has been rejected for "
                                 +property.getAddress().getUnit()+" "+
                                 property.getAddress().getStreet_name()+" "+
@@ -314,7 +319,7 @@ public class PropertyApplicationController {
                                 property.getAddress().getSuburb()+" \n"
                 );
             case PENDING -> // send pending status to user
-                Util.sendEmail(user.getEmail(), agent.getEmail(), "Your application has been moved to pending state",
+                Util.sendEmail(user.getEmail(), agent.getEmail(), configEJB.getConfigByKey(MessageType.MESSAGE_PENDING_REQUEST.name()).getValue(),
                         "Your application has been moved to pending state for "
                                 +property.getAddress().getUnit()+" "+
                                 property.getAddress().getStreet_name()+" "+
