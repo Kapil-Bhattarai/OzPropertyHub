@@ -1,5 +1,7 @@
 package oz.user;
 
+import config.ConfigEJB;
+import config.ConfigEntity;
 import jakarta.annotation.PostConstruct;
 import jakarta.ejb.EJB;
 import jakarta.faces.application.FacesMessage;
@@ -19,6 +21,7 @@ import java.util.Date;
 import java.util.List;
 import org.primefaces.model.file.UploadedFile;
 import oz.ApplicationStatus;
+import oz.MessageType;
 import oz.PropertyType;
 import oz.UserType;
 import static oz.UserType.ADMIN;
@@ -58,6 +61,10 @@ public class UserController {
     @EJB
     private NewsletterSubscriberEJB newsletterEJB;
 
+    @EJB
+    private ConfigEJB configEJB;
+    
+    
     private UserEntity ozUser;
 
     private String formUserName;
@@ -66,6 +73,8 @@ public class UserController {
     private String formMessage;
 
     private ApplicationStatus applicationStatus;
+
+    private String config;
 
     @PostConstruct
     public void init() {
@@ -77,6 +86,15 @@ public class UserController {
         registerUser("Agent3", "User 3", HashConvert("password"), "123456789", "200,Kent Street, NSW, Australia", UserType.AGENT, "test3@gmail.com", false, bio);
         registerUser("User1", "User 1", HashConvert("password"), "123456789", "200,Kent Street, NSW, Australia", UserType.USER, "user1@gmail.com", true, bio);
         registerUser("User2", "User 2", HashConvert("password"), "123456789", "200,Kent Street, NSW, Australia", UserType.USER, "user2@gmail.com", true, bio);
+
+        addConfig(MessageType.ERROR_USER_NOT_FOUND, "User details not found!. Please enter correct details.");
+        addConfig(MessageType.MESSAGE_PENDING_REQUEST, "User details not found!. Your request is still pending.");
+        addConfig(MessageType.ERROR_PROFILE_FETCH_ERROR, "Something went wrong getting your details.");
+        addConfig(MessageType.MESSAGE_ACCOUNT_SUSPENSION, "Your account has been suspended. Please contact admin for further information.");
+        addConfig(MessageType.MESSAGE_ACCOUNT_DELETION, "Your account has been deleted from Oz Property Hub. Please contact admin for further information."); 
+        addConfig(MessageType.MESSAGE_ACCOUNT_ACTIVATION, "Congratulations!. Your account has been activated. Now, you can add properties to OZ Property Hub."); 
+        addConfig(MessageType.ERROR_WHILE_SENDING_EMAIL, "There were some errors while sending emails.");     
+        
     }
 
     public String loginUser() {
@@ -129,7 +147,7 @@ public class UserController {
                 try {
                     String fileName = mainImage.getFileName();
                     String fileLocation = System.getProperty("OZPROPERTYHUB_UPLOAD_LOCATION") + "/" + fileName;
-                    try (InputStream inputStream = mainImage.getInputStream()) {
+                    try ( InputStream inputStream = mainImage.getInputStream()) {
                         Files.copy(inputStream, Paths.get(fileLocation), StandardCopyOption.REPLACE_EXISTING);
                         user.setMainImage(fileName);
                     } catch (IOException e) {
@@ -261,6 +279,13 @@ public class UserController {
 
     }
 
+    public void addConfig(MessageType key, String value) {
+        ConfigEntity config = configEJB.getConfigByKey(key.name());
+        if (config == null) {
+            configEJB.createConfig(new ConfigEntity(key.name(), key.getDisplayName(), value));
+        }
+    }
+
     public String contactForm() {
         if (formEmail.length() > 0 && formUserName.length() > 0 && formMessage.length() > 0 && formNumber.length() > 0) {
             Util.sendEmail("admin@gmail.com", formEmail, "Feedback from " + formUserName, formMessage + "\n Contact Details: \n" + formNumber);
@@ -346,7 +371,6 @@ public class UserController {
         }
     }
 
-    
     public ApplicationStatus[] getStatus() {
         return ApplicationStatus.values();
     }
@@ -365,7 +389,7 @@ public class UserController {
     }
 
     public List<PropertyApplicationEntity> getPropertiesApplicationByUser(Integer userId) {
-       return  userEJB.getPropertiesApplicationByUser(userId);  
+        return userEJB.getPropertiesApplicationByUser(userId);
     }
 
     public List<PropertyApplicationEntity> getPropertiesApplicationByAgent(Integer userId) {
@@ -547,6 +571,14 @@ public class UserController {
         this.confirmPassword = confirmPassword;
     }
 
+    public String getConfig() {
+        return config;
+    }
+
+    public void setConfig(String config) {
+        this.config = config;
+    }
+
     public EntityManager getEm() {
         return em;
     }
@@ -600,5 +632,4 @@ public class UserController {
         return "UserController{" + "id=" + id + ", firstName=" + firstName + ", password=" + password + ", confirmPassword=" + confirmPassword + ", lastName=" + lastName + ", email=" + email + ", bio=" + bio + ", phone=" + phone + ", address=" + address + ", since=" + since + ", isLive=" + isLive + ", mainImage=" + mainImage + ", mainImageUrl=" + mainImageUrl + ", newEmail=" + newEmail + ", type=" + type + ", userEJB=" + userEJB + ", newsletterEJB=" + newsletterEJB + ", ozUser=" + ozUser + ", formUserName=" + formUserName + ", formEmail=" + formEmail + ", formNumber=" + formNumber + ", formMessage=" + formMessage + '}';
     }
 
-    
 }
