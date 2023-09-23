@@ -769,7 +769,7 @@ public class PropertyController {
 
     public String submitEnquiry() {
         Util.sendEmail("amdin@gmail.com", enquiryEmail, "Enquiry for " +unitNumber+" "+streetName+" "+streetNumber+" "+ suburb, enquiryMessage);
-        return "property-detail.faces?faces-redirect=true&id=" + pid;
+         return "feedback_success.faces?faces-redirect=true";
     }
 
     

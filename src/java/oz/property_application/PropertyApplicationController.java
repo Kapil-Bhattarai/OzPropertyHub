@@ -18,6 +18,7 @@ import java.util.Map;
 import org.primefaces.model.file.UploadedFile;
 import oz.ApplicationStatus;
 import oz.SalaryType;
+import oz.Util;
 import oz.property.PropertyEntity;
 import oz.user.UserEntity;
 
@@ -290,6 +291,38 @@ public class PropertyApplicationController {
         if (propertyApplicationEntity != null) {
             propertyApplicationEntity.setStatus(status);
             propertyApplicationEJB.updateApplicationStatus(propertyApplicationEntity);
+            if (null != status) switch (status) {
+            case ACCEPTED -> // send lease agreement
+                Util.sendEmail(user.getEmail(), agent.getEmail(), "Congratulation! Your application has been approved",
+                        "Congratulation your application has been approved for "
+                                +property.getAddress().getUnit()+" "+
+                                property.getAddress().getStreet_name()+" "+
+                                property.getAddress().getStreet_number()+" "+
+                                property.getAddress().getSuburb()+" \n"+
+                                        "Plase find your lease Agrement:\n"+
+                                        "Duration: "+leaseTermInMonths+"\n"+
+                                                "Rent: "+offeredRent+"\n"+
+                                                        "MoveIn Date:"+moveInDate+"\n \n"+
+                                "Regards\nOZPropertyHub"
+                );
+            case REJECTED -> // send rejection message
+                Util.sendEmail(user.getEmail(), agent.getEmail(), "Your application has been rejected",
+                        "Your application has been rejected for "
+                                +property.getAddress().getUnit()+" "+
+                                property.getAddress().getStreet_name()+" "+
+                                property.getAddress().getStreet_number()+" "+
+                                property.getAddress().getSuburb()+" \n"
+                );
+            case PENDING -> // send pending status to user
+                Util.sendEmail(user.getEmail(), agent.getEmail(), "Your application has been moved to pending state",
+                        "Your application has been moved to pending state for "
+                                +property.getAddress().getUnit()+" "+
+                                property.getAddress().getStreet_name()+" "+
+                                property.getAddress().getStreet_number()+" "+
+                                property.getAddress().getSuburb());
+            default -> {
+            }
+        }
             return "apply_property.faces?faces-redirect=true&uid=" + uid + "&pid=" + pid + "&aid=" + aid + "&reload=true";
         }
         return null;
