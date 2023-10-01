@@ -24,7 +24,7 @@
                             <th>Parking</th>
                             <th>Bathroom</th>
                             <th>Applied Rent</th>
-                            <th>Agent</th>
+                            <th>Status</th>
                             <th>Action</th>
 
                         </tr>
@@ -39,7 +39,7 @@
                                 <td>#{application.property.noOfParking} </td>
                                 <td>#{application.property.noOfBathroom} </td> 
                                 <td>#{application.property.rent} / week </td>
-                                <td>Name: #{application.agent.firstName} <br/> Phone: #{application.agent.phone} <br/> Email: #{application.agent.email}</td>
+                                <td>#{application.status}</td>
                                 <td>  
                                     <!--<h:outputText value="#{application}"></h:outputText>-->
 <!--                                    <h:selectOneMenu value="#{userBean.applicationStatus}" required="true" requiredMessage="Required!">
