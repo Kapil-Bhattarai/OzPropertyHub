@@ -328,7 +328,7 @@ public class PropertyApplicationController {
             default -> {
             }
         }
-            return "apply_property.faces?faces-redirect=true&uid=" + uid + "&pid=" + pid + "&aid=" + aid + "&reload=true";
+            return "/dashboard/agent/application_dashboard.faces?faces-redirect=true";
         }
         return null;
     }
