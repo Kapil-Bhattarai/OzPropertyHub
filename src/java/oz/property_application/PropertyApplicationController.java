@@ -387,7 +387,7 @@ public class PropertyApplicationController {
                 try ( InputStream inputStream = secondaryDocument.getInputStream()) {
                     Files.copy(inputStream, Paths.get(fileLocation), StandardCopyOption.REPLACE_EXISTING);
                     this.secondaryImageUrl = fileName;
-                    propertyEntity.setSecondaryImageUrl(primaryImageUrl);
+                    propertyEntity.setSecondaryImageUrl(secondaryImageUrl);
                 } catch (IOException e) {
                     System.out.println(e);
                     // Handle the exception
