@@ -352,6 +352,7 @@ public class PropertyApplicationController {
         propertyEntity.setIsEmployed(isEmployed);
         propertyEntity.setSalary(salary);
         propertyEntity.setSalaryType(salaryType);
+        propertyEntity.setOfferedRent(offeredRent);
 
         propertyEntity.setApplicationDate(new Date());
         propertyEntity.setNoOfDogs(noOfDogs);
