@@ -330,7 +330,7 @@ public class PropertyController {
     public void setStatus(PropertyStatus status) {
         this.status = status;
     }
-
+    
     @PostConstruct
     public void init() {
         FacesContext context = FacesContext.getCurrentInstance();
@@ -375,12 +375,12 @@ public class PropertyController {
         try {
             propertyEntity = new PropertyEntity();
             if (mainImage != null) {
-                try ( InputStream input = mainImage.getInputStream()) {
+                try (InputStream input = mainImage.getInputStream()) {
                     String fileName = getSubmittedFileName(mainImage);
                     String fileLocation = System.getProperty("OZPROPERTYHUB_UPLOAD_LOCATION") + "/" + fileName;
                     File outputFile = new File(fileLocation);
 
-                    try ( FileOutputStream output = new FileOutputStream(outputFile)) {
+                    try (FileOutputStream output = new FileOutputStream(outputFile)) {
                         byte[] buffer = new byte[1024];
                         int bytesRead;
                         while ((bytesRead = input.read(buffer)) != -1) {
@@ -454,7 +454,7 @@ public class PropertyController {
                     try {
                         String fileName = uploadedFile.getFileName();
                         String fileLocation = System.getProperty("OZPROPERTYHUB_UPLOAD_LOCATION") + "/" + fileName;
-                        try ( InputStream inputStream = uploadedFile.getInputStream()) {
+                        try (InputStream inputStream = uploadedFile.getInputStream()) {
                             Files.copy(inputStream, Paths.get(fileLocation), StandardCopyOption.REPLACE_EXISTING);
                             PropertyImageEntity pie = new PropertyImageEntity();
                             pie.setProperty(propertyEntity);
@@ -643,6 +643,10 @@ public class PropertyController {
         return "/dashboard/agent/property_form.faces?faces-redirect=true&id=" + property.getPid();
     }
 
+    public String viewApplications(PropertyEntity property) {
+        return "/dashboard/agent/application_dashboard.faces?faces-redirect=true&id=" + property.getPid();
+    }
+
     public String deleteProperty(PropertyEntity property) {
         if (propertyEJB.deleteProperty(property) != null) {
             return "/dashboard/agent/agent_dashboard.faces?faces-redirect=true";
@@ -764,9 +768,11 @@ public class PropertyController {
         this.enquiryPhone = enquiryPhone;
     }
 
-    public String submitEnquiry() {
-        Util.sendEmail("amdin@gmail.com", enquiryEmail, "Enquiry for " +unitNumber+" "+streetName+" "+streetNumber+" "+ suburb, enquiryMessage);
-         return "feedback_success.faces?faces-redirect=true";
+    public String submitEnquiry(String email) {
+        if(email == null) email = "admin@gmail.com";
+        
+        Util.sendEmail(email, enquiryEmail, "Enquiry for " + unitNumber + " " + streetName + " " + streetNumber + " " + suburb, enquiryMessage);
+        return "feedback_success.faces?faces-redirect=true";
     }
 
     

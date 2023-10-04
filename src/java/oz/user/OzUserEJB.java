@@ -65,8 +65,8 @@ public class OzUserEJB extends OzEJB {
             return null;
         }
     }
-    
-  public List<PropertyApplicationEntity> getPropertiesApplicationByUser(Integer userId) {
+
+    public List<PropertyApplicationEntity> getPropertiesApplicationByUser(Integer userId) {
         try {
             return entityManager.createNamedQuery(PropertyApplicationEntity.QUERY_GET_ALL_APPLICATIONS, PropertyApplicationEntity.class)
                     .setParameter("userId", userId).getResultList();
@@ -74,9 +74,9 @@ public class OzUserEJB extends OzEJB {
             System.out.println("exception value  " + e.getMessage());
             return new ArrayList<>();
         }
-    }    
+    }
 
-      public List<PropertyApplicationEntity> getPropertiesApplicationByAgent(Integer agentId) {
+    public List<PropertyApplicationEntity> getPropertiesApplicationByAgent(Integer agentId) {
         try {
             return entityManager.createNamedQuery(PropertyApplicationEntity.QUERY_GET_ALL_APPLICATIONS_TO_AGENT, PropertyApplicationEntity.class)
                     .setParameter("agentId", agentId).getResultList();
@@ -85,16 +85,28 @@ public class OzUserEJB extends OzEJB {
             return new ArrayList<>();
         }
     }
+
+    public List<PropertyApplicationEntity> getPropertiesApplicationByAgent(Integer agentId, Integer propertyId) {
+        try {
+            return entityManager.createNamedQuery(PropertyApplicationEntity.QUERY_GET_ALL_APPLICATIONS_TO_AGENT_BY_PROPERTY, PropertyApplicationEntity.class)
+                    .setParameter("agentId", agentId)
+                    .setParameter("propertyId", propertyId).getResultList();
+        } catch (Exception e) {
+            System.out.println("exception value  " + e.getMessage());
+            return new ArrayList<>();
+        }
+    }
+
     public String deleteAgent(UserEntity user) {
 
         try {
             //entityManager.remove(user);
-             UserEntity userToDelete = entityManager.find(UserEntity.class, user.getId());
-        
-        if (userToDelete != null) {
-            UserEntity managedUser = entityManager.merge(userToDelete); // Re-attach the entity
-            entityManager.remove(managedUser); // Now remove the managed entity
-        }
+            UserEntity userToDelete = entityManager.find(UserEntity.class, user.getId());
+
+            if (userToDelete != null) {
+                UserEntity managedUser = entityManager.merge(userToDelete); // Re-attach the entity
+                entityManager.remove(managedUser); // Now remove the managed entity
+            }
             return "success";
         } catch (Exception e) {
             System.out.println("exception value  " + e.getMessage());

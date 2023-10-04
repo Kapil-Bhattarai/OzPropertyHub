@@ -38,7 +38,7 @@
                                 <td>#{application.property.noOfBedroom} </td> 
                                 <td>#{application.property.noOfParking} </td>
                                 <td>#{application.property.noOfBathroom} </td> 
-                                <td>#{application.property.rent} / week </td>
+                                <td>#{application.offeredRent} / week </td>
                                 <td>#{application.status}</td>
                                 <td>  
                                     <!--<h:outputText value="#{application}"></h:outputText>-->
@@ -48,7 +48,7 @@
                                       <!--<h:commandButton value="View More" action="#{userBean.viewApplicationDetails(application)}" />-->
                                     <!--<a id="myLink" href="targetPage.xhtml?paramName=paramValue&anotherParam=#{managedBean.property}">Click Me</a>-->
 
-                                    <h:outputLink styleClass="btn btn-success"  value="#{request.contextPath}/apply_property.faces?faces-redirect=true&amp;uid=#{application.user.getId()}&amp;pid=#{application.property.getPid()}&amp;aid=#{application.agent.getId()}&amp;reload=true">
+                                    <h:outputLink styleClass="btn btn-success"  value="#{request.contextPath}/apply_property.faces?faces-redirect=true&amp;uid=#{application.user.getId()}&amp;pid=#{application.property.getPid()}&amp;aid=#{application.agent.getId()}&amp;source=#{userBean.source}&amp;reload=true">
                                         View Details
                                     </h:outputLink>
                                 </td>

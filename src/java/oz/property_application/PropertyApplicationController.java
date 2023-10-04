@@ -3,6 +3,7 @@ package oz.property_application;
 import config.ConfigEJB;
 import jakarta.annotation.PostConstruct;
 import jakarta.ejb.EJB;
+import jakarta.faces.application.FacesMessage;
 import jakarta.faces.bean.ManagedBean;
 import jakarta.faces.bean.ViewScoped;
 import jakarta.faces.context.FacesContext;
@@ -15,12 +16,14 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 import org.primefaces.model.file.UploadedFile;
 import oz.ApplicationStatus;
 import oz.MessageType;
 import oz.SalaryType;
 import oz.Util;
+import oz.newsletter_subscriber.NewsletterSubscriberEntity;
 import oz.property.PropertyEntity;
 import oz.user.UserEntity;
 
@@ -59,10 +62,11 @@ public class PropertyApplicationController {
 
     @EJB
     private ConfigEJB configEJB;
-        
+
     private boolean shouldDisableUI = false;
 
     int uid, pid, aid;
+    String source;
 
     @PostConstruct
     public void init() {
@@ -72,6 +76,7 @@ public class PropertyApplicationController {
         uid = Integer.parseInt(params.get("uid"));
         pid = Integer.parseInt(params.get("pid"));
         aid = Integer.parseInt(params.get("aid"));
+        source = params.get("source");
 
         agent = em.find(UserEntity.class, aid);
         user = em.find(UserEntity.class, uid);
@@ -294,41 +299,58 @@ public class PropertyApplicationController {
 
         PropertyApplicationEntity propertyApplicationEntity = propertyApplicationEJB.checkApplicationForUpdate(uid, pid, aid);
         if (propertyApplicationEntity != null) {
+            if (status == ApplicationStatus.ACCEPTED) {
+                boolean canAccept = propertyApplicationEJB.canAcceptApplication(pid);
+
+                if (!canAccept) {
+                    Util.showMessage(context, FacesMessage.SEVERITY_ERROR, "You have already accepted application for this property.", null);
+                    return null;
+                }
+
+            }
             propertyApplicationEntity.setStatus(status);
             propertyApplicationEJB.updateApplicationStatus(propertyApplicationEntity);
-            if (null != status) switch (status) {
-            case ACCEPTED -> // send lease agreement
-                Util.sendEmail(user.getEmail(), agent.getEmail(), configEJB.getConfigByKey(MessageType.MESSAGE_APPLICATION_APPROVED.name()).getValue(),
-                        "Congratulation your application has been approved for "
-                                +property.getAddress().getUnit()+" "+
-                                property.getAddress().getStreet_name()+" "+
-                                property.getAddress().getStreet_number()+" "+
-                                property.getAddress().getSuburb()+" \n"+
-                                        "Plase find your lease Agrement:\n"+
-                                        "Duration: "+leaseTermInMonths+"\n"+
-                                                "Rent: "+offeredRent+"\n"+
-                                                        "MoveIn Date:"+moveInDate+"\n \n"+
-                                "Regards\nOZPropertyHub"
-                );
-            case REJECTED -> // send rejection message
-                Util.sendEmail(user.getEmail(), agent.getEmail(), configEJB.getConfigByKey(MessageType.MESSAGE_APPLICATION_REJECTED.name()).getValue(),
-                        "Your application has been rejected for "
-                                +property.getAddress().getUnit()+" "+
-                                property.getAddress().getStreet_name()+" "+
-                                property.getAddress().getStreet_number()+" "+
-                                property.getAddress().getSuburb()+" \n"
-                );
-            case PENDING -> // send pending status to user
-                Util.sendEmail(user.getEmail(), agent.getEmail(), configEJB.getConfigByKey(MessageType.MESSAGE_PENDING_REQUEST.name()).getValue(),
-                        "Your application has been moved to pending state for "
-                                +property.getAddress().getUnit()+" "+
-                                property.getAddress().getStreet_name()+" "+
-                                property.getAddress().getStreet_number()+" "+
-                                property.getAddress().getSuburb());
-            default -> {
+            if (null != status) {
+                switch (status) {
+                    case ACCEPTED -> // send lease agreement
+                        Util.sendEmail(user.getEmail(), agent.getEmail(), configEJB.getConfigByKey(MessageType.MESSAGE_APPLICATION_APPROVED.name()).getValue(),
+                                "Congratulation your application has been approved for "
+                                + property.getAddress().getUnit() + " "
+                                + property.getAddress().getStreet_name() + " "
+                                + property.getAddress().getStreet_number() + " "
+                                + property.getAddress().getSuburb() + " \n"
+                                + "Plase find your lease Agrement:\n"
+                                + "Duration: " + leaseTermInMonths + "\n"
+                                + "Rent: " + offeredRent + "\n"
+                                + "MoveIn Date:" + moveInDate + "\n \n"
+                                + "Regards\nOZPropertyHub"
+                        );
+                    case REJECTED -> // send rejection message
+                        Util.sendEmail(user.getEmail(), agent.getEmail(), configEJB.getConfigByKey(MessageType.MESSAGE_APPLICATION_REJECTED.name()).getValue(),
+                                "Your application has been rejected for "
+                                + property.getAddress().getUnit() + " "
+                                + property.getAddress().getStreet_name() + " "
+                                + property.getAddress().getStreet_number() + " "
+                                + property.getAddress().getSuburb() + " \n"
+                        );
+                    case PENDING -> // send pending status to user
+                        Util.sendEmail(user.getEmail(), agent.getEmail(), configEJB.getConfigByKey(MessageType.MESSAGE_PENDING_REQUEST.name()).getValue(),
+                                "Your application has been moved to pending state for "
+                                + property.getAddress().getUnit() + " "
+                                + property.getAddress().getStreet_name() + " "
+                                + property.getAddress().getStreet_number() + " "
+                                + property.getAddress().getSuburb());
+                    default -> {
+                    }
+                }
             }
-        }
-            return "/dashboard/agent/application_dashboard.faces?faces-redirect=true";
+            String returnUrl = "/dashboard/agent/application_dashboard.faces?faces-redirect=true";
+
+            if ("singleP".equals(source)) {
+                returnUrl = returnUrl + "&id=" + pid;
+            }
+
+            return returnUrl;
         }
         return null;
     }
@@ -363,7 +385,7 @@ public class PropertyApplicationController {
             try {
                 String fileName = primaryDocument.getFileName();
                 String fileLocation = System.getProperty("OZPROPERTYHUB_UPLOAD_LOCATION") + "/" + fileName;
-                try ( InputStream inputStream = primaryDocument.getInputStream()) {
+                try (InputStream inputStream = primaryDocument.getInputStream()) {
                     Files.copy(inputStream, Paths.get(fileLocation), StandardCopyOption.REPLACE_EXISTING);
                     this.primaryImageUrl = fileName;
                     propertyEntity.setPrimaryImageUrl(primaryImageUrl);
@@ -384,7 +406,7 @@ public class PropertyApplicationController {
             try {
                 String fileName = secondaryDocument.getFileName();
                 String fileLocation = System.getProperty("OZPROPERTYHUB_UPLOAD_LOCATION") + "/" + fileName;
-                try ( InputStream inputStream = secondaryDocument.getInputStream()) {
+                try (InputStream inputStream = secondaryDocument.getInputStream()) {
                     Files.copy(inputStream, Paths.get(fileLocation), StandardCopyOption.REPLACE_EXISTING);
                     this.secondaryImageUrl = fileName;
                     propertyEntity.setSecondaryImageUrl(secondaryImageUrl);
@@ -405,7 +427,7 @@ public class PropertyApplicationController {
             try {
                 String fileName = incomeDocument.getFileName();
                 String fileLocation = System.getProperty("OZPROPERTYHUB_UPLOAD_LOCATION") + "/" + fileName;
-                try ( InputStream inputStream = incomeDocument.getInputStream()) {
+                try (InputStream inputStream = incomeDocument.getInputStream()) {
                     Files.copy(inputStream, Paths.get(fileLocation), StandardCopyOption.REPLACE_EXISTING);
                     this.incomeImageUrl = fileName;
                     propertyEntity.setIncomeImageUrl(incomeImageUrl);
@@ -426,7 +448,7 @@ public class PropertyApplicationController {
             try {
                 String fileName = otherDocuement.getFileName();
                 String fileLocation = System.getProperty("OZPROPERTYHUB_UPLOAD_LOCATION") + "/" + fileName;
-                try ( InputStream inputStream = otherDocuement.getInputStream()) {
+                try (InputStream inputStream = otherDocuement.getInputStream()) {
                     Files.copy(inputStream, Paths.get(fileLocation), StandardCopyOption.REPLACE_EXISTING);
                     this.otherImageUrl = fileName;
                     propertyEntity.setOtherImageUrl(otherImageUrl);
