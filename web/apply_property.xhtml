@@ -159,7 +159,7 @@
                                     <div class="row">
                                         <div class="col-lg-6">
                                             <h:outputLabel value="Income Document"/>
-                                            <p:fileUpload value="#{applyPropertyBean.incomeDocument}"  multiple="false" mode="simple" dragDropSupport="true" />
+                                            <p:fileUpload  disabled="#{applyPropertyBean.shouldDisableUI}" value="#{applyPropertyBean.incomeDocument}"  multiple="false" mode="simple" dragDropSupport="true" />
                                           
                                             <h:messages errorStyle="color:red" for="incomeDocument" layout="table"/>
                                            <h:graphicImage value="uploaded-images/#{applyPropertyBean.incomeImageUrl}" class="img-responsive" rendered="#{not empty applyPropertyBean.incomeImageUrl}" />

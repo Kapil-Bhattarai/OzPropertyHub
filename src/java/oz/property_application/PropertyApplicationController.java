@@ -328,7 +328,7 @@ public class PropertyApplicationController {
             default -> {
             }
         }
-            return "apply_property.faces?faces-redirect=true&uid=" + uid + "&pid=" + pid + "&aid=" + aid + "&reload=true";
+            return "/dashboard/agent/application_dashboard.faces?faces-redirect=true";
         }
         return null;
     }
@@ -352,6 +352,7 @@ public class PropertyApplicationController {
         propertyEntity.setIsEmployed(isEmployed);
         propertyEntity.setSalary(salary);
         propertyEntity.setSalaryType(salaryType);
+        propertyEntity.setOfferedRent(offeredRent);
 
         propertyEntity.setApplicationDate(new Date());
         propertyEntity.setNoOfDogs(noOfDogs);
@@ -386,7 +387,7 @@ public class PropertyApplicationController {
                 try ( InputStream inputStream = secondaryDocument.getInputStream()) {
                     Files.copy(inputStream, Paths.get(fileLocation), StandardCopyOption.REPLACE_EXISTING);
                     this.secondaryImageUrl = fileName;
-                    propertyEntity.setSecondaryImageUrl(primaryImageUrl);
+                    propertyEntity.setSecondaryImageUrl(secondaryImageUrl);
                 } catch (IOException e) {
                     System.out.println(e);
                     // Handle the exception
