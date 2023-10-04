@@ -33,8 +33,16 @@ import oz.user.UserEntity;
             query = "SELECT pa FROM PropertyApplicationEntity pa WHERE pa.id.userId = :userId"
     ),
     @NamedQuery(
+        name = "PropertyApplicationEntity.findAllApplicationByAgentByProperty",
+        query = "SELECT pa FROM PropertyApplicationEntity pa WHERE pa.id.agentId = :agentId AND pa.id.propertyId = :propertyId"
+    ),
+    @NamedQuery(
         name = "PropertyApplicationEntity.findAllApplicationByAgent",
         query = "SELECT pa FROM PropertyApplicationEntity pa WHERE pa.id.agentId = :agentId"
+    ),
+    @NamedQuery(
+        name = "PropertyApplicationEntity.getAcceptedApplication",
+        query = "SELECT pa FROM PropertyApplicationEntity pa WHERE pa.id.propertyId = :propertyId AND pa.status = :applicationStatus"
     ),
      @NamedQuery(
             name = "PropertyApplicationEntity.findPropertyTypeForUpdate",
@@ -45,8 +53,10 @@ public class PropertyApplicationEntity implements Serializable {
 
     public static final String QUERY_GET_APPLICATION_STATUS = "PropertyApplicationEntity.findPropertyTypeByUserIdAndPropertyId";
     public static final String QUERY_GET_ALL_APPLICATIONS = "PropertyApplicationEntity.findAllAppliedProperties";
+     public static final String QUERY_GET_ALL_APPLICATIONS_TO_AGENT_BY_PROPERTY = "PropertyApplicationEntity.findAllApplicationByAgentByProperty";
      public static final String QUERY_GET_ALL_APPLICATIONS_TO_AGENT = "PropertyApplicationEntity.findAllApplicationByAgent";
      public static final String QUERY_GET_APPLICATION_TO_UPDATE = "PropertyApplicationEntity.findPropertyTypeForUpdate";
+     public static final String QUERY_ACCEPTED_APPLICATION = "PropertyApplicationEntity.getAcceptedApplication";
 
     @EmbeddedId
     private PropertyApplicationId id;

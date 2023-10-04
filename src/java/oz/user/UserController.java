@@ -19,6 +19,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import org.primefaces.model.file.UploadedFile;
 import oz.ApplicationStatus;
 import oz.MessageType;
@@ -52,7 +53,7 @@ public class UserController {
     private UploadedFile mainImage;
     private String mainImageUrl;
     private String newEmail;
-
+    private String source = "list";
     private UserType type;
 
     @EJB
@@ -150,7 +151,7 @@ public class UserController {
                 try {
                     String fileName = mainImage.getFileName();
                     String fileLocation = System.getProperty("OZPROPERTYHUB_UPLOAD_LOCATION") + "/" + fileName;
-                    try ( InputStream inputStream = mainImage.getInputStream()) {
+                    try (InputStream inputStream = mainImage.getInputStream()) {
                         Files.copy(inputStream, Paths.get(fileLocation), StandardCopyOption.REPLACE_EXISTING);
                         user.setMainImage(fileName);
                     } catch (IOException e) {
@@ -197,6 +198,14 @@ public class UserController {
 
     public boolean showUserDashboard() {
         return id != null && type == UserType.USER;
+    }
+
+    public void setSource(String s) {
+        source = s;
+    }
+
+    public String getSource() {
+        return source;
     }
 
     public List<UserEntity> getActiveUsersByType(Boolean isActive) {
@@ -396,7 +405,16 @@ public class UserController {
     }
 
     public List<PropertyApplicationEntity> getPropertiesApplicationByAgent(Integer userId) {
-        return userEJB.getPropertiesApplicationByAgent(userId);
+        FacesContext context = FacesContext.getCurrentInstance();
+        Map<String, String> params = context.getExternalContext().getRequestParameterMap();
+        String propertyId = params.get("id");
+        if (propertyId == null) {
+            source = "list";
+            return userEJB.getPropertiesApplicationByAgent(userId);
+        } else {
+            source = "singleP";
+            return userEJB.getPropertiesApplicationByAgent(userId, Integer.parseInt(propertyId));
+        }
     }
 
     public void subscribeToNewsletter() {
