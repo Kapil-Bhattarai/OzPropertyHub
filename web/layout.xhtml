@@ -36,7 +36,7 @@
     </h:head>
     <body>
 
-        <div id="content">
+        <div id="content" style="display: flex;flex-direction:column;min-height:100vh;">
 <!--            <h:outputText value="#{ozglobalbean}"></h:outputText>-->
 
             <!-- Header Starts -->
@@ -95,7 +95,7 @@
             </div>
             <!-- #Header Starts -->
 
-            <div style="min-height: calc(100vh - 500px);">
+            <div style="flex:1;">
             <ui:insert name="content"> 
 
             </ui:insert>
