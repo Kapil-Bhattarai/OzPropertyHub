@@ -115,6 +115,7 @@
                             </ul>
                         </div>
 
+                        
                         <h:panelGroup rendered="#{userBean.isUser() || !userBean.isLoggedIn()}">
                             <div class="col-lg-3 col-sm-3">
                                 <h4>Newsletter</h4>
@@ -125,6 +126,8 @@
                                 </h:form>
                             </div>
                         </h:panelGroup>
+                        
+                        
                         <div class="col-lg-3 col-sm-3">
                             <h4>Follow us</h4>
                             <a href="#"><img src="#{request.contextPath}/resources/images/facebook.png" alt="facebook"/></a>
@@ -154,6 +157,8 @@
                         <div class="row">
                             <div class="col-sm-6 login">
                                 <h4>Login</h4>
+                                
+                                
                                 <form class="" role="form">
                                     <div class="form-group">
                                         <label class="sr-only" for="exampleInputEmail2">Email address</label>
@@ -169,13 +174,19 @@
                                         </label>
                                     </div>
                                     <button type="submit" class="btn btn-success">Sign in</button>
-                                </form>          
+                                </form> 
+                                
+                                
                             </div>
+                            
+                            
                             <div class="col-sm-6">
                                 <h4>New User Sign Up</h4>
                                 <p>Join today and get updated with all the properties deal happening around.</p>
                                 <button type="submit" class="btn btn-info"  onclick="window.location.href = 'signup.faces'">Join Now</button>
                             </div>
+                            
+                            
 
                         </div>
                     </div>
