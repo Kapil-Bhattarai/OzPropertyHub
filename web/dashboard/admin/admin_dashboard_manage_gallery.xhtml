@@ -16,6 +16,8 @@
             <h3> <h:outputText value="Welcome #{userBean.firstName}"/></h3>
             <h6><h:outputText value="Manage Gallery"/></h6>
               </div>
+            
+            
             <h:form id="search-form">
                 <div class="properties-listing spacer">
                     <div class="admin-search-form">
@@ -46,7 +48,6 @@
                                     <h:commandButton value="Filter" class="btn btn-success" action="#{ozglobalbean.searchProperty}" />
                                 </div>
                             </div>
-
 
                             <div>
                                 <p:dataTable id="search-list" var="property" value="#{ozglobalbean.lazyModel}"
@@ -85,6 +86,9 @@
                     </div>
                 </div>
             </h:form>
+            
+            
+            
         </ui:define>
     </ui:composition> 
 </html>

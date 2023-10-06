@@ -22,6 +22,7 @@
                                         layout="table"
                                         errorStyle="color:red"
                                         />
+                            
                             <h:form>
                                 <h:outputLabel value="Subject"/>
                                 <h:inputText  value="#{newsletterBean.subject}"  required="true" requiredMessage="Required!" class="form-control" id="subject" />
@@ -33,6 +34,8 @@
 
                                 <h:commandButton value="Send" class="btn btn-success" action="#{newsletterBean.submit}" />
                             </h:form>
+                            
+                            
                         </div>
 
                     </div>
